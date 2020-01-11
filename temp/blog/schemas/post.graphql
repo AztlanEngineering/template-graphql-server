@@ -1,0 +1,69 @@
+extend type Query {
+  post(id: ID!): Post!
+  postBySlug(slug: String): Post
+  allPosts: [Post]
+  posts(page:Int, category: String):PaginatedPosts
+}
+
+extend type Mutation {
+  addPost(input:PostInput!): Post!
+  updatePost(id: ID!, input: PostInput!): Post!
+  deletePost(id: ID!): Boolean!
+  }
+
+input PostInput {
+  title:String
+  title_tag:String
+  url:String
+  description:String
+  meta_description:String
+  main_image:String
+  content:String
+  category:String
+  services:[String]
+  related:[String]
+  mkt1:String
+  published: String
+  itemtype: String
+  default_size:String
+  label:String
+  flag_green:Boolean
+  flag_blue:Boolean
+  flag_red:Boolean
+  noindex:Boolean
+  }
+
+type Post {
+ 	id: ID
+  title:String
+  title_tag:String
+  url:String
+  meta_description:String
+  main_image:String
+  content:String
+  description:String
+  ts_created: String!
+  ts_updated: String
+  published: String
+  word_count: Int
+  itemtype:String
+  default_size:String
+  label:String
+  flag_green:Boolean
+  flag_blue:Boolean
+  flag_red:Boolean
+  noindex:Boolean
+}
+
+type PaginatedPosts {
+  docs: [Post]
+  totalDocs: Int!
+  limit: Int!
+  hasPrevPage: Boolean!
+  hasNextPage: Boolean!
+  page: Int!
+  totalPages: Int!
+  pagingCounter: Int!
+  prevPage: Int
+  nextPage: Int
+}

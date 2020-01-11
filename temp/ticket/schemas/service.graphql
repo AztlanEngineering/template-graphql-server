@@ -1,0 +1,45 @@
+extend type Query {
+    allServices: [Service]!
+    service(id : ID!):Service!
+  }
+
+extend type Mutation {
+  addService(input: ServiceInput!): Service!
+  updateService(id: ID!, input: ServiceInput!): Service!
+  deleteService(id: ID!): Boolean!
+  activateService(id: ID!): Boolean!
+  activateCar(id: ID!): Boolean!
+  activateMotorcycle(id: ID!): Boolean!
+  }
+
+input ServiceInput {
+  name: String
+  category: String
+  is_active: Boolean
+  car : Boolean
+  motorcycle : Boolean
+  seotext : String
+  slug: String
+  carbutton:String
+  motobutton:String
+  invisible:Boolean
+  icon:String
+  generic_cta:String
+  }
+
+type Service {
+ 	id: ID
+ 	name: String
+ 	category: String
+  is_active : Boolean
+  car : Boolean
+  motorcycle : Boolean
+  seotext : String
+  slug: String
+  carbutton:String
+  motobutton:String
+  invisible:Boolean
+  icon:String
+  generic_cta:String
+}
+

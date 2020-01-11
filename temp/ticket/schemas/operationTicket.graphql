@@ -1,0 +1,78 @@
+extend type Query {
+  operationTicket(id: ID!): OperationTicket!
+  allOperationTickets(unassigned: Boolean): [OperationTicket]
+}
+
+extend type Mutation {
+  addOperationTicket(input: OperationTicketInput): OperationTicket!
+  updateOperationTicket(id: ID!, input: OperationTicketInput): OperationTicket!
+}
+
+
+input OperationTicketInput {
+  make: ID
+  _make: String
+  model: ID
+  _model: String
+  year: Int
+  problem_category: ID
+  problem_description: String
+  mechanic: ID
+  price_expected: Int
+  price_final: Int
+  other: String
+  vendor:ID
+  customer: ID
+  first_name: String
+  last_name: String
+  address: String
+  address_2: String
+  city: String
+  postcode: String
+  mobile_phone: Float
+  has_whatsapp: Boolean
+  preferred_medium: String
+  preferred_time: String
+  email: String
+  notes : String
+  is_car:Boolean
+  is_motorcycle:Boolean
+  star:Boolean
+  km: String
+  new_parts: Boolean
+  mostly_city: Boolean
+}
+
+type OperationTicket {
+  id: ID
+  customer: ID
+  ts_created: String
+  ts_updated: String
+  _make: String
+  _model: String
+  year: Int
+  problem_description: String
+  price_expected: Int
+  price_final: Int
+  other: String
+  first_name: String
+  last_name: String
+  address: String
+  address_2: String
+  city: String
+  postcode: String
+  mobile_phone: Float
+  has_whatsapp: Boolean
+  preferred_medium: String
+  preferred_time: String
+  email: String
+  notes : String
+  is_car:Boolean
+  is_motorcycle:Boolean
+  is_from_site:Boolean
+  star:Boolean
+  km: String
+  new_parts: Boolean
+  mostly_city: Boolean
+}
+

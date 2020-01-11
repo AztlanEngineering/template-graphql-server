@@ -1,0 +1,19 @@
+extend type Query {
+  allModels(make: ID!): [Model]!
+  modelsFrom(make: ID!, from:Int!): [Model]!
+}
+
+#extend type Mutation {
+  #}
+
+  #input ModelCreate {
+    #}
+
+type Model {
+ 	id: ID
+ 	name: String
+ 	year: Int
+ 	make: ID
+ 	slug: String
+}
+

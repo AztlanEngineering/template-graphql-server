@@ -1,0 +1,99 @@
+extend type Query {
+  getTicket(id: ID!): OTicket!
+  ticket(id: ID!): CTicket!
+  i: InitialDataForTicket!
+  allTickets: [CTicket]
+}
+
+extend type Mutation {
+  newTicket(input: OTicketInput): OTicket!
+  addTicket(input: CTicketInput): CTicket!
+  updateTicket(id: ID!, input: CTicketInput): CTicket!
+  deleteTicket(id: ID!): Boolean!
+  starTicket(id: ID!): Boolean!
+}
+
+input OTicketInput {
+  make: ID!
+  model: ID
+  _model: String
+  year: Int!
+  problem_category: ID!
+  mobile_phone: String!
+  whatsapp: Boolean!
+  postcode: Int!
+  is_from_site:Boolean!
+  first_name: String!
+  last_name: String!
+  motorcycle: Boolean!
+  km: String!
+  preferred_time: String!
+  mostly_city: Boolean!
+}
+
+input CTicketInput {
+  make: ID
+  _make: String
+  model: ID
+  _model: String
+  year: Int
+  problem_category: ID
+  problem_description: String
+  mechanic: ID
+  price_expected: Int
+  completed: Boolean
+  price_final: Int
+  other: String
+  vendor:ID
+  customer: ID
+  is_car:Boolean
+  is_motorcycle:Boolean
+  star:Boolean
+  km: String
+  new_parts: Boolean
+  mostly_city: Boolean
+}
+#Open source ticket => Visible by the client
+
+type OTicket {
+ 	id: ID!
+  ts_created: String
+  ts_updated: String
+  _make: String
+  _model: String
+  _service: String
+  year: Int!,
+  first_name: String!
+  last_name: String!
+  motorcycle: Boolean!
+  km: String!
+  preferred_time: String
+  completed: Boolean!
+  mostly_city: Boolean
+}
+
+#Closed source tiket => only Visible in the dashboard
+
+type CTicket {
+  id: ID!
+  ts_created: String!
+  ts_updated: String!
+  _make: String
+  _model: String
+  year: Int
+  completed: Boolean
+  # Now the private stuff
+  problem_description: String
+  price_expected: Int
+  price_final: Int
+  other: String
+  is_car:Boolean
+  is_motorcycle:Boolean
+  is_from_site:Boolean
+  star:Boolean
+  km: String
+  new_parts: Boolean
+  mostly_city: Boolean
+  # And we don't forget to  ./_stitch
+}
+

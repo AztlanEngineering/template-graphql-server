@@ -1,0 +1,17 @@
+{
+  "regions": ["bru", "lhr"],
+  "routes": [
+    { "src": "/.*", "dest": "dist/main.js" }
+  ],
+	"env": {
+		"DEBUG":"false",
+		"DB_DEBUG":"false",
+		"DB_PORT":"27017",
+		"DB_HOST":"cluster0-z5khd.mongodb.net",
+		"DB_NAME":"test",
+		"DB_PASSWORD":"@db_password",
+		"DB_USER":"@db_username",
+		"JWT_SECRET":"@jwt",
+		"SIGNUP":"false"
+	}
+}

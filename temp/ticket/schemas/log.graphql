@@ -1,0 +1,17 @@
+extend type Mutation {
+  addLog(ticketId:ID, input: LogInput): Log!
+  deleteLog(id:ID!): Boolean!
+  }
+
+input LogInput {
+  type: Int
+  note: String
+  }
+
+type Log {
+ 	id: ID
+ 	type: Int
+  ts_created: String!
+  note: String
+}
+

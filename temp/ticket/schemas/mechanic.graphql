@@ -1,0 +1,56 @@
+extend type Query {
+  allMechanics(zone: String): [Mechanic]!
+  mechanic(id: ID!): Mechanic!
+}
+
+extend type Mutation {
+  addMechanic(input: MechanicInput!): Mechanic!
+  updateMechanic(id: ID!, input: MechanicInput!): Mechanic!
+  deleteMechanic(id: ID!): Boolean!
+  }
+
+input MechanicInput {
+  first_name: String
+  last_name: String
+  address: String
+  address_2: String
+  city: String
+  zone: String
+  postcode: String
+  mobile_phone: Float
+  has_whatsapp: Boolean
+  shop_phone: Float
+  email: String
+  preferred_medium: String
+  notes: String
+  num_mechanics:Int
+  num_elevators:Int
+  shop_name:String
+  repairs_cars:Boolean
+  repairs_motorcycles:Boolean
+  }
+
+type Mechanic {
+ 	id: ID
+  ts_created: String!
+  ts_updated: String!
+  first_name: String
+  last_name: String
+  address: String
+  address_2: String
+  city: String
+  zone: String
+  postcode: String
+  mobile_phone: Float
+  has_whatsapp: Boolean
+  shop_phone: Float
+  email: String
+  preferred_medium: String
+  notes: String
+  num_mechanics:Int
+  num_elevators:Int
+  shop_name:String
+  repairs_cars:Boolean
+  repairs_motorcycles:Boolean
+}
+

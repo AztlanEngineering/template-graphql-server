@@ -1,0 +1,33 @@
+extend type Query {
+  inWaitList(id: ID!): InWaitList!
+  allInWaitList: [InWaitList]
+}
+
+extend type Mutation {
+  newInWaitList(input:InWaitListInput!): Boolean
+  addInWaitList(input:InWaitListInput!): InWaitList!
+  updateInWaitList(id: ID!, input: InWaitListInput!): InWaitList!
+  deleteInWaitList(id: ID!): Boolean!
+  }
+
+input InWaitListInput {
+ 	id: ID
+  postcode: String
+  sent: Boolean
+  confirmed: Boolean
+  email: String
+  }
+
+type InWaitList {
+ 	id: ID
+  postcode: Float
+  sent: Boolean
+  confirmed: Boolean
+  email: String
+  ua: String
+  ip: String
+  ip_location: String
+  ts_created: String!
+  ts_updated: String
+}
+

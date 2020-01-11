@@ -1,0 +1,44 @@
+extend type Query {
+  customer(id: ID!): Customer!
+  allCustomers: [Customer]
+}
+
+extend type Mutation {
+  addCustomer(input:CustomerInput!): Customer!
+  updateCustomer(id: ID!, input: CustomerInput!): Customer!
+  deleteCustomer(id: ID!): Boolean!
+  }
+
+input CustomerInput {
+  first_name: String
+  last_name: String
+  address: String
+  address_2: String
+  city: String
+  postcode: String
+  mobile_phone: Float
+  has_whatsapp: Boolean
+  preferred_medium: String
+  preferred_time: String
+  email: String
+  notes : String
+   }
+
+type Customer {
+ 	id: ID
+  first_name: String
+  last_name: String
+  address: String
+  address_2: String
+  city: String
+  postcode: String
+  mobile_phone: Float
+  has_whatsapp: Boolean
+  preferred_medium: String
+  preferred_time: String
+  notes : String
+  email: String
+  ts_created: String!
+  ts_updated: String
+}
+

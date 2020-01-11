@@ -1,0 +1,24 @@
+extend type Query {
+  allMeetings:[Meeting]
+  meeting(id: ID!): Meeting!
+}
+
+extend type Mutation {
+  addMeeting(input: MeetingInput): Meeting!
+  updateMeeting(input: MeetingInput, id: ID!): Meeting!
+  deleteMeeting(id:ID!): Boolean!
+  }
+
+input MeetingInput {
+  datetime: String
+  mechanic: ID
+  ticket: ID
+  for: String
+  }
+
+type Meeting {
+ 	id: ID
+ 	datetime: String
+  for: String
+}
+

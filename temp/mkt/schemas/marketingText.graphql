@@ -1,0 +1,23 @@
+extend type Query {
+  marketingText(id: ID!): MarketingText!
+  allMarketingTexts: [MarketingText]
+}
+
+extend type Mutation {
+  addMarketingText(input:MarketingTextInput!): MarketingText!
+  updateMarketingText(id: ID!, input: MarketingTextInput!): MarketingText!
+  deleteMarketingText(id: ID!): Boolean!
+  }
+
+input MarketingTextInput {
+ 	id: ID
+  text: String
+  type:String
+  }
+
+type MarketingText {
+ 	id: ID
+  text: String
+  type:String
+}
+

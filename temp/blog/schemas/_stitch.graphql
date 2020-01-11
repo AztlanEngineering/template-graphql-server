@@ -1,0 +1,12 @@
+extend type Post {
+  user: MinUser
+  category: PostCategory
+  services: [Service]
+  related: [Post]
+  mkt1:MarketingText
+}
+
+extend type PostCategory {
+  posts:[Post]
+}
+

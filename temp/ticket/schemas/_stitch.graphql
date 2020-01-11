@@ -1,0 +1,41 @@
+type InitialDataForTicket {
+  makes: [Make]
+  services: [Service]
+}
+
+extend type OTicket {
+  make: Make
+  model: Model
+  meeting: Meeting
+  customer: Customer
+  problem_category: Service
+}
+
+extend type CTicket {
+  make: Make
+  model: Model
+  customer: Customer
+  meeting: Meeting
+  mechanic: Mechanic
+  logs:[Log]
+  vendor: User
+  problem_category: Service
+}
+extend type OperationTicket {
+  make: Make
+  model: Model
+  meetings: [Meeting]
+  mechanic: Mechanic
+  logs: [Log]
+  vendor: User
+  problem_category: Service
+}
+
+extend type Meeting {
+  mechanic: Mechanic
+  ticket: CTicket
+}
+
+extend type Log {
+  user: User
+}

@@ -1,0 +1,48 @@
+extend type Query {
+  allMakes: [Make]!
+  commonMakes: [Make]!
+  make: Make
+}
+
+#extend type Mutation {
+  #}
+
+  #input MakeCreate {
+    #}
+
+extend type Mutation {
+  addMake(input: MakeInput!): Make!
+  updateMake(id: ID!, input: MakeInput!): Make!
+  deleteMake(id: ID!): Boolean!
+  activateMake(id: ID!): Boolean!
+  activateMakeCar(id: ID!): Boolean!
+  activateMakeMotorcycle(id: ID!): Boolean!
+  }
+
+input MakeInput {
+ 	active_from: String
+ 	active_to: String
+ 	name: String
+ 	slug: String
+  is_common: Boolean
+  is_active: Boolean
+  car: Boolean
+  motorcycle: Boolean
+  seotext: String
+  country: String
+  }
+
+type Make {
+ 	id: ID!
+ 	active_from: String
+ 	active_to: String
+ 	name: String
+ 	slug: String
+  is_common: Boolean
+  is_active:Boolean
+  car: Boolean
+  motorcycle: Boolean
+  seotext: String
+  country: String
+}
+

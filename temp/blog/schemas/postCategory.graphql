@@ -1,0 +1,34 @@
+extend type Query {
+  postCategory(id: ID!): PostCategory!
+  allPostCategories: [PostCategory]
+  postCategories:[PostCategory]
+}
+
+extend type Mutation {
+  addPostCategory(input:PostCategoryInput!): PostCategory!
+  updatePostCategory(id: ID!, input: PostCategoryInput!): PostCategory!
+  deletePostCategory(id: ID!): Boolean!
+  }
+
+input PostCategoryInput {
+  name:String
+  slug:String
+  meta_description:String
+  title_tag:String
+  star:Boolean
+  seotext:String
+  class:String
+  icon:String
+  }
+
+type PostCategory {
+ 	id: ID
+  name:String
+  slug:String
+  meta_description:String
+  title_tag:String
+  star:Boolean
+  seotext:String
+  class:String
+  icon:String
+}
