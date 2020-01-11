@@ -17,14 +17,10 @@ import passport from 'passport'
 import mongoose from 'mongoose'
 import { CacheControlExtension } from 'apollo-cache-control'
 
-let port
+const port = 4000
 
 if (process.env.LOCAL) {
   require('dotenv').config()
-  port=4000
-}
-else {
-  port=443
 }
 
 const {
@@ -95,7 +91,7 @@ mongoose.connect(
 const server = new ApolloServer({
   schema,
   playground,
-  introspection :IS_DB_DEBUG,
+  introspection :IS_DEBUG,
   tracing       :true,
   debug         :IS_DEBUG,
   formatError   :logError,
@@ -174,5 +170,5 @@ app.use('/', (req, res, next) => {
 server.applyMiddleware({ app })
 
 app.listen({ port }, () =>
-  console.log(`🌋 Server ready at http://localhost:4000${server.graphqlPath}`)
+  console.log(`🌋 Server ready at http://localhost:${port}${server.graphqlPath}`)
 )
