@@ -4,7 +4,7 @@
     { "src": "/.*", "dest": "api/server.js" }
   ],
 	"env": {
-		"DEBUG":"false",
+		"DEBUG":"true",
 		"DB_DEBUG":"false",
 		"DB_PORT":"27017",
 		"DB_HOST":"cluster0-z5khd.mongodb.net",
