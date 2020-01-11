@@ -12,7 +12,10 @@
     "server:start": "LOCAL=true nodemon --exec babel-node src/server.js",
     "server:compile": "webpack --config ./webpack.js",
     "ss": "npm run server:start",
-    "sc": "npm run server:compile"
+    "sc": "npm run server:compile",
+    "deploy-commit":"git add . && git commit -m '|Auto] Compile and deploy from cli' && git push",
+    "build:deploy":"npm run sc && npm run deploy-commit",
+    "bd":"npm run build:deploy"
   },
   "author": "",
   "license": "ISC",
