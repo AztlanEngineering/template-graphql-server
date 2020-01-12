@@ -13,9 +13,9 @@
     "server:compile": "webpack --config ./webpack.js",
     "ss": "npm run server:start",
     "sc": "npm run server:compile",
-    "deploy-commit":"git add . && git commit -m '|Auto] Compile and deploy from cli' && git push",
-    "build:deploy":"npm run sc && npm run deploy-commit",
-    "bd":"npm run build:deploy"
+    "deploy-commit": "git add . && git commit -m '|Auto] Compile and deploy from cli' && git push",
+    "build:deploy": "npm run sc && npm run deploy-commit",
+    "bd": "npm run build:deploy"
   },
   "author": "",
   "license": "ISC",
@@ -37,6 +37,7 @@
     "webpack-node-externals": "^1.7.2"
   },
   "dependencies": {
+    "apollo-cache-control": "^0.8.11",
     "apollo-errors": "^1.9.0",
     "apollo-server": "^2.9.16",
     "bcrypt": "^3.0.7",

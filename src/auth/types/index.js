@@ -1,9 +1,9 @@
-import TokenSchema from './Token.graphql'
-import UserSchema from './User.graphql'
-import stitchSchemas from './_stitch.graphql'
+import TokenType from './Token.graphql'
+import UserType from './User.graphql'
+import stitchTypes from './_stitch.graphql'
 
 export default [
-  TokenSchema,
-  UserSchema,
-  stitchSchemas
+  TokenType,
+  UserType,
+  stitchTypes
 ]
