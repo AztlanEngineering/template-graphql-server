@@ -5,7 +5,7 @@ export default {
   Mutation:{
   },
   Query:{
-    getHello(r, a, c) {
+    hello(r, a, c) {
       // use context if you want to restrict the usage
       return 'mini hello'
       //return su(MainController.get(r, a), c.user)
