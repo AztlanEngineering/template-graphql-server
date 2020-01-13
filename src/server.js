@@ -12,6 +12,8 @@ import jwt from 'jsonwebtoken'
 import express from 'express'
 import passport from 'passport'
 
+import helmet from 'helmet'
+
 //import bodyParser from 'body-parser'
 
 import mongoose from 'mongoose'
@@ -149,6 +151,8 @@ const server = new ApolloServer({
 
 
 const app = express()
+
+app.use(helmet())
 
 app.use(passport.initialize())
 JWTStrategy(passport)
