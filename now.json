@@ -12,6 +12,8 @@
 		"DB_PASSWORD":"@db_password",
 		"DB_USER":"@db_username",
 		"JWT_SECRET":"@jwt",
-		"SIGNUP":"false"
+		"SIGNUP":"false",
+    "OAUTH_KEY":"@oauth_secret",
+    "OAUTH_CLIENT":"@oauth_client"
 	}
 }

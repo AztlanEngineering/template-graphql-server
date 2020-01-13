@@ -1,4 +1,0 @@
-# Generator version : 1.1.1
-extend type Query {
-  getPollow: String
-}

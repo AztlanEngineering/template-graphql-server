@@ -1,0 +1,16 @@
+# Generator version : 1.1.1
+extend type Query {
+  getHello: Hello
+}
+
+#extend type Mutation {
+  #mutateHello(id: ID!, input: HelloInput!): Hello!
+  # }
+
+#input HelloInput {
+  #y:String
+# }
+
+type Hello {
+  y:String
+}
