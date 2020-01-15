@@ -1,17 +1,20 @@
 import mongoose from 'mongoose'
 
-const Oauth2Schema = new mongoose.Schema({
-  //access_token: String,
-  refresh_token:String,
+const OAuth2Schema = new mongoose.Schema({
+  access_token  :String,
+  refresh_token :String,
   //id_token: String,
-  provider     :String,
-  ps           :String,
-  email        :String,
-  name         :String,
+  provider      :String,
+  picture       :String,
+  email         :String,
+  email_verified:Boolean,
+  locale        :String,
+  name          :String,
   //token_type: String,
-  scope        :String,
-  ts_created   :{ type: Date, default: Date.now },
-  ts_updated   :{ type: Date, default: Date.now }
+  scope         :String,
+  ts_created    :{ type: Date, default: Date.now },
+  ts_updated    :{ type: Date, default: Date.now },
+  expires       :{ type: Date }
 })
 
 const UserSchema = new mongoose.Schema({
@@ -26,8 +29,9 @@ const UserSchema = new mongoose.Schema({
   profile_picture:String,
   superuser      :Boolean,
   operator       :Boolean,
+  is_active      :Boolean,
   oauth2         :[
-    Oauth2Schema
+    OAuth2Schema
   ]
 })
 

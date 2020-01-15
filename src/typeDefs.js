@@ -3,6 +3,7 @@ import mutation from 'utils/schemas/mutation.graphql'
 
 import authTypes from 'auth/types'
 import tstrTypes from 'tstr/types'
+import oauth2Types from 'oauth2/types'
 
 const baseTypes = [
   query,
@@ -12,5 +13,6 @@ const baseTypes = [
 export default [
   ...baseTypes,
   ...authTypes,
-  ...tstrTypes
+  ...tstrTypes,
+  ...oauth2Types
 ]

@@ -1,4 +1,8 @@
 /* eslint-disable no-console */
+if (process.env.LOCAL) {
+  require('dotenv').config()
+}
+
 import fs from 'fs'
 
 import JWTStrategy from 'auth/passport'
@@ -13,6 +17,7 @@ import express from 'express'
 import passport from 'passport'
 
 import helmet from 'helmet'
+import oAuth2Router from 'oauth2/router'
 
 //import bodyParser from 'body-parser'
 
@@ -21,9 +26,6 @@ import { CacheControlExtension } from 'apollo-cache-control'
 
 const port = 4000
 
-if (process.env.LOCAL) {
-  require('dotenv').config()
-}
 
 const {
   //DB_LOCAL //Deprecated
@@ -81,6 +83,7 @@ if (IS_DB_DEBUG) {
 //DB_LOCAL === 'true' ?
 //mongoose.connect('mongodb://localhost:27017/mecatest'):
 
+mongoose.set('useFindAndModify', false)
 mongoose.connect(
   `mongodb+srv://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/${DB_NAME}?retryWrites=true`,
   {
@@ -124,9 +127,8 @@ const server = new ApolloServer({
       }
       let ver = ''
       try {
-        const HS512 = JWT_SECRET ? JWT_SECRET : null
         ver = jwt.verify(t.token,
-          HS512 ? HS512 : fs.readFileSync('./keys/jwt_public.pem'),
+          JWT_SECRET,
           verifyOptions)
 
       }
@@ -156,6 +158,7 @@ app.use(helmet())
 
 app.use(passport.initialize())
 JWTStrategy(passport)
+app.use('/auth', oAuth2Router)
 //app.use(bodyParser.urlencoded({ extended: false }))
 //app.use(bodyParser.json())
 

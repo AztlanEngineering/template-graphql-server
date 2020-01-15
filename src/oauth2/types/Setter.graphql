@@ -1,0 +1,41 @@
+# Generator version : 1.1.1
+extend type Query {
+  allSetters: [Setter]
+  getSetter: Setter
+  #paginatedSetter (page:Int, category: String):PaginatedSetters
+}
+
+extend type Mutation {
+  addSetter(input:SetterInput!): Setter!
+  updateSetter(id: ID!, input: SetterInput!): Setter!
+  deleteSetter(id: ID!): Boolean!
+  }
+
+input SetterInput {
+  user:String
+  s:String
+  provider:String
+  }
+
+type Setter {
+  id:ID
+  user:User
+  s:String
+  provider:String
+  expires:Int
+  ts_created:Int
+  is_valid:Boolean
+}
+
+#type PaginatedSetters {
+#  docs: [Setter]
+#  totalDocs: Int!
+#  limit: Int!
+#  hasPrevPage: Boolean!
+#  hasNextPage: Boolean!
+#  page: Int!
+#  totalPages: Int!
+#  pagingCounter: Int!
+#  prevPage: Int
+#  nextPage: Int
+#}

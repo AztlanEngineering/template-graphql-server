@@ -151,6 +151,7 @@ const userController = {
   me:async(root, args, context) => {
     console.log('me function called, r, a ,c', root, args, context)
   }
+
 }
 
 export default userController

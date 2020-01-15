@@ -26,6 +26,7 @@ input UserInput {
   operator: Boolean
   handle: String
   profile_picture: String
+  is_active:Boolean
 }
 
 input MeInput {
@@ -56,6 +57,7 @@ type User {
   password: String
   handle: String
   profile_picture: String
+  is_active:Boolean
 }
 
 type MinUser {
@@ -65,5 +67,6 @@ type MinUser {
   username: String
   handle: String
   profile_picture: String
+  is_active:Boolean
 }
 
