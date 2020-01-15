@@ -134,7 +134,7 @@ const userController = {
 
       if (isMatch) {
         if (!process.env.JWT_SECRET) {
-          throw new ValidationError({ message: 'No jwt secret key' })
+          throw new ConfigurationError({ message: 'No jwt secret key' })
         }
         return getTokenFor(user, process.env.JWT_SECRET)
       }

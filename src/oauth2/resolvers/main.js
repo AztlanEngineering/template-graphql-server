@@ -5,19 +5,19 @@ import { SetterController as MainController } from '../controllers'
 
 export default {
   Mutation:{
+    async oAuth2Login(r, a) {
+      return await MainController.login(r, a)
+    }
   },
   Query:{
-    oAuth2Login(r, a, c) {
-      return 'blah'
-    },
     async oAuth2Google(r, a, c) {
       const GoogleMgr = GoogleManager()
       // use context if you want to restrict the usage
       //
       // Use a setter to add a setter from the current user (that's why we pass context)
-      const setter = await MainController.addSetter(r, { provider: 'google' }, c)
+      //const setter = await MainController.add(r, { provider: 'google' }, c)
 
-      //const setter ={ _id: null }
+      const setter ={ _id: null }
       return GoogleMgr.getAuthorizationUri(setter._id)// use context if you want to restrict the usage
       //return su(MainController.get(r, a), c.user)
     }

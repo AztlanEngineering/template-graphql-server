@@ -31,6 +31,10 @@ module.exports = function (api) {
     ]
   ]
 
+  if (process.env.LOCAL === 'true') {
+    plugins.push('inline-dotenv')
+  }
+
 
   //['add-module-exports']
 

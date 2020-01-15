@@ -14,7 +14,7 @@ callbacks.get(
   async (req, res) => {
     const { state, scope, code:authorizationCode } = req.query
     let redirectUri
-    console.log('Got This back', req.query)
+    //console.log('Got This back', req.query)
     !(scope && authorizationCode) ?
       res.status(400).send('Bad request') :
       void(0)
@@ -33,9 +33,9 @@ callbacks.get(
       await GoogleMgr.getProfile()
       const redirectUri = await GoogleMgr.useStrategy()
 
-      console.log('The profile of the user', GoogleMgr.authData)
-      console.log('CTX', GoogleMgr.context)
-      console.log('Will now redirect to', redirectUri)
+      // console.log('The profile of the user', GoogleMgr.authData)
+      // console.log('CTX', GoogleMgr.context)
+      // console.log('Will now redirect to', redirectUri)
 
       res.redirect(redirectUri)
     }

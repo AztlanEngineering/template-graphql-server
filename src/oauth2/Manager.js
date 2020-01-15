@@ -139,7 +139,7 @@ export default class Manager {
       token_type
       //id_token: body.id_token,
     }
-    console.log('POST w params', request_params, this.authData)
+    //console.log('POST w params', request_params, this.authData)
 
   }
 
@@ -221,14 +221,14 @@ export default class Manager {
       
         }
       )
-      console.log('USER FOUND', this.currentUser)
+      //console.log('USER FOUND', this.currentUser)
 
       if (this.currentUser) {
         void(0) //Redirect to login sucessful and set up json data
         //redirect him to the onboarding if it exists
       }
       else if (process.env.SIGNUP) {
-        console.log('🚌 signup')
+        //console.log('🚌 signup')
         // Create the user
         this.currentUser = new User(
           {
@@ -272,21 +272,25 @@ export default class Manager {
       // We create a setter to keep the state, and redirect to a client
       // ... page that will get the json token
       this.context.setter = this.context.setter ? (
-        await SetterController.updateSetter(
+        await SetterController.update(
           {},
           {
             id   :this.context.setter._id,
-            input:{ user: this.currentUser }
+            input:{ user: this.currentUser, use_to_login: true }
           }
         )) :(
-        await SetterController.addSetter(
+        await SetterController.add(
           {},
-          { provider: 'google' },
-          { user: this.currentUser }
+          { input:{
+            user        :this.currentUser,
+            use_to_login:true,
+            provider    :'google'
+          }
+          }
         ))
       this.context.state = this.context.setter._id
 
-      console.log('COMPLETE', this.currentUser, this.context.setter, this.isSignup)
+      //console.log('COMPLETE', this.currentUser, this.context.setter, this.isSignup)
       return this.getRedirectUri()
 
     }

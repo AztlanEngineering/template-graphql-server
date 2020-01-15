@@ -11,9 +11,10 @@ const opts = {}
 //opts.secretOrKey = (format === 'HS512') ? process.env.JWT_SECRET : fs.readFileSync('./keys/jwt_public.pem', 'utf8')
 
 opts.jwtFromRequest = ExtractJWT.fromAuthHeaderAsBearerToken()
-opts.secretOrKey = 'yooo' //process.env.JWT_SECRET
+opts.secretOrKey = process.env.JWT_SECRET
 opts.issuer = ''
 opts.audience = ''
+opts.authScheme = 'Bearer'
 opts.algorithms = [
   'HS512'
 ]
@@ -32,6 +33,4 @@ const JWTS = new JWTStrategy(opts, (jwt_payload, done) => {
     .catch(err => console.error(err))
 })
 
-export default function(passport) {
-  passport.use(JWTS)
-}
+export default JWTS

@@ -115,19 +115,19 @@ const server = new ApolloServer({
     let c = {}
     const token = req.headers.authorization ? req.headers.authorization.split(' ')[1] : ''
     if (token){
-      const t = await Token.findOne({ token }).populate({ path: 'user', model: User })
+      //const t = await Token.findOne({ token }).populate({ path: 'user', model: User })
       let verifyOptions = {
         // issuer:  i,
         // subject:  s,
         // audience:  a,
-        expiresIn:t.duration,
+        expiresIn:process.env.SESSION_DURATION,
         algorithm:[
           'RS256'
         ]
       }
       let ver = ''
       try {
-        ver = jwt.verify(t.token,
+        ver = jwt.verify(token,
           JWT_SECRET,
           verifyOptions)
 
@@ -135,17 +135,22 @@ const server = new ApolloServer({
       catch (JsonWebTokenError) {
         throw new AuthenticationError('must authenticate')
       }
+
+      /*
       c = {
         user      :t.user,
         token     :t,
         authorized:ver
-      }
+      }*/
     }
     c.user = req.user
     c.client = {
       ip:req.headers.origin,
       ua:req.headers['user-agent']
       //al:req.headers['accept-language'] //Notsure we need this ATM but will be useful for future trckn
+    }
+    if (IS_DEBUG){
+      console.log('Context : ', c)
     }
     return c
   }
@@ -156,12 +161,11 @@ const app = express()
 
 app.use(helmet())
 
+passport.use(JWTStrategy)
 app.use(passport.initialize())
-JWTStrategy(passport)
 app.use('/auth', oAuth2Router)
 //app.use(bodyParser.urlencoded({ extended: false }))
 //app.use(bodyParser.json())
-
 app.use('/', (req, res, next) => {
   passport.authenticate(
     'jwt',

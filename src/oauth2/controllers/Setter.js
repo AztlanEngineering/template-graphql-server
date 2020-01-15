@@ -2,17 +2,18 @@
 import {
   Setter as Model
 } from '../models'
-import { ObjectNotFoundError } from 'utils/errors'
-
-
-/*
 import {
-  ConfigurationError,
+  User
+} from 'auth/models'
+import { getTokenFor } from 'auth/utils'
+
+import {
+  //ConfigurationError,
   ValidationError,
-  NotUniqueError,
+  //NotUniqueError,
   ObjectNotFoundError
 } from 'utils'
-*/
+
 const LIMIT_PER_PAGE = 20
 
 const Controller = {
@@ -38,11 +39,27 @@ const Controller = {
   },
   */
 
+  login:async(root, { code:id }) => {
+    let tempItem = await Model.findById(id).populate(
+      { path: 'user', model: User }
+    )
+
+    //console.log('got setter, ready to l/I', tempItem, tempItem.is_valid)
+    if (tempItem.login()){
+      // Do Login
+      const token = getTokenFor(tempItem.user)
+      Model.deleteOne({ _id: id })
+      return token
+    }
+ 
+    throw new ValidationError({ message: 'Wrong authorization code' })
+    
+  },
+
   get:(root, { id }) => Model.findById( id ),
 
-  add:(root, args, context) => {
-    const item = new Model(args)
-    item.user = (context.user._id)
+  add:(root, { input }) => {
+    const item = new Model(input)
     return item.save()
   },
 
@@ -53,7 +70,7 @@ const Controller = {
     return true
   },
 
-	 update:async (root, { input, id }) => {
+  update:async (root, { input, id }) => {
     const tempItem = { input }
     //tempItem.ts_updated = Date.now()
     const updatedItem = await Model.findByIdAndUpdate(
