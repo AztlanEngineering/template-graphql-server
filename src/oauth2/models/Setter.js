@@ -16,7 +16,7 @@ SetterSchema.virtual('is_valid').get(function () {
 })
 
 SetterSchema.methods.login = function() {
-  console.log(this)
+  //console.log(this)
   if (this.is_valid && this.use_to_login){
     this.use_to_login = false,
     this.save()

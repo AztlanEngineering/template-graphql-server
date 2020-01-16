@@ -25,7 +25,7 @@ const userController = {
   },
 
   del:async (root, id) => {
-    console.log('DELETING', id)
+    //console.log('DELETING', id)
     await User.deleteOne({ _id: id  }, (err) => {
       if (err) return false
     })
@@ -149,7 +149,7 @@ const userController = {
   },
 
   me:async(root, args, context) => {
-    console.log('me function called, r, a ,c', root, args, context)
+    //console.log('me function called, r, a ,c', root, args, context)
   }
 
 }

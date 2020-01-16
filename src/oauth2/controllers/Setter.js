@@ -40,12 +40,13 @@ const Controller = {
   */
 
   login:async(root, { code:id }) => {
-    let tempItem = await Model.findById(id).populate(
-      { path: 'user', model: User }
-    )
+    let tempItem = await Model.findById(id)
 
     //console.log('got setter, ready to l/I', tempItem, tempItem.is_valid)
     if (tempItem.login()){
+      tempItem = await User.populate(tempItem,
+        { path: 'user', model: User }
+      )
       // Do Login
       const token = getTokenFor(tempItem.user)
       Model.deleteOne({ _id: id })
