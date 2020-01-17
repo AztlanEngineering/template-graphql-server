@@ -1,6 +1,6 @@
 import mongoose from 'mongoose'
 
-const getDefaultExpireTime = () => Date.now() + (process.env.TIME_TO_LOGIN || 120) * 1000
+const getDefaultExpireTime = () => Date.now() + (Number(process.env.TIME_TO_LOGIN) || 120) * 1000
 
 const SetterSchema = new mongoose.Schema({
   user        :{ type: mongoose.Schema.Types.ObjectId, ref: 'User' },

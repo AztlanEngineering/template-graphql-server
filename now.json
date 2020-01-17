@@ -17,7 +17,7 @@
     "GOOGLE_OAUTH_KEY":"@oauth_secret",
     "GOOGLE_OAUTH_HOST_AUTHORIZE":"http://api.fwrlines.com",
     "GOOGLE_OAUTH_HOST_TOKEN":"http://template-preact-dashboard.fwrlines.com",
-    "SESSION_DURATION":86400,
-    "TIME_TO_LOGIN":140
+    "SESSION_DURATION":"86400",
+    "TIME_TO_LOGIN":"140"
 	}
 }

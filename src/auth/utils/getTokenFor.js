@@ -28,7 +28,7 @@ const getTokenFor = (User, secret=null) => {
       issuer   :'Meccamico',
       subject  :User.id,
       audience :'dashboard.meccamico.com',
-      expiresIn:process.env.SESSION_DURATION,
+      expiresIn:Number(process.env.SESSION_DURATION),
       algorithm:'HS512'
     }
     //, (err, token) => {}
@@ -36,7 +36,7 @@ const getTokenFor = (User, secret=null) => {
   // TODO If we store the tokens, it's to be able to invalidate them.
   // This is currently not implemented. If not we shoud NOT persist JWT's in the DB
   // As it is the case here...
-  return new Token({ duration: process.env.SESSION_DURATION, token, user: User._id }).save()
+  return new Token({ duration: Number(process.env.SESSION_DURATION), token, user: User._id }).save()
 }
 
 export default (user) => {
