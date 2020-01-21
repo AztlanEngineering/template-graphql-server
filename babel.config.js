@@ -25,7 +25,8 @@ module.exports = function (api) {
         extensions:[
           '.html',
           '.xml',
-          '.graphql'
+          '.graphql',
+          '.gql'
         ]
       }
     ]
