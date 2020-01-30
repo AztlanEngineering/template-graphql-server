@@ -4,6 +4,7 @@
     { "src": "/.*", "dest": "api/server.js" }
   ],
 	"env": {
+    "CORS":"false",
 		"DEBUG":"true",
 		"DB_DEBUG":"false",
 		"DB_PORT":"27017",

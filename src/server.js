@@ -35,6 +35,7 @@ const {
   DB_NAME,
   DB_PASSWORD,
   DEBUG,
+  CORS,
   JWT_SECRET
 } = process.env
 
@@ -42,6 +43,7 @@ let playground, logError, logResponse
 
 const IS_DEBUG = DEBUG === 'true'
 const IS_DB_DEBUG = DB_DEBUG === 'true'
+const WITH_CORS = CORS === 'true'
 
 if (IS_DEBUG) {
   mongoose.connection.once('open', () => {
@@ -96,6 +98,7 @@ mongoose.connect(
 const server = new ApolloServer({
   schema,
   playground,
+  cors          :WITH_CORS,
   introspection :IS_DEBUG,
   tracing       :true,
   debug         :IS_DEBUG,
