@@ -19,7 +19,7 @@ import passport from 'passport'
 import helmet from 'helmet'
 import oAuth2Router from 'oauth2/router'
 
-//import bodyParser from 'body-parser'
+import bodyParser from 'body-parser'
 
 import mongoose from 'mongoose'
 import { CacheControlExtension } from 'apollo-cache-control'
@@ -167,8 +167,8 @@ app.use(helmet())
 passport.use(JWTStrategy)
 app.use(passport.initialize())
 app.use('/auth', oAuth2Router)
-//app.use(bodyParser.urlencoded({ extended: false }))
-//app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({ extended: false }))
+app.use(bodyParser.json())
 app.use('/', (req, res, next) => {
   passport.authenticate(
     'jwt',
