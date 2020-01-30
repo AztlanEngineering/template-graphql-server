@@ -165,10 +165,10 @@ const app = express()
 app.use(helmet())
 
 passport.use(JWTStrategy)
-app.use(passport.initialize())
-app.use('/auth', oAuth2Router)
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
+app.use(passport.initialize())
+app.use('/auth', oAuth2Router)
 app.use('/', (req, res, next) => {
   passport.authenticate(
     'jwt',
