@@ -19,7 +19,7 @@ import passport from 'passport'
 import helmet from 'helmet'
 import oAuth2Router from 'oauth2/router'
 
-import bodyParser from 'body-parser'
+//import bodyParser from 'body-parser'
 
 import mongoose from 'mongoose'
 import { CacheControlExtension } from 'apollo-cache-control'
@@ -161,12 +161,16 @@ const server = new ApolloServer({
 
 
 const app = express()
+app.use('/', (req, res, next) => {
+  console.log(req.body)
+  next()
+})
 
+//app.use(bodyParser.urlencoded({ extended: false }))
+//app.use(bodyParser.json())
 app.use(helmet())
 
 passport.use(JWTStrategy)
-app.use(bodyParser.urlencoded({ extended: false }))
-app.use(bodyParser.json())
 app.use(passport.initialize())
 app.use('/auth', oAuth2Router)
 app.use('/', (req, res, next) => {
