@@ -9,7 +9,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "test-eslint": "eslint src/server.js",
-    "server:start": "LOCAL=true nodemon --exec babel-node src/server.js --config-file ./babel.config.js",
+    "server:start": "nodemon src/server.js",
     "server:compile": "webpack --config ./webpack.js",
     "ss": "npm run server:start",
     "sc": "npm run server:compile",
