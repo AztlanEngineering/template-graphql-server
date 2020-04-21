@@ -29,7 +29,7 @@ export default {
     async signup(root, args, context) {
       return process.ENV.SIGNUP === 'true' ?
         UserController.signup(root, args.input, context) :
-        { token: 'none', duration: 'none' }
+        { token: 'none', maxAge: 'none' }
     }
   },
   Query:{

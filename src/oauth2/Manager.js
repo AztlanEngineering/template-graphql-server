@@ -146,13 +146,13 @@ export default class Manager {
   async getUserSetter(){
     if (this.context.state){
       const setter = await Setter
-        .findOne({ _id: this.context.state })
+        .findOne({ code: this.context.state })
         .populate({ path: 'user', model: User })
       //TODO if (!setter.is_valid)
       //console.error('Access Token Error', error.message)
       //return res.status(500).json('Authentication failed')
       this.context.setter = setter
-      Setter.deleteOne({ _id: this.context.state })
+      Setter.deleteOne({ code: this.context.u })
     }
     else this.context.setter = {}
   }
@@ -275,7 +275,7 @@ export default class Manager {
         await SetterController.update(
           {},
           {
-            id   :this.context.setter._id,
+            code :this.context.setter.code,
             input:{ user: this.currentUser, use_to_login: true }
           }
         )) :(
@@ -288,7 +288,7 @@ export default class Manager {
           }
           }
         ))
-      this.context.state = this.context.setter._id
+      this.context.state = this.context.setter.code
 
       //console.log('COMPLETE', this.currentUser, this.context.setter, this.isSignup)
       return this.getRedirectUri()

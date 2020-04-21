@@ -39,18 +39,19 @@ const Controller = {
   },
   */
 
-  login:async(root, { code:id }) => {
-    let tempItem = await Model.findById(id)
+  login:async(root, { code }) => {
+    let tempItem = await Model.findOne({ code })
 
-    //console.log('got setter, ready to l/I', tempItem, tempItem.is_valid)
-    if (tempItem.login()){
+    //console.log('got setter, ready to l/I', tempItem, tempItem.is_valid, code)
+    if (tempItem && tempItem.login()){
       tempItem = await User.populate(tempItem,
         { path: 'user', model: User }
       )
       // Do Login
       const token = getTokenFor(tempItem.user)
-      Model.deleteOne({ _id: id })
+      Model.deleteOne({ code })
       return token
+      //TODO delete all expired codes here (????)
     }
  
     throw new ValidationError({ message: 'Wrong authorization code' })
@@ -85,6 +86,11 @@ const Controller = {
     else {
       return updatedItem
     }
+  },
+
+  clean:async (root) => {
+    const deleted = await Model.deleteMany({ expires: { $lte: Date.now() } })
+    //console.log(999, deleted)
   }
 }
 
