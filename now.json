@@ -6,7 +6,7 @@
 	"env": {
     "CORS":"false",
 		"DEBUG":"true",
-		"DB_DEBUG":"false",
+		"DB_DEBUG":"true",
 		"DB_PORT":"27017",
 		"DB_HOST":"cluster0-z5khd.mongodb.net",
 		"DB_NAME":"test",
