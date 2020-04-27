@@ -162,7 +162,7 @@ const server = new ApolloServer({
 
 const app = express()
 app.use('/', (req, res, next) => {
-  console.log(req.body)
+  console.log('HEYTHERE',req.headers, req.body)
   next()
 })
 
@@ -174,7 +174,6 @@ passport.use(JWTStrategy)
 app.use(passport.initialize())
 app.use('/auth', oAuth2Router)
 app.use('/', (req, res, next) => {
-  console.log(req)
   passport.authenticate(
     'jwt',
     { session: false },
