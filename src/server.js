@@ -174,6 +174,7 @@ passport.use(JWTStrategy)
 app.use(passport.initialize())
 app.use('/auth', oAuth2Router)
 app.use('/', (req, res, next) => {
+  console.log(req)
   passport.authenticate(
     'jwt',
     { session: false },
