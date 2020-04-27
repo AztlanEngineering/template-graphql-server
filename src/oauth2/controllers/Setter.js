@@ -42,7 +42,7 @@ const Controller = {
   login:async(root, { code }) => {
     let tempItem = await Model.findOne({ code })
 
-    console.log('got setter, ready to l/I', tempItem, tempItem.is_valid, code)
+    //console.log('got setter, ready to l/I', tempItem, tempItem.is_valid, code)
     if (tempItem && tempItem.login()){
       tempItem = await User.populate(tempItem,
         { path: 'user', model: User }
