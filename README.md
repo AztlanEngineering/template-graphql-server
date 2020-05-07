@@ -13,20 +13,24 @@ Todo :
 + Generate keypair in https://console.developers.google.com/apis/credentials
 + Authorize the domains and the FULL redirection URLS
 + configure env 
-+ + `GOOGLE_OAUTH_KEY` : Secret key given when generating the oauth identifier, in the dev console
-+ + `GOOGLE_OAUTH_CLIENT` : Given by google dev console in the form `blahblah.apps.googleusercontent.com`
-+ + `GOOGLE_OAUTH_HOST_AUTHORIZE` : The url authorizing the google oauth. This MUST match one of the urls self declared in the developper console, for instance `https://api.server.com:4000`
-+ + `GOOGLE_OAUTH_HOST_TOKEN` : The url of the client to redirect to
-+ + `CORS` : undocumented atm TODO
-+ + `DB_HOST` : The database host
-+ + `DB_PORT` : The database port (for instance `27017`)
-+ + `DB_USER` : The database username
-+ + `DB_NAME` : The database name
-+ + `DB_PASSWORD` : The database password
-+ + `DB_DEBUG` : Whether to start the DB in debug mode. If true will log all the queries to the console.
-+ + `DEBUG` : Whether to start the server in debug mode. Will log the requests to the console, and possibly more things.
+  + `GOOGLE_OAUTH_KEY` : Secret key given when generating the oauth identifier, in the dev console
+  + `GOOGLE_OAUTH_CLIENT` : Given by google dev console in the form `blahblah.apps.googleusercontent.com`
+  + `GOOGLE_OAUTH_HOST_AUTHORIZE` : The url authorizing the google oauth. This MUST match one of the urls self declared in the developper console, for instance `https://api.server.com:4000`
+  + `GOOGLE_OAUTH_HOST_TOKEN` : The url of the client to redirect to
+  + `CORS` : undocumented atm TODO
+  + `DB_HOST` : The database host
+  + `DB_PORT` : The database port (for instance `27017`)
+  + `DB_USER` : The database username
+  + `DB_NAME` : The database name
+  + `DB_PASSWORD` : The database password
+  + `DB_DEBUG` : Whether to start the DB in debug mode. If true will log all the queries to the console.
+  + `DEBUG` : Whether to start the server in debug mode. Will log the requests to the console, and possibly more things.
+  + `SESSION_DURATION` : How long to set up a session cookie for. For instance `86400`.
+  + `TIME_TO_LOGIN` : How many seconds will the authorization code be valid to be redeemed for an jwt token. A sensible value would be max `60`.
+  + `SIGNUP` : Whether signups are authorized in the default auth strategy. If false, only existing users will be able to login.
+  + `JWT_SECRET` : The key to encrypt the jwts. `openssl rand -base64 172 | tr -d '\n'` (https://stackoverflow.com/questions/33960565/how-to-generate-a-hs512-secret-key-to-use-with-jwt)
 
-If not needed, remvoe dependencies 
+If google auth is not needed, remove dependencies 
 ```
 npm uninstall request request-promise query-string
 ```
