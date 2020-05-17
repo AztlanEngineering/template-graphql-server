@@ -22,7 +22,6 @@ import oAuth2Router from 'oauth2/router'
 //import bodyParser from 'body-parser'
 
 import mongoose from 'mongoose'
-import sequelize from './connector'
 import { CacheControlExtension } from 'apollo-cache-control'
 
 const port = 4000
@@ -85,7 +84,6 @@ if (IS_DB_DEBUG) {
 
 //DB_LOCAL === 'true' ?
 //mongoose.connect('mongodb://localhost:27017/mecatest'):
-
 
 mongoose.set('useFindAndModify', false)
 mongoose.connect(
@@ -189,11 +187,6 @@ app.use('/', (req, res, next) => {
 
 server.applyMiddleware({ app })
 
-sequelize.sync().then(
-  async () => {
-    app.listen({ port }, () =>
-      console.log(`🌋 Server ready at http://localhost:${port}${server.graphqlPath}`)
-    )
-  }
+app.listen({ port }, () =>
+  console.log(`🌋 Server ready at http://localhost:${port}${server.graphqlPath}`)
 )
-
