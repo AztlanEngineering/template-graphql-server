@@ -30,6 +30,16 @@ Todo :
   + `SIGNUP` : Whether signups are authorized in the default auth strategy. If false, only existing users will be able to login.
   + `JWT_SECRET` : The key to encrypt the jwts. `openssl rand -base64 172 | tr -d '\n'` (https://stackoverflow.com/questions/33960565/how-to-generate-a-hs512-secret-key-to-use-with-jwt)
 
+TEMP
+
++ `POSTGRES_DB_NAME`
++ `POSTGRES_HOST`
++ `POSTGRES_USER`
++ `POSTGRES_PASSWORD`
++ `POSTGRES_CLIENT_CERT` : https://console.cloud.google.com/sql/instances/fwrlines/connections?authuser=1&project=meccamico, generate a key, download and 'cat file.pem | base64'
++ `POSTGRES_CLIENT_KEY` :
++ `POSTGRES_SERVER_CA`
+
 If google auth is not needed, remove dependencies 
 ```
 npm uninstall request request-promise query-string
