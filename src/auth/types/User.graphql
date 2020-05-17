@@ -44,6 +44,19 @@ input UserLogin {
   password:String!
 }
 
+type OAuth2Data {
+  id: ID
+ 	ts_created: String
+ 	ts_updated: String
+  name: String
+  scope: String
+  picture: String
+  locale: String
+  email: String
+  email_verified: Boolean
+  provider: String 
+}
+
 type User {
  	id: ID
  	ts_created: String
@@ -58,6 +71,7 @@ type User {
   handle: String
   profile_picture: String
   is_active:Boolean
+  oauth2:[OAuth2Data]
 }
 
 type MinUser {

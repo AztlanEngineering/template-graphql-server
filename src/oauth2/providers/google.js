@@ -36,8 +36,8 @@ export default {
     accessType          :'online',//'offline',
     authorizeRedirectUri:`${HOST_AUTHORIZE}/auth/google/callback`,
     getRedirectUri      :(user, authorizationCode) => {
-      if (!user.is_active) {
-        return `${HOST_TOKEN}/fail`
+      if (!true) {
+        return `${HOST_TOKEN}/unauthorized`
       }
       return `${HOST_TOKEN}/redeem/${authorizationCode}`
       

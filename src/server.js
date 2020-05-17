@@ -162,7 +162,7 @@ const server = new ApolloServer({
 
 const app = express()
 app.use('/', (req, res, next) => {
-  console.log('HEYTHERE',req.headers, req.body)
+  //console.log('HEYTHERE',req.headers, req.body)
   next()
 })
 
