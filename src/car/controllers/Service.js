@@ -1,9 +1,8 @@
-/* @fwrlines/generator-graphql-server-type 1.3.0 */
-import {
-  Service as Model
-} from '../models'
+/* @fwrlines/generator-graphql-server-type 1.3.1 */
+import models from 'models'
 import { ObjectNotFoundError } from 'utils'
 
+const Model = models.Service
 
 /*
 import {
@@ -16,10 +15,10 @@ import {
 const LIMIT_PER_PAGE = 20
 
 const Controller = {
-  all:(root, args) => Model.find({}),
+  all:(root, args) => Model.findAll({}),
 
   /*
-  paginated:(r, { 
+  paginated:(r, {
     page=1,
     //category,
     limit=LIMIT_PER_PAGE
@@ -38,35 +37,33 @@ const Controller = {
   },
   */
 
-  get:(root, { id }) => Model.findById( id ),
+  get:(root, { id }) => Model.findByPk( id ),
 
-  add:(root, args) => {
-    const item = new Model(args)
-    return item.save()
+  add:async (root, args) => {
+    await Model.create(args)
   },
 
-  del:async (root, { id:_id }) => {
-    await Model.deleteOne({ _id  }, (err) => {
-      if (err) return false
+  delete:async (root, { id }) => {
+    const item = await Model.findByPk(id).catch(e => {
+      console.log(e.message)
     })
+    if (!item) {
+      return false
+    }
+    item.destroy()
     return true
   },
 
 	 update:async (root, { input, id }) => {
-    const tempItem = { input }
-    //tempItem.ts_updated = Date.now() //Deprecated
-    const updatedItem = await Model.findByIdAndUpdate(
-      id,
-      { $set: tempItem },
-      { new:true }
+    const updated = await Model.update(input, {
+      where:{
+        id
+      }
+    }).catch(
+      e => console.log(e.message)
     )
-    if (!updatedItem){
-      throw new ObjectNotFoundError()
-    }
-    else {
-      return updatedItem
-    }
-  },
+    return updated[0]
+  }
 }
 
 export default Controller

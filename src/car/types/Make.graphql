@@ -1,7 +1,7 @@
-# @fwrlines/generator-graphql-server-type 1.3.0 
+# @fwrlines/generator-graphql-server-type 1.3.1 
 extend type Query {
   allMakes: [Make]
-  getMake: Make
+  getMake(id: ID!): Make
   #paginatedMake (page:Int, category: String):PaginatedMakes
 }
 
@@ -12,16 +12,30 @@ extend type Mutation {
   }
 
 input MakeInput {
-  x:Int
-  y:String
-  z:Boolean
+  name:String
+  slug:String
+  active_from:String
+  active_to:String
+  country:String
+  is_common:Boolean
+  is_active:Boolean
+  car:Boolean
+  motorcycle:Boolean
+  seotext:String
   }
 
 type Make {
-  id:ID
-  x:Int
-  y:String
-  z:Boolean
+  id:ID!
+  name:String
+  slug:String
+  active_from:String
+  active_to:String
+  country:String
+  is_common:Boolean
+  is_active:Boolean
+  car:Boolean
+  motorcycle:Boolean
+  seotext:String
 }
 
 #type PaginatedMakes {

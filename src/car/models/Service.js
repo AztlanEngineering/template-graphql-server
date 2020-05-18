@@ -1,20 +1,87 @@
-import mongoose from 'mongoose'
+/* @fwrlines/generator-graphql-server-type 1.3.1 */
+import { Sequelize, DataTypes, Model } from 'sequelize'
+//import sequelize from 'connector'
 
-const ServiceSchema = new mongoose.Schema({
-  name       :{ type: String, unique: true },
-  category   :String,
-  seotext    :String,
-  is_active  :{ type: Boolean, default: 1 },
-  car        :{ type: Boolean },
-  motorcycle :{ type: Boolean },
-  slug       :String,
-  generic_cta:String,
-  carbutton  :String,
-  motobutton :String,
-  invisible  :{ type: Boolean, default: 0 },
-  icon       :String
-})
+export default sequelize => {
+  class Service extends Model {
 
-const Service = new mongoose.model('service', ServiceSchema)
+  /*
+  static classLevelMethod() {
+  }
 
-export default Service
+  instanceLevelMethod() {
+    return this.first_name
+  }
+  */
+  }
+
+  Service.init({
+    id:{
+      type         :DataTypes.INTEGER,
+      autoIncrement:true,
+      primaryKey   :true
+    },
+    name:{
+      type     :DataTypes.STRING,
+      allowNull:false,
+      unique   :true
+    },
+    category:{
+      type:DataTypes.STRING
+    },
+    seotext:{
+      type:DataTypes.STRING
+    },
+    is_active:{
+      type        :DataTypes.BOOLEAN,
+      allowNull   :false,
+      defaultValue:true
+    },
+    car:{
+      type        :DataTypes.BOOLEAN,
+      allowNull   :false,
+      defaultValue:false
+    },
+    motorcycle:{
+      type        :DataTypes.BOOLEAN,
+      allowNull   :false,
+      defaultValue:false
+    },
+    slug:{
+      type     :DataTypes.STRING,
+      allowNull:false,
+      unique   :true
+    },
+    generic_cta:{
+      type:DataTypes.STRING
+    },
+    carbutton:{
+      type:DataTypes.STRING
+    },
+    motobutton:{
+      type:DataTypes.STRING
+    },
+
+    /*
+  invisible: {
+    type: DataTypes.BOOLEAN,
+    allowNull: false,
+    defaultValue:false,
+  },
+  */
+    icon:{
+      type:DataTypes.STRING
+    }
+  },{
+    sequelize,
+    modelName:'Service'
+  //tableName: 'services'
+  //freezeTableName: true
+  })
+  //Service.addHook('afterCreate', 'hookName', (e, options) => {})
+
+  return Service
+
+}
+
+

@@ -1,8 +1,8 @@
 /* @fwrlines/generator-graphql-server-type 1.3.0 */
-import MakeResolvers from './Make'
 import ServiceResolvers from './Service'
+import MakeResolvers from './Make'
 
 export default [
-  MakeResolvers,
-  ServiceResolvers
+  ServiceResolvers,
+  MakeResolvers
 ]

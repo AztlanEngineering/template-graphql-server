@@ -1,18 +1,75 @@
-import mongoose from 'mongoose'
+/* @fwrlines/generator-graphql-server-type 1.3.1 */
+import { Sequelize, DataTypes, Model } from 'sequelize'
 
-const MakeSchema = new mongoose.Schema({
-  name       :{ type: String, unique: true },
-  slug       :String,
-  active_from:String,
-  active_to  :String,
-  country    :String,
-  is_common  :Boolean,
-  is_active  :Boolean, //Is active on the front end (!= active as a make)
-  car        :Boolean,
-  motorcycle :Boolean,
-  seotext    :String
-})
+export default sequelize => {
+  class Make extends Model {
 
-const Make = new mongoose.model('make', MakeSchema)
+  /*
+  static classLevelMethod() {
+  }
 
-export default Make
+  instanceLevelMethod() {
+    return this.first_name
+  }
+  */
+  }
+
+  Make.init({
+    id:{
+      type         :DataTypes.INTEGER,
+      autoIncrement:true,
+      primaryKey   :true
+    },
+    name:{
+      type     :DataTypes.STRING,
+      allowNull:false,
+      unique   :true
+    },
+    slug:{
+      type     :DataTypes.STRING,
+      allowNull:false,
+      unique   :true
+    },
+    active_from:{
+      type:DataTypes.STRING
+    },
+    active_to:{
+      type:DataTypes.STRING
+    },
+    country:{
+      type:DataTypes.STRING
+    },
+    is_common:{
+      type        :DataTypes.BOOLEAN,
+      allowNull   :false,
+      defaultValue:false
+    },
+    is_active:{
+      type        :DataTypes.BOOLEAN,
+      allowNull   :false,
+      defaultValue:false
+    },
+    car:{
+      type        :DataTypes.BOOLEAN,
+      allowNull   :false,
+      defaultValue:true
+    },
+    motorcycle:{
+      type        :DataTypes.BOOLEAN,
+      allowNull   :false,
+      defaultValue:false
+    },
+    seotext:{
+      type:DataTypes.STRING
+    }
+
+  },{
+    sequelize,
+    modelName:'Make'
+  })
+
+  return Make
+
+
+}
+

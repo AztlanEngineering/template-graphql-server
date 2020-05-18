@@ -1,14 +1,14 @@
-/* @fwrlines/generator-graphql-server-type 1.3.0 */
+/* @fwrlines/generator-graphql-server-type 1.3.1 */
 import { ServiceController as MainController } from '../controllers'
 import { suMethod as su } from 'utils'
 
 export default {
   Mutation:{
-    addService(r, a, c) {
+    async addService(r, a, c) {
       return su(MainController.add(r, a), c.user)
     },
     async deleteService(r, a, c) {
-      return su(MainController.del(r, a), c.user)
+      return su(MainController.delete(r, a), c.user)
     },
     async updateService(r, a, c) {
       return su(MainController.update(r, a), c.user)

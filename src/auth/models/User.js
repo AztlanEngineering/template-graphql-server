@@ -1,40 +1,84 @@
-import mongoose from 'mongoose'
+/* @fwrlines/generator-graphql-server-type 1.3.1 */
+import { Sequelize, DataTypes, Model } from 'sequelize'
+import bcrypt from 'bcrypt'
 
-const OAuth2Schema = new mongoose.Schema({
-  access_token  :String,
-  refresh_token :String,
-  //id_token: String,
-  provider      :String,
-  picture       :String,
-  email         :String,
-  email_verified:Boolean,
-  locale        :String,
-  name          :String,
-  //token_type: String,
-  scope         :String,
-  ts_created    :{ type: Date, default: Date.now },
-  ts_updated    :{ type: Date, default: Date.now },
-  expires       :{ type: Date }
-})
+export default sequelize => {
+  class User extends Model {
 
-const UserSchema = new mongoose.Schema({
-  email          :String,
-  first_name     :String,
-  last_name      :String,
-  ts_created     :{ type: Date, default: Date.now },
-  ts_updated     :{ type: Date },
-  username       :String,
-  password       :String,
-  handle         :String,
-  profile_picture:String,
-  superuser      :Boolean,
-  operator       :Boolean,
-  is_active      :Boolean,
-  oauth2         :[
-    OAuth2Schema
-  ]
-})
+    /*
+  static classLevelMethod() {
+  }
 
-const User = mongoose.model('users', UserSchema)
+  instanceLevelMethod() {
+    return this.first_name
+  }
+  */
 
-export default User
+    async setPassword(password) {
+      this.password_hash = bcrypt.hash(password, bcrypt.genSaltSync(8))
+      await this.save()
+      return true
+    }
+    isPasswordValid(password) {
+      return bcrypt.compare(password, this.password_hash)
+    }
+
+  }
+
+  User.init({
+    id:{
+      type         :DataTypes.INTEGER,
+      autoIncrement:true,
+      primaryKey   :true
+    },
+    email:{
+      type  :DataTypes.STRING,
+      unique:true
+    },
+    first_name:{
+      type:DataTypes.STRING
+    },
+    last_name:{
+      type:DataTypes.STRING
+    },
+    username:{
+      type  :DataTypes.STRING,
+      unique:true
+    },
+    username:{
+      type  :DataTypes.STRING,
+      unique:true
+    },
+    password_hash:{
+      type:DataTypes.STRING
+    },
+    handle:{
+      type  :DataTypes.STRING,
+      unique:true
+    },
+    superuser:{
+      type        :DataTypes.BOOLEAN,
+      allowNull   :false,
+      defaultValue:false
+    },
+    is_active:{
+      type        :DataTypes.BOOLEAN,
+      allowNull   :false,
+      defaultValue:false
+    }
+
+  },{
+    sequelize,
+    modelName:'User'
+  //tableName: 'services'
+  //freezeTableName: true
+  })
+  
+  User.associate = models => {
+    //User.hasMany(models.OAuth2)
+  }
+  //User.addHook('afterCreate', 'hookName', (e, options) => {})
+
+  return User
+}
+

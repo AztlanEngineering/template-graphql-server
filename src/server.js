@@ -23,6 +23,8 @@ import oAuth2Router from 'oauth2/router'
 
 import mongoose from 'mongoose'
 import sequelize from './connector'
+import models from 'models'
+
 import { CacheControlExtension } from 'apollo-cache-control'
 
 const port = 4000
@@ -189,7 +191,7 @@ app.use('/', (req, res, next) => {
 
 server.applyMiddleware({ app })
 
-sequelize.sync().then(
+sequelize.sync({ alter: true }).then(
   async () => {
     app.listen({ port }, () =>
       console.log(`🌋 Server ready at http://localhost:${port}${server.graphqlPath}`)

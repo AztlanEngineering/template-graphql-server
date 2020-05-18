@@ -1,13 +1,52 @@
-import mongoose from 'mongoose'
+/* @fwrlines/generator-graphql-server-type 1.3.1 */
+import { Sequelize, DataTypes, Model } from 'sequelize'
+import sequelize from 'connector'
 
-const TokenSchema = new mongoose.Schema({
-  token :String,
-  maxAge:{ type: String, default: '3600' },
-  user  :{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }
-})
+export default sequelize => {
+  class Token extends Model {
 
+    async login() {
+      //console.log(this)
+      if (this.valid && this.use_to_login){
+        this.use_to_login = false,
+        await this.save()
+        return true
+      }
+      return false
+    }
 
-const Token = new mongoose.model('token', TokenSchema)
+  /*
+  static classLevelMethod() {
+  }
 
-export default Token
+  */
+  }
+
+  Token.init({
+    id:{
+      type         :DataTypes.INTEGER,
+      autoIncrement:true,
+      primaryKey   :true
+    },
+    maxAge:{
+      type        :DataTypes.STRING,
+      defaultValue:'3600'
+    },
+    token:{
+      type     :DataTypes.STRING,
+      allowNull:false
+    }
+
+  },{
+    sequelize,
+    modelName:'Token'
+  })
+
+  //Token.addHook('afterCreate', 'hookName', (e, options) => {})
+  Token.associate = models => {
+    Token.belongsTo(models.User)
+  }
+  return Token
+}
+
 
