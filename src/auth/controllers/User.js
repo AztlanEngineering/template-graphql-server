@@ -1,15 +1,7 @@
-import bcrypt from 'bcrypt'
+/* @fwrlines/generator-graphql-server-type 1.3.1 */
+import models from 'models'
 
-import {
-  User
-} from '../models'
-
-import {
-  validateSignupInput ,
-  validateLoginInput
-} from '../validation'
-
-import { getTokenFor } from '../utils'
+//import { getTokenFor } from '../utils'
 
 import {
   ConfigurationError,
@@ -18,20 +10,124 @@ import {
   ObjectNotFoundError
 } from 'utils'
 
-const userController = {
-  add:(root, args) => {
-    const user = new User(args)
-    return user.save()
-  },
+import bcrypt from 'bcrypt'
 
-  del:async (root, id) => {
-    //console.log('DELETING', id)
-    await User.deleteOne({ _id: id  }, (err) => {
-      if (err) return false
+import {
+  validateSignupInput ,
+  validateLoginInput
+} from '../validation'
+
+const Model = models.User
+
+
+/*
+import {
+  ConfigurationError,
+  ValidationError,
+  NotUniqueError,
+  ObjectNotFoundError
+} from 'utils'
+*/
+const Controller = {
+  all:(root, args) => Model.findAll({}),
+
+  get:(root, { id }) => Model.findByPk( id ),
+
+  add:async (root, { input }) => await Model.create( input ),
+
+  delete:async (root, { id }) => {
+    const item = await Model.findByPk(id).catch(e => {
+      console.log(e.message)
     })
+    if (!item) {
+      return false
+    }
+    item.destroy()
     return true
   },
 
+  update:async (root, { input, id }) => {
+    const updated = await Model.update(input, {
+      where:{
+        id
+      },
+      returning:true
+    }).catch(
+      e => console.log(e.message)
+    )
+    return updated[1][0] //we return the first updated item
+  },
+
+  signup:async (root, args, context) => {
+    const { errors, isValid } = validateSignupInput(args)
+
+    if (!isValid) {
+      throw new ValidationError({ data: errors })
+    }
+    const email_exists = await Model.findOne({ 
+      where:{
+        email:args.email
+      }
+    })
+
+    if (email_exists) {
+      throw new NotUniqueError({ message: 'email already exists', data: { email: 'email already exists' } })
+    }
+
+    else {
+      const { 
+        password,
+        ...creationArgs
+      } = args
+      const item = await Model.create(creationArgs)
+      await item.setPassword(password)
+
+      return item.getAuthToken()
+    }
+  },
+
+  login:async (root, args, context) => {
+    const { errors, isValid } = validateLoginInput(args)
+
+    if (!isValid) {
+      throw new ValidationError({ data: errors })
+    }
+
+    const { 
+      email:rawEmail,
+      password
+    } = args
+
+    const email = rawEmail.toLowerCase()
+
+    const item = await Model.findOne({ where: { email }})
+
+    if (item) {
+      if (await item.isPasswordValid(password)) {
+        return await item.getAuthToken()
+      }
+      
+      return new ValidationError({ message: 'Incorrect credentials' }) //Incorrect pwd
+      //return res.status(400).json(errors)
+      
+    }
+    
+    return new ValidationError({ message: 'Incorrect credentials' }) //User not found
+    
+  },
+
+  /*
+  me:async(root, args, context) => {
+    //console.log('me function called, r, a ,c', root, args, context)
+  }
+  */
+}
+
+export default Controller
+
+
+/*
+const userController = {
   changePassword:async(r, a) => {
     const salt = await bcrypt.genSalt(10)
     const hash = await bcrypt.hash(a.password, salt)
@@ -96,62 +192,8 @@ const userController = {
 
   user:(token) => User.find({ token }),
 
-  signup:async (root, args, context) => {
-    const { errors, isValid } = validateSignupInput(args)
-    if (!isValid) {
-      throw new ValidationError({ data: errors })
-    }
-    const email_exists = await User.findOne({
-      email:args.email
-    })
-    if (email_exists) {
-      throw new NotUniqueError({ message: 'email already exists', data: { email: 'email already exists' } })
-    }
-    else {
-      const newUser = new User(args)
-      const salt = await bcrypt.genSalt(10)
-      const hash = await bcrypt.hash(newUser.password, salt)
-
-      newUser.ts_updated = Date.now()
-      newUser.password = hash
-      newUser.save()
-      return getTokenFor(newUser, process.env.JWT_SECRET)
-    }
-  },
-
-  login:async (root, args, context) => {
-    const { errors, isValid } = validateLoginInput(args)
-
-    if (!isValid) {
-      throw new ValidationError({ data: errors })
-    }
-
-    const email = args.email
-    const password = args.password
-    const user = await User.findOne({ email })
-    if (user) {
-      const isMatch = await bcrypt.compare(password, user.password)
-
-      if (isMatch) {
-        if (!process.env.JWT_SECRET) {
-          throw new ConfigurationError({ message: 'No jwt secret key' })
-        }
-        return getTokenFor(user, process.env.JWT_SECRET)
-      }
-      
-      return new ValidationError({ message: 'Incorrect Password' })
-      //return res.status(400).json(errors)
-      
-    }
-    
-    throw new ValidationError({ message: 'user not found' })
-    
-  },
-
-  me:async(root, args, context) => {
-    //console.log('me function called, r, a ,c', root, args, context)
-  }
 
 }
 
 export default userController
+  */

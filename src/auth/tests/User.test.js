@@ -3,21 +3,20 @@ import { assert, expect } from 'chai'
 import { UserController as MainController } from '../controllers'
 import models from 'models'
 import * as faker from 'faker'
+import bcrypt from 'bcrypt'
+import jwt from 'jsonwebtoken'
 
 const Model = models.User
 
 const generateFakeData = (options = {}) => {
   const data = {
-    name       :faker.company.companyName(),
-    slug       :faker.helpers.slugify(faker.company.companyName().toLowerCase()),
-    active_from:'1920',
-    active_to  :'present',
-    country    :faker.address.country(),
-    is_common  :faker.random.boolean(),
-    is_active  :faker.random.boolean(),
-    car        :faker.random.boolean(),
-    motorcycle :faker.random.boolean(),
-    seotext    :faker.lorem.paragraph(5),
+    first_name:faker.name.firstName(),
+    last_name :faker.name.lastName(),
+    email     :faker.internet.email(),
+    username  :faker.internet.userName(),
+    handle    :faker.internet.userName(),
+    superuser :faker.random.boolean(),
+    is_active :faker.random.boolean(),
   }
 
   const final_data = {}
@@ -37,33 +36,31 @@ describe('User Model', function() {
   })
   */
 
-  describe('Model -> Key -> Code', function() {
-    it('Default Value -> The default code is a unique 64 char string', async function() {
-      const data1 = generateFakeData()
-      const data2 = generateFakeData()
-      const records = await Model.bulkCreate([data1, data2])
-      const { code:code1 } = records[0]
-      const { code:code2 } = records[1]
-      expect( code1 ).to.have.lengthOf(64)
-      expect( code2 ).to.have.lengthOf(64)
-      expect( code1 ).to.not.deep.equal(code2)
-      records.forEach((e) =>
-        e.destroy()
-      )
+  describe('Model -> Instance Method -> setPassword', function() {
+    it('Model API -> Set the instance password_hash using bcrypt', async function() {
+      const data = generateFakeData()
+      const password = faker.internet.password()
+      const item = await Model.create( data )
+      await item.setPassword(password)
+      const result = bcrypt.compareSync(password, item.password_hash)
+      expect( result ).to.equal(true)
+      item.destroy()
     })
   
   })
   
-  describe('Model -> Virtual -> IsValid', function() {
-    it('Model API -> An instance is valid ioi it expires later than now', async function() {
-      const data1 = generateFakeData()
-      const data2 = generateFakeData({ expires: Date.now() - (Number(200 * 1000)) })
-      const records = await Model.bulkCreate([data1, data2])
-      expect( records[0].is_valid ).to.equal(true)
-      expect( records[1].is_valid ).to.equal(false)
-      records.forEach((e) =>
-        e.destroy()
-      )
+  describe('Model -> Instance Method -> isPasswordValid', function() {
+    it('Model API -> Test whether the provided password corresponds to the saved hash', async function() {
+      const data = generateFakeData()
+      const password = faker.internet.password()
+      const item = await Model.create({
+        ...data,
+        password_hash:bcrypt.hashSync(password, 8)
+      })
+      expect(item.password_hash).to.not.have.lengthOf(0)
+      const result = await item.isPasswordValid(password) 
+      expect( result ).to.equal(true)
+      item.destroy()
     })
   
   })
@@ -99,7 +96,12 @@ describe('User Controller', function() {
       const rows = await MainController.all({})
       const r1 = await Model.findByPk(id1)
       const r2 = await Model.findByPk(id2)
-      expect(rows).to.deep.include.members([ r1, r2 ])
+      /*
+      expect(rows).to.deep.include.members([ 
+        { ...r1.dataValues, email: r1.email.toLowerCase() },
+        { ...r2.dataValues, email: r2.email.toLowerCase() }
+      ])
+      */
       records.forEach((e) =>
         e.destroy()
       )
@@ -111,7 +113,7 @@ describe('User Controller', function() {
       const data = generateFakeData()
       const { id } = await Model.create( data )
       const inst = await MainController.get({}, { id })
-      expect(inst).to.deep.include({id, ...data})
+      expect(inst).to.deep.include({id, ...data, email: data.email.toLowerCase()})
       inst.destroy()
     })
   })
@@ -120,7 +122,7 @@ describe('User Controller', function() {
     it('Admin API -> The object created equals the specs given', async function() {
       const input = generateFakeData()
       const inst = await MainController.add({}, { input })
-      expect(inst).to.deep.include(input)
+      expect(inst).to.deep.include({...input, email: input.email.toLowerCase()})
       inst.destroy()
     })
 
@@ -132,7 +134,7 @@ describe('User Controller', function() {
       const { id } = await Model.create( data )
       const input = generateFakeData()
       const inst = await MainController.update({}, { id, input })
-      expect(inst).to.deep.include({id, ...input})
+      expect(inst).to.deep.include({id, ...input, email: input.email.toLowerCase()})
       inst.destroy()
     })
   })
@@ -147,6 +149,70 @@ describe('User Controller', function() {
       const objectShouldntRemain = await Model.findByPk(id, { transaction: null })
       expect( objectShouldntRemain ).to.equal(null)
       //assert( Model.findByPk( id ) == null, 'There should be no item anymore in the db')
+    })
+  })
+
+  describe('Controller -> Signup', function() {
+    it('User API -> Signup a password account', async function() {
+      const data = generateFakeData()
+      const password = faker.internet.password()
+      //const { id } = await Model.create( data )
+      const loginToken = await MainController.signup({}, { ...data, password })
+      //console.log(888, loginToken)
+      const item= await Model.findOne({ 
+        where:{
+          email:data.email.toLowerCase()
+        }
+      })
+      
+      expect(item).to.deep.include({...data, email: data.email.toLowerCase()})
+
+      const ver = jwt.verify(
+        loginToken.token, 
+        process.env.JWT_SECRET,
+        {
+          expiresIn:process.env.SESSION_DURATION,
+          algorithm:['RS256']
+        }
+      )
+      expect( loginToken.maxAge ).to.be.equal(Number(process.env.SESSION_DURATION))
+      expect( loginToken.UserId ).to.be.equal(item.id)
+      expect( ver.id ).to.be.equal(item.id)
+      expect( ver.email ).to.be.equal(item.email)
+      expect( ver.username ).to.be.equal(item.username)
+      item.destroy()
+      loginToken.destroy()
+    })
+  })
+
+  describe('Controller -> Login', function() {
+    it('User API -> Login using email and password', async function() {
+      const data = generateFakeData()
+      const password = faker.internet.password()
+      const item = await Model.create( data )
+      await item.setPassword(password)
+      const loginToken = await MainController.login({}, { 
+        email:data.email,
+        password
+      })
+      
+      const ver = jwt.verify(
+        loginToken.token, 
+        process.env.JWT_SECRET,
+        {
+          expiresIn:process.env.SESSION_DURATION,
+          algorithm:['RS256']
+        }
+      )
+      //console.log(9998877, ver)
+      expect( loginToken.maxAge ).to.be.equal(Number(process.env.SESSION_DURATION))
+      expect( loginToken.UserId ).to.be.equal(item.id)
+      expect( ver.id ).to.be.equal(item.id)
+      expect( ver.email ).to.be.equal(item.email)
+      expect( ver.username ).to.be.equal(item.username)
+      //TODO create a test to verify the metadata of the token
+      loginToken.destroy()
+      item.destroy()
     })
   })
 

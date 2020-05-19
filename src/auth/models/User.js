@@ -2,6 +2,8 @@
 import { Sequelize, DataTypes, Model } from 'sequelize'
 import bcrypt from 'bcrypt'
 
+import { getTokenFor } from '../utils'
+
 export default sequelize => {
   class User extends Model {
 
@@ -15,12 +17,17 @@ export default sequelize => {
   */
 
     async setPassword(password) {
-      this.password_hash = bcrypt.hash(password, bcrypt.genSaltSync(8))
+      this.password_hash = await bcrypt.hash(password, 8)
       await this.save()
       return true
     }
-    isPasswordValid(password) {
-      return bcrypt.compare(password, this.password_hash)
+
+    async isPasswordValid(password) {
+      return await bcrypt.compare(password, this.password_hash)
+    }
+
+    async getAuthToken() {
+      return await getTokenFor(this)
     }
 
   }
@@ -32,8 +39,11 @@ export default sequelize => {
       primaryKey   :true
     },
     email:{
-      type  :DataTypes.STRING,
-      unique:true
+      type    :DataTypes.STRING,
+      unique  :true,
+      validate:{
+        isEmail:true
+      },
     },
     first_name:{
       type:DataTypes.STRING
@@ -44,13 +54,6 @@ export default sequelize => {
     username:{
       type  :DataTypes.STRING,
       unique:true
-    },
-    username:{
-      type  :DataTypes.STRING,
-      unique:true
-    },
-    password_hash:{
-      type:DataTypes.STRING
     },
     handle:{
       type  :DataTypes.STRING,
@@ -65,7 +68,10 @@ export default sequelize => {
       type        :DataTypes.BOOLEAN,
       allowNull   :false,
       defaultValue:false
-    }
+    },
+    password_hash:{
+      type:DataTypes.STRING
+    },
 
   },{
     sequelize,
@@ -77,6 +83,11 @@ export default sequelize => {
   User.associate = models => {
     //User.hasMany(models.OAuth2)
   }
+
+  User.addHook('beforeValidate', 'lowercaseEmail', (item, options) => {
+    item.email = item.email.toLowerCase()
+  })
+  
   //User.addHook('afterCreate', 'hookName', (e, options) => {})
 
   return User

@@ -1,6 +1,5 @@
 /* @fwrlines/generator-graphql-server-type 1.3.1 */
 import { Sequelize, DataTypes, Model } from 'sequelize'
-import sequelize from 'connector'
 
 export default sequelize => {
   class Token extends Model {
@@ -29,11 +28,11 @@ export default sequelize => {
       primaryKey   :true
     },
     maxAge:{
-      type        :DataTypes.STRING,
-      defaultValue:'3600'
+      type        :DataTypes.INTEGER,
+      defaultValue:3600
     },
     token:{
-      type     :DataTypes.STRING,
+      type     :DataTypes.TEXT,
       allowNull:false
     }
 

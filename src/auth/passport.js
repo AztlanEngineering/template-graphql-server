@@ -23,7 +23,7 @@ const JWTS = new JWTStrategy(opts, (jwt_payload, done) => {
   if (process.env.DEBUG === 'true')(
     console.log('TOKEN INFORMATION', jwt_payload)
   )
-  User.findById(jwt_payload.id)
+  User.findByPk(jwt_payload.id)
     .then(user => {
       if (user) {
         return done(null, user)

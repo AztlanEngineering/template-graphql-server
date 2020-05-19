@@ -10,13 +10,15 @@ module.exports = {
     'browser': true,
     'node': true,
     'commonjs': true,
-    'es6': true
+    'es6': true,
+    'mocha':true
   },
+  'plugins': [
+    'mocha'
+  ],
   'extends': [
     'eslint:recommended',
-    'eslint-config-synacor'
-  ],
-  'plugins': [
+    'plugin:mocha/recommended'
   ],
   'parser': 'babel-eslint',
   'rules':{
@@ -43,7 +45,7 @@ module.exports = {
     ],
     'no-unused-vars': [
       "error", 
-      { "varsIgnorePattern": "h|Fragment|React"}
+      { "varsIgnorePattern": ""}
     ],
     'quote-props': ["error", "consistent-as-needed"]
   },
