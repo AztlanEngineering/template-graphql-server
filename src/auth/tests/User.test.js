@@ -152,6 +152,47 @@ describe('User Controller', function() {
     })
   })
 
+  describe('Controller -> Set Superuser', function() {
+    it('Admin API -> Set whether the selected user is a superuser', async function() {
+      const data = generateFakeData({ superuser: false })
+      const inst = await Model.create( data )
+      const { id, superuser } = inst
+      expect(superuser).to.be.equal(false)
+
+      const result = await MainController.setSuperuser({}, { id, value: true })
+      expect(result).to.be.equal(true) //change succeeded
+
+      const { superuser:superuserShouldBeTrue } = await Model.findByPk(id)
+      expect(superuserShouldBeTrue).to.be.equal(true)
+
+      const result2 = await MainController.setSuperuser({}, { id, value: false })
+      expect(result2).to.be.equal(true) //change succeeded
+
+      const { superuser:superuserShouldBeFalse } = await Model.findByPk(id)
+      expect(superuserShouldBeFalse).to.be.equal(false)
+
+      inst.destroy()
+    })
+
+  })
+
+  describe('Controller -> Set User Password', function() {
+    it('Admin API -> Set the selected user\'s password', async function() {
+      const data = generateFakeData({ superuser: false })
+      const password = faker.internet.password()
+      const { id } = await Model.create( data )
+
+      const result = await MainController.setUserPassword({}, { id, value: password })
+      expect(result).to.be.equal(true)
+
+      const item = await Model.findByPk(id)
+      expect(await item.isPasswordValid(password)).to.be.equal(true) //change succeeded
+
+      item.destroy()
+    })
+
+  })
+
   describe('Controller -> Signup', function() {
     it('User API -> Signup a password account', async function() {
       const data = generateFakeData()
@@ -212,6 +253,60 @@ describe('User Controller', function() {
       expect( ver.username ).to.be.equal(item.username)
       //TODO create a test to verify the metadata of the token
       loginToken.destroy()
+      item.destroy()
+    })
+  })
+
+  describe('Controller -> setMyPassword', function() {
+    it('User API -> Set first time password for current user (user has been created passwordless)', async function() {
+      const data = generateFakeData()
+      const item = await Model.create( data )
+      const newPassword = faker.internet.password()
+      const result = await MainController.setMyPassword(
+        {}, 
+        { newPassword },
+        { user: item }
+      )
+      
+      expect(result).to.be.equal(true)
+      const uItem = await Model.findOne({ where: { id: item.id } })
+      expect(await uItem.isPasswordValid(newPassword)).to.be.equal(true)
+      item.destroy()
+    })
+
+    it('User API -> Change current users password is allowed', async function() {
+      const data = generateFakeData()
+      const originalPassword = faker.internet.password()
+      const item = await Model.create( data )
+      await item.setPassword(originalPassword)
+      const newPassword = faker.internet.password()
+      const result = await MainController.setMyPassword(
+        {}, 
+        { oldPassword: originalPassword, newPassword },
+        { user: item }
+      )
+      
+      expect(result).to.be.equal(true)
+      const uItem = await Model.findOne({ where: { id: item.id } })
+      expect(await uItem.isPasswordValid(newPassword)).to.be.equal(true)
+      item.destroy()
+    })
+
+    it('User API -> Change current users password is not allowed', async function() {
+      const data = generateFakeData()
+      const originalPassword = faker.internet.password()
+      const item = await Model.create( data )
+      await item.setPassword(originalPassword)
+      const newPassword = faker.internet.password()
+      const result = await MainController.setMyPassword(
+        {}, 
+        { oldPassword: 'badguess', newPassword },
+        { user: item }
+      )
+      
+      expect(result).to.be.equal(false)
+      const uItem = await Model.findOne({ where: { id: item.id } })
+      expect(await uItem.isPasswordValid(newPassword)).to.be.equal(false)
       item.destroy()
     })
   })

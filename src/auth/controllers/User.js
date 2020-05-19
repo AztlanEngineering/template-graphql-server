@@ -116,6 +116,29 @@ const Controller = {
     
   },
 
+  setSuperuser:async (root, {id, value}, context) => {
+    const item = await Model.findByPk(id)
+    item.superuser = value
+    await item.save()
+    return true
+  },
+
+  setMyPassword:async (root, { oldPassword, newPassword }, context) => {
+    const item = await Model.findByPk( context.user.id )
+    const canChangePassword = (item.password_hash && await item.isPasswordValid(oldPassword)) || !item.password_hash
+    if(canChangePassword) {
+      await item.setPassword(newPassword)
+      return true
+    }
+    return false
+  },
+
+  setUserPassword:async (root, { id, value }, context) => {
+    const item = await Model.findByPk(id)
+    await item.setPassword(value)
+    return true
+  }
+
   /*
   me:async(root, args, context) => {
     //console.log('me function called, r, a ,c', root, args, context)
