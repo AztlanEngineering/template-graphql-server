@@ -13,12 +13,17 @@ export default {
     async updateUser(r, a, c) {
       return su(UserController.update(r, a), c.user)
     },
-    async changePassword(r, a, c) {
-      //add further protection
-      return su(UserController.changePassword(r, a, c), c.user)
+    async setUserPassword(r, a, c) {
+      //TODO add further protection
+      return su(UserController.setUserPassword(r, a, c), c.user)
     },
-    async changeMyPassword(r, a, c) {
-      return su(UserController.changeMyPassword(r, a, c), c.user)
+    async setSuperuser(r, a, c) {
+      //TODO add further protection
+      return su(UserController.setSuperuser(r, a, c), c.user)
+    },
+    async setMyPassword(r, a, c) {
+      //TODO Should work for any user
+      return su(UserController.setMyPassword(r, a, c), c.user)
     },
     async updateMe(r, a, c) {
       return su(UserController.updateMe(r, a, c), c.user)

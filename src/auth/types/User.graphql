@@ -6,14 +6,18 @@ extend type Query {
 }
 
 extend type Mutation {
+  #Admin Mutations
  	addUser(input:UserInput): User!,
  	updateUser(id: ID!, input:UserInput): User!,
- 	updateMe(input:MeInput): User!,
  	deleteUser(id: ID!): Boolean!,
- 	changePassword(id: ID!, password: String!): Boolean!,
- 	changeMyPassword(password: String!): Boolean!,
+ 	setSuperuser(id: ID!, value: String!): Boolean!,
+ 	setUserPassword(id: ID!, value: String!): Boolean!,
+
+  #User Mutations
  	login(input: UserLogin): Token!,
   signup(input: UserInput): Token!,
+ 	setMyPassword(oldPassword:String, password: String!): Boolean!,
+ 	updateMe(input:MeInput): User!,
 }
 
 input UserInput {

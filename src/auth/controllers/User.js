@@ -22,7 +22,7 @@ const Model = models.User
 
 /*
 import {
-  ConfigurationError,
+  ConfigurationError,ad 
   ValidationError,
   NotUniqueError,
   ObjectNotFoundError
@@ -56,6 +56,19 @@ const Controller = {
       e => console.log(e.message)
     )
     return updated[1][0] //we return the first updated item
+  },
+
+  setSuperuser:async (root, {id, value}, context) => {
+    const item = await Model.findByPk(id)
+    item.superuser = value
+    await item.save()
+    return true
+  },
+
+  setUserPassword:async (root, { id, value }, context) => {
+    const item = await Model.findByPk(id)
+    await item.setPassword(value)
+    return true
   },
 
   signup:async (root, args, context) => {
@@ -107,20 +120,25 @@ const Controller = {
         return await item.getAuthToken()
       }
       
-      return new ValidationError({ message: 'Incorrect credentials' }) //Incorrect pwd
+      throw new ValidationError({ message: 'Incorrect credentials' }) //Incorrect pwd
       //return res.status(400).json(errors)
       
     }
     
-    return new ValidationError({ message: 'Incorrect credentials' }) //User not found
+    throw new ValidationError({ message: 'Incorrect credentials' }) //User not found
     
   },
 
-  setSuperuser:async (root, {id, value}, context) => {
-    const item = await Model.findByPk(id)
-    item.superuser = value
-    await item.save()
-    return true
+  updateMe:async (root, { input }, context) => {
+    const updated = await Model.update(input, {
+      where:{
+        id:context.user.id
+      },
+      returning:true
+    }).catch(
+      e => console.log(e.message)
+    )
+    return updated[1][0] //we return the first updated item
   },
 
   setMyPassword:async (root, { oldPassword, newPassword }, context) => {
@@ -133,12 +151,6 @@ const Controller = {
     return false
   },
 
-  setUserPassword:async (root, { id, value }, context) => {
-    const item = await Model.findByPk(id)
-    await item.setPassword(value)
-    return true
-  }
-
   /*
   me:async(root, args, context) => {
     //console.log('me function called, r, a ,c', root, args, context)
@@ -148,75 +160,3 @@ const Controller = {
 
 export default Controller
 
-
-/*
-const userController = {
-  changePassword:async(r, a) => {
-    const salt = await bcrypt.genSalt(10)
-    const hash = await bcrypt.hash(a.password, salt)
-    const updatedUser = await User.findByIdAndUpdate(
-      a.id,
-      { password: hash },
-    )
-    if (!updatedUser){
-      throw new ObjectNotFoundError()
-    }
-    else {
-      return true
-    }
-  },
-
-  changeMyPassword:async(r, a, c) => {
-    const salt = await bcrypt.genSalt(10)
-    const hash = await bcrypt.hash(a.password, salt)
-    const updatedUser = await User.findByIdAndUpdate(
-      c.user.id,
-      { password: hash },
-    )
-    if (!updatedUser){
-      throw new ObjectNotFoundError()
-    }
-    else {
-      return true
-    }
-  },
-
-	 updateMe:async (r, a, c) => {
-    const tempUser = { ...a.input }
-    tempUser.ts_updated = Date.now()
-    const updatedUser = await User.findByIdAndUpdate(
-      c.user.id,
-      { $set: tempUser },
-    )
-    if (!updatedUser){
-      throw new ObjectNotFoundError()
-    }
-    else {
-      return updatedUser
-    }
-  },
-
-	 update:async (root, args) => {
-    const tempUser = { ...args.input }
-    tempUser.ts_updated = Date.now()
-    const updatedUser = await User.findByIdAndUpdate(
-      args.id,
-      { $set: tempUser },
-    )
-    if (!updatedUser){
-      throw new ObjectNotFoundError()
-    }
-    else {
-      return updatedUser
-    }
-  },
-
-  users:(root, args) => User.find({}),
-
-  user:(token) => User.find({ token }),
-
-
-}
-
-export default userController
-  */

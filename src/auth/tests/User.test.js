@@ -6,6 +6,13 @@ import * as faker from 'faker'
 import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
 
+import {
+  ConfigurationError,
+  ValidationError,
+  NotUniqueError,
+  ObjectNotFoundError
+} from 'utils'
+
 const Model = models.User
 
 const generateFakeData = (options = {}) => {
@@ -227,7 +234,7 @@ describe('User Controller', function() {
   })
 
   describe('Controller -> Login', function() {
-    it('User API -> Login using email and password', async function() {
+    it('User API -> Login authorized using email and password', async function() {
       const data = generateFakeData()
       const password = faker.internet.password()
       const item = await Model.create( data )
@@ -255,7 +262,57 @@ describe('User Controller', function() {
       loginToken.destroy()
       item.destroy()
     })
+
+    it('User API -> Login forbidden using bad email', async function() {
+      const data = generateFakeData()
+      const password = faker.internet.password()
+      const item = await Model.create( data )
+      await item.setPassword(password)
+      try {
+        await MainController.login({}, { 
+          email:'somerandomstring@gmail.com',
+          password
+        })
+        assert.notOk(true, "no error has been raised")
+      } catch(e) {
+        //console.log(777, e)
+        assert(e instanceof ValidationError, true, "Should raise a validation Error")
+      }
+      item.destroy()
+    })
+
+    it('User API -> Login forbidden using bad password', async function() {
+      const data = generateFakeData()
+      const password = faker.internet.password()
+      const item = await Model.create( data )
+      await item.setPassword(password)
+
+      try {
+        await MainController.login({}, { 
+          email   :data.email,
+          password:'somerandompwd'
+        })
+        assert.notOk(true, "no error has been raised")
+      } catch(e) {
+        //console.log(777, e)
+        assert(e instanceof ValidationError, true, "Should raise a validation Error")
+      }
+      item.destroy()
+    })
   })
+
+  describe('Controller -> Update Me', function() {
+    it('User API -> The current user is successfully updated', async function() {
+      const data = generateFakeData()
+      const baseInst = await Model.create( data )
+      const { id } = baseInst
+      const input = generateFakeData()
+      const inst = await MainController.updateMe({}, { input }, { user: baseInst })
+      expect(inst).to.deep.include({id, ...input, email: input.email.toLowerCase()})
+      inst.destroy()
+    })
+  })
+
 
   describe('Controller -> setMyPassword', function() {
     it('User API -> Set first time password for current user (user has been created passwordless)', async function() {
