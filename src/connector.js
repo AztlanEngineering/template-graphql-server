@@ -10,6 +10,8 @@ const sequelize = new Sequelize(
   process.env.POSTGRES_PASSWORD,
   {
     host          :process.env.POSTGRES_HOST,
+    logging       :process.env.SQL_LOGGING === 'true'? console.log : false,
+    //logging       :false,
     dialect       :'postgres',
     dialectOptions:{
       ssl:{

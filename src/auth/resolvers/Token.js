@@ -1,26 +1,26 @@
-/* @fwrlines/generator-graphql-server-type 1.1.1 */
-import { SetterController as MainController } from '../controllers'
+/* @fwrlines/generator-graphql-server-type 2.1.1 */
+import { TokenController as MainController } from '../controllers'
 import { suMethod as su } from 'utils'
 
 export default {
   Mutation:{
-    async addSetter(r, a, c) {
+    async addToken(r, a, c) {
       return su(MainController.add(r, a), c.user)
     },
-    async deleteSetter(r, a, c) {
+    async deleteToken(r, a, c) {
       return su(MainController.del(r, a), c.user)
     },
-    async updateSetter(r, a, c) {
+    async updateToken(r, a, c) {
       return su(MainController.update(r, a), c.user)
     }
   },
   Query:{
-    allSetters(r, a, c) {
+    allTokens(r, a, c) {
       // use context if you want to restrict the usage
       return su(MainController.all(r, a), c.user)
-      //return su(SetterController.paginated(r, a), c.user)
+      //return su(TokenController.paginated(r, a), c.user)
     },
-    getSetter(r, a, c) {
+    getToken(r, a, c) {
       // use context if you want to restrict the usage
       return su(MainController.get(r, a), c.user)
     }

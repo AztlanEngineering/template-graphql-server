@@ -11,7 +11,7 @@ export default sequelize => {
     async login() {
       //console.log(this)
       if (this.is_valid && this.use_to_login){
-        this.use_to_login = false,
+        this.use_to_login = false
         await this.save()
         return true
       }
@@ -43,7 +43,8 @@ export default sequelize => {
     code:{
       type        :DataTypes.STRING,
       allowNull   :false,
-      defaultValue:() => randomString(64)
+      defaultValue:() => randomString(64),
+      unique:true
     },
     provider:{
       type:DataTypes.STRING

@@ -36,6 +36,8 @@ type Make {
   car:Boolean
   motorcycle:Boolean
   seotext:String
+  createdAt:Float
+  updatedAt:Float
 }
 
 #type PaginatedMakes {

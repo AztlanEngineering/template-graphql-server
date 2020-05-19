@@ -1,23 +1,19 @@
-/* @fwrlines/generator-graphql-server-type 1.1.1 */
-import {
-  Setter as Model
-} from '../models'
-import {
-  User
-} from 'auth/models'
-import { getTokenFor } from 'auth/utils'
+import models from 'models'
+import { ObjectNotFoundError } from 'utils'
 
+const Model = models.Setter
+
+/*
 import {
-  //ConfigurationError,
+  ConfigurationError,
   ValidationError,
-  //NotUniqueError,
+  NotUniqueError,
   ObjectNotFoundError
 } from 'utils'
-
-const LIMIT_PER_PAGE = 20
+*/
 
 const Controller = {
-  all:(root, args) => Model.find({}),
+  all:(root, args) => Model.findAll({}),
 
   /*
   paginated:(r, {
@@ -39,17 +35,45 @@ const Controller = {
   },
   */
 
+  get:(root, { id }) => Model.findByPk( id ),
+
+  add:async (root, { input }) => await Model.create( input ),
+
+  delete:async (root, { id }) => {
+    const item = await Model.findByPk(id).catch(e => {
+      console.log(e.message)
+    })
+    if (!item) {
+      return false
+    }
+    item.destroy()
+    return true
+  },
+
+  update:async (root, { input, id }) => {
+    const updated = await Model.update(input, {
+      where:{
+        id
+      },
+      returning:true
+    }).catch(
+      e => console.log(e.message)
+    )
+    return updated[1][0] //we return the first updated item
+  },
+
+  /*
   login:async(root, { code }) => {
-    let tempItem = await Model.findOne({ code })
+    const item = await Model.findOne(where:{ code })
 
     //console.log('got setter, ready to l/I', tempItem, tempItem.is_valid, code)
-    if (tempItem && tempItem.login()){
-      tempItem = await User.populate(tempItem,
+    if (item && item.login()){
+      item = await User.populate(item,
         { path: 'user', model: User }
       )
       // Do Login
-      const token = getTokenFor(tempItem.user)
-      Model.deleteOne({ code })
+      const token = getTokenFor(item.user)
+      item.destroy()
       return token
       //TODO delete all expired codes here (????)
     }
@@ -58,40 +82,10 @@ const Controller = {
     
   },
 
-  get:(root, { id }) => Model.findById( id ),
-
-  add:(root, { input }) => {
-    const item = new Model(input)
-    return item.save()
-  },
-
-  delete:async(root, { id:_id }) => {
-    await Model.deleteOne({ _id  }, (err) => {
-      if (err) return false
-    })
-    return true
-  },
-
-  update:async (root, { input, id }) => {
-    const tempItem = { input }
-    //tempItem.ts_updated = Date.now()
-    const updatedItem = await Model.findByIdAndUpdate(
-      id,
-      { $set: tempItem },
-      { new: true }
-    )
-    if (!updatedItem){
-      throw new ObjectNotFoundError()
-    }
-    else {
-      return updatedItem
-    }
-  },
-
   clean:async (root) => {
     const deleted = await Model.deleteMany({ expires: { $lte: Date.now() } })
     //console.log(999, deleted)
-  }
+  }*/
 }
 
 export default Controller

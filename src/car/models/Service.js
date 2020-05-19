@@ -26,10 +26,12 @@ export default sequelize => {
       allowNull:false,
       unique   :true
     },
-    category:{
-      type:DataTypes.STRING
+    slug:{
+      type     :DataTypes.STRING,
+      allowNull:false,
+      unique   :true
     },
-    seotext:{
+    category:{
       type:DataTypes.STRING
     },
     is_active:{
@@ -47,19 +49,17 @@ export default sequelize => {
       allowNull   :false,
       defaultValue:false
     },
-    slug:{
-      type     :DataTypes.STRING,
-      allowNull:false,
-      unique   :true
-    },
     generic_cta:{
-      type:DataTypes.STRING
+      type:DataTypes.TEXT
     },
     carbutton:{
       type:DataTypes.STRING
     },
     motobutton:{
       type:DataTypes.STRING
+    },
+    seotext:{
+      type:DataTypes.TEXT
     },
 
     /*

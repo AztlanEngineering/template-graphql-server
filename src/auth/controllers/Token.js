@@ -2,7 +2,7 @@
 import models from 'models'
 import { ObjectNotFoundError } from 'utils'
 
-const Model = models.Service
+const Model = models.Token
 
 /*
 import {

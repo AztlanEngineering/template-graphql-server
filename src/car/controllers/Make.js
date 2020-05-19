@@ -38,12 +38,7 @@ const Controller = {
 
   get:(root, { id }) => Model.findByPk( id ),
 
-  add:async (root, { input }) => {
-    console.log(888, Model, models)
-    const m = await Model.create( input )
-    console.log(9999, m)
-    return m
-  },
+  add:async (root, { input }) => await Model.create( input ),
 
   delete:async (root, { id }) => {
     const item = await Model.findByPk(id).catch(e => {
@@ -56,7 +51,7 @@ const Controller = {
     return true
   },
 
-	 update:async (root, { input, id }) => {
+  update:async (root, { input, id }) => {
     const updated = await Model.update(input, {
       where:{
         id

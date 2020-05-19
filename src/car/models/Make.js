@@ -60,7 +60,7 @@ export default sequelize => {
       defaultValue:false
     },
     seotext:{
-      type:DataTypes.STRING
+      type:DataTypes.TEXT
     }
 
   },{

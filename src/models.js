@@ -22,6 +22,6 @@ Object.keys(models).forEach(key => {
   }
 })
 
-console.log(models)
+//console.log(models)
 
 export default models
