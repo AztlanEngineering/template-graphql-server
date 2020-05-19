@@ -1,7 +1,10 @@
 import V from 'validator'
 import { isEmpty } from 'utils'
+import models from 'models'
 
-export default function validateSignupInput(d) {
+const Model = models.User
+
+export default async(d) => {
   let e = {}
   d.last_name = !isEmpty(d.last_name) ? d.last_name : ''
   d.username = !isEmpty(d.username) ? d.username : ''
@@ -9,6 +12,7 @@ export default function validateSignupInput(d) {
   d.email = !isEmpty(d.email) ? d.email : ''
   d.password = !isEmpty(d.password) ? d.password : ''
   // d.password_confirm = !isEmpty(d.password_confirm) ? d.password_confirm : ''
+  //
 
   if (!V.isLength(d.first_name, { min: 2, max: 30 })) {
     e.first_name = 'First name must be between 2 to 30 chars'
@@ -26,12 +30,38 @@ export default function validateSignupInput(d) {
     e.username = 'Username field is required'
   }
 
+  if (!V.isEmpty(d.username)) {
+
+    const username_exists = await Model.findOne({ 
+      where:{
+        email:d.username
+      }
+    })
+
+    if (username_exists) {
+      e.username = 'Username already exists'
+    }
+  }
+
   if (!V.isEmail(d.email)) {
     e.email = 'Email is invalid'
   }
 
   if (V.isEmpty(d.email)) {
     e.email = 'Email is required'
+  }
+
+  if (V.isEmail(d.email) && !V.isEmpty(d.email) ) {
+
+    const email_exists = await Model.findOne({ 
+      where:{
+        email:d.email
+      }
+    })
+
+    if (email_exists) {
+      e.email = 'Email already exists'
+    }
   }
 
   if (!V.isLength(d.password, { min: 6, max: 30 })) {

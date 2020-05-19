@@ -72,31 +72,20 @@ const Controller = {
   },
 
   signup:async (root, args, context) => {
-    const { errors, isValid } = validateSignupInput(args)
+    const { errors, isValid } = await validateSignupInput(args)
 
     if (!isValid) {
       throw new ValidationError({ data: errors })
     }
-    const email_exists = await Model.findOne({ 
-      where:{
-        email:args.email
-      }
-    })
+    
+    const { 
+      password,
+      ...creationArgs
+    } = args
+    const item = await Model.create(creationArgs)
+    await item.setPassword(password)
 
-    if (email_exists) {
-      throw new NotUniqueError({ message: 'email already exists', data: { email: 'email already exists' } })
-    }
-
-    else {
-      const { 
-        password,
-        ...creationArgs
-      } = args
-      const item = await Model.create(creationArgs)
-      await item.setPassword(password)
-
-      return item.getAuthToken()
-    }
+    return item.getAuthToken()
   },
 
   login:async (root, args, context) => {
