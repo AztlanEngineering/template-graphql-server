@@ -1,0 +1,43 @@
+# @fwrlines/generator-graphql-server-type 2.1.1 
+extend type Query {
+  allSites: [Site]
+  getSite(id: ID!): Site
+  #paginatedSite (page:Int, category: String):PaginatedSites
+}
+
+extend type Mutation {
+  #Admin mutations
+  addSite(input:SiteInput!): Site!
+  updateSite(id: ID!, input: SiteInput!): Site!
+  deleteSite(id: ID!): Boolean!
+
+  #User mutations
+  }
+
+input SiteInput {
+  x:Int
+  y:String
+  z:Boolean
+  }
+
+type Site {
+  id:ID!
+  x:Int
+  y:String
+  z:Boolean
+  createdAt:Float
+  updatedAt:Float
+}
+
+#type PaginatedSites {
+#  docs: [Site]
+#  totalDocs: Int!
+#  limit: Int!
+#  hasPrevPage: Boolean!
+#  hasNextPage: Boolean!
+#  page: Int!
+#  totalPages: Int!
+#  pagingCounter: Int!
+#  prevPage: Int
+#  nextPage: Int
+#}

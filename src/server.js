@@ -21,7 +21,6 @@ import oAuth2Router from 'oauth2/router'
 
 //import bodyParser from 'body-parser'
 
-import mongoose from 'mongoose'
 import sequelize from './connector'
 import models from 'models'
 
@@ -32,11 +31,6 @@ const port = 4000
 
 const {
   //DB_LOCAL //Deprecated
-  DB_DEBUG,
-  DB_HOST,
-  DB_USER,
-  DB_NAME,
-  DB_PASSWORD,
   DEBUG,
   CORS,
   JWT_SECRET
@@ -45,17 +39,9 @@ const {
 let playground, logError, logResponse
 
 const IS_DEBUG = DEBUG === 'true'
-const IS_DB_DEBUG = DB_DEBUG === 'true'
 const WITH_CORS = CORS === 'true'
 
 if (IS_DEBUG) {
-  mongoose.connection.once('open', () => {
-    console.log('connected to database at ',
-      mongoose.connection.host +
-      mongoose.connection.port + '/' +
-      mongoose.connection.name,
-    )
-  })
 
   playground = {
     endpoint:'/graphql',
@@ -80,24 +66,6 @@ if (IS_DEBUG) {
 
 
 }
-
-if (IS_DB_DEBUG) {
-  mongoose.set('debug', true)
-}
-
-//DB_LOCAL === 'true' ?
-//mongoose.connect('mongodb://localhost:27017/mecatest'):
-
-
-mongoose.set('useFindAndModify', false)
-mongoose.connect(
-  `mongodb+srv://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/${DB_NAME}?retryWrites=true`,
-  {
-    useNewUrlParser:true
-    //useUnifiedTopology:true
-  }
-)
-
 
 const server = new ApolloServer({
   schema,

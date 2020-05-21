@@ -1,13 +1,15 @@
 import * as authModels from 'auth/models'
 import * as oAuth2Models from 'oauth2/models'
 import * as carModels from 'car/models'
+import * as websiteModels from 'website/models'
 
 import sequelize from 'connector'
 
 const modelGetters = {
   ...authModels,
   ...oAuth2Models,
-  ...carModels
+  ...carModels,
+  ...websiteModels
 }
 
 const models = {}

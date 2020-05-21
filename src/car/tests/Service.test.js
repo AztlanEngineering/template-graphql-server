@@ -28,7 +28,7 @@ const generateFakeData = (options = {}) => {
   return final_data
 }
 
-describe('Service Controller', function() {
+describe('Car -> Service Controller', function() {
 
   before( function(){
 

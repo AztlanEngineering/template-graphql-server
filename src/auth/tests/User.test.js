@@ -34,7 +34,7 @@ const generateFakeData = (options = {}) => {
   return { ...options, ...final_data }
 }
 
-describe('User Model', function() {
+describe('Auth -> User Model', function() {
   /*
   before( function(){
   })
@@ -81,7 +81,7 @@ describe('User Model', function() {
   */
 })
 
-describe('User Controller', function() {
+describe('Auth -> User Controller', function() {
   /*
   before( function(){
   })

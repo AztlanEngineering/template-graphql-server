@@ -1,0 +1,43 @@
+# @fwrlines/generator-graphql-server-type 2.1.1 
+extend type Query {
+  allPages: [Page]
+  getPage(id: ID!): Page
+  #paginatedPage (page:Int, category: String):PaginatedPages
+}
+
+extend type Mutation {
+  #Admin mutations
+  addPage(input:PageInput!): Page!
+  updatePage(id: ID!, input: PageInput!): Page!
+  deletePage(id: ID!): Boolean!
+
+  #User mutations
+  }
+
+input PageInput {
+  x:Int
+  y:String
+  z:Boolean
+  }
+
+type Page {
+  id:ID!
+  x:Int
+  y:String
+  z:Boolean
+  createdAt:Float
+  updatedAt:Float
+}
+
+#type PaginatedPages {
+#  docs: [Page]
+#  totalDocs: Int!
+#  limit: Int!
+#  hasPrevPage: Boolean!
+#  hasNextPage: Boolean!
+#  page: Int!
+#  totalPages: Int!
+#  pagingCounter: Int!
+#  prevPage: Int
+#  nextPage: Int
+#}

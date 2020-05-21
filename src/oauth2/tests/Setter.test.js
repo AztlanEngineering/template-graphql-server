@@ -20,7 +20,7 @@ const generateFakeData = (options = {}) => {
   return { ...options, ...final_data }
 }
 
-describe('Setter Model', function() {
+describe('OAuth2 -> Setter Model', function() {
   /*
   before( function(){
   })
@@ -85,7 +85,7 @@ describe('Setter Model', function() {
   */
 })
 
-describe('Setter Controller', function() {
+describe('OAuth2 -> Setter Controller', function() {
 
   /*
   before( function(){

@@ -1,41 +1,96 @@
+/* @fwrlines/generator-graphql-server-type 2.1.1 */
 import { assert, expect } from 'chai'
-import { MakeController as MainController } from '../controllers'
+import { DomainController as MainController } from '../controllers'
 import models from 'models'
 import * as faker from 'faker'
 
-const Model = models.Make
+const Model = models.Domain
 
 const generateFakeData = (options = {}) => {
   const data = {
-    name       :faker.company.companyName(),
-    slug       :faker.helpers.slugify(faker.company.companyName().toLowerCase()),
-    active_from:'1920',
-    active_to  :'present',
-    country    :faker.address.country(),
-    is_common  :faker.random.boolean(),
-    is_active  :faker.random.boolean(),
-    car        :faker.random.boolean(),
-    motorcycle :faker.random.boolean(),
-    seotext    :faker.lorem.paragraph(5),
-  } 
+    name        :faker.internet.domainName(),
+    alt         :faker.internet.domainName(),
+    ordered     :faker.random.boolean(),
+    bought      :faker.random.boolean(),
+    installed   :faker.random.boolean(),
+    expected_dns:[
+      faker.internet.domainName(),
+      faker.internet.domainName(),
+      faker.internet.domainName(),
+      faker.internet.domainName(),
+    ]
+  }
 
   const final_data = {}
   Object.keys(data).forEach(e => {
     final_data[e] = (e in options) ? options[e] : data[e]
   })
 
-  return final_data
+  return { ...options, ...final_data }
 }
 
-describe('Car -> Make Controller', function() {
-
+describe('Website -> Domain Model', function() {
+  /*
   before( function(){
-
   })
 
   beforeEach( function(){
-
   })
+  */
+
+  /*
+  describe('Model -> Key -> Code', function() {
+    it('Default Value -> The default code is a unique 64 char string', async function() {
+      const data1 = generateFakeData()
+      const data2 = generateFakeData()
+      const records = await Model.bulkCreate([data1, data2])
+      const { code:code1 } = records[0]
+      const { code:code2 } = records[1]
+      expect( code1 ).to.have.lengthOf(64)
+      expect( code2 ).to.have.lengthOf(64)
+      expect( code1 ).to.not.deep.equal(code2)
+      records.forEach((e) =>
+        e.destroy()
+      )
+    })
+  })
+    */
+  
+  describe('Domain Model -> Virtual -> Main', function() {
+    it('Model API -> The domain is not installed, main should be the alt', async function() {
+      const data = generateFakeData({ installed: false })
+      const inst = await Model.create(data)
+      expect(inst.main).to.equal(data.alt)
+      inst.destroy()
+    })
+
+    it('Model API -> The domain is installed, main should be the regular name', async function() {
+      const data = generateFakeData({ installed: true })
+      const inst = await Model.create(data)
+      expect(inst.main).to.equal(data.name)
+      inst.destroy()
+    })
+  
+  })
+
+  /*
+  afterEach( function(){
+  })
+
+  after( function(){
+  })
+  */
+})
+
+describe('Website -> Domain Controller', function() {
+  /*
+  before( function(){
+  })
+
+  beforeEach( function(){
+  })
+  */
+
 
   describe('Controller -> Get all', function() {
     it('Admin API -> The objects retrieved equals the objects looked for', async function() {
@@ -100,13 +155,14 @@ describe('Car -> Make Controller', function() {
     })
   })
 
+  /*
   afterEach( function(){
-
   })
 
   after( function(){
-
   })
-
-
+  */
 })
+
+
+

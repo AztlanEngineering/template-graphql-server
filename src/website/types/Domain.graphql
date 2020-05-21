@@ -1,0 +1,43 @@
+# @fwrlines/generator-graphql-server-type 2.1.1 
+extend type Query {
+  allDomains: [Domain]
+  getDomain(id: ID!): Domain
+  #paginatedDomain (page:Int, category: String):PaginatedDomains
+}
+
+extend type Mutation {
+  #Admin mutations
+  addDomain(input:DomainInput!): Domain!
+  updateDomain(id: ID!, input: DomainInput!): Domain!
+  deleteDomain(id: ID!): Boolean!
+
+  #User mutations
+  }
+
+input DomainInput {
+  x:Int
+  y:String
+  z:Boolean
+  }
+
+type Domain {
+  id:ID!
+  x:Int
+  y:String
+  z:Boolean
+  createdAt:Float
+  updatedAt:Float
+}
+
+#type PaginatedDomains {
+#  docs: [Domain]
+#  totalDocs: Int!
+#  limit: Int!
+#  hasPrevPage: Boolean!
+#  hasNextPage: Boolean!
+#  page: Int!
+#  totalPages: Int!
+#  pagingCounter: Int!
+#  prevPage: Int
+#  nextPage: Int
+#}

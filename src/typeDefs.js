@@ -5,6 +5,7 @@ import authTypes from 'auth/types'
 import tstrTypes from 'tstr/types'
 import oauth2Types from 'oauth2/types'
 import carTypes from 'car/types'
+import websiteTypes from 'website/types'
 
 const baseTypes = [
   query,
@@ -16,5 +17,6 @@ export default [
   ...authTypes,
   ...tstrTypes,
   ...oauth2Types,
-  ...carTypes
+  ...carTypes,
+  ...websiteTypes
 ]
