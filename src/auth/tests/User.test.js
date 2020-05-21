@@ -150,8 +150,8 @@ describe('Auth -> User Controller', function() {
     it('Admin API -> The object is successfully deleted', async function() {
       const data = generateFakeData()
       const { id } = await Model.create( data )
-      const success = await MainController.delete({}, { id })
-      assert( success == true, 'The controller should respond true to the deletion command' )
+      const deletedId = await MainController.delete({}, { id })
+      assert( deletedId === id, 'The controller should respond true to the deletion command' )
       await Model.findByPk(id, { transaction: null }) //there is a little time for the deletion to actually happen, so we auery twice
       const objectShouldntRemain = await Model.findByPk(id, { transaction: null })
       expect( objectShouldntRemain ).to.equal(null)

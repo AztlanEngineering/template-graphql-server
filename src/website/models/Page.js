@@ -17,10 +17,10 @@ export default sequelize => {
   
   Page.init({
     id:{
-      type         :DataTypes.INTEGER,
-      allowNull    :false,
-      autoIncrement:true,
-      primaryKey   :true,
+      type        :DataTypes.UUIDV4,
+      defaultValue:Sequelize.UUIDV4,
+      allowNull   :false,
+      primaryKey  :true,
     },
 
     a:{

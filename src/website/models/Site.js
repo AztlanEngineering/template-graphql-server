@@ -12,18 +12,25 @@ export default sequelize => {
       return this.first_name
     }
     */
+    async addDomain(domain, alt) {
+
+    }
+
+    async verifyDomain() {
+
+    }
   
   } 
   
   Site.init({
     id:{
-      type         :DataTypes.INTEGER,
-      allowNull    :false,
-      autoIncrement:true,
-      primaryKey   :true,
+      type        :DataTypes.UUIDV4,
+      defaultValue:Sequelize.UUIDV4,
+      allowNull   :false,
+      primaryKey  :true,
     },
 
-    a:{
+    name:{
       type        :DataTypes.STRING,
       //type: DataTypes.BOOLEAN,
       //type: DataTypes.INTEGER,

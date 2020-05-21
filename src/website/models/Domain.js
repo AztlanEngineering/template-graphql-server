@@ -7,40 +7,94 @@ import { VercelAPI } from '../utils'
 export default sequelize => {
   class Domain extends Model {
   
-    static async isDomainAvailable(domain) {
-      const response = VercelAPI.get.isDomainAvailable(domain)
-      return response.available
+    static async isAvailable(domain) {
+      const { available } = await VercelAPI.get.isDomainAvailable(domain)
+      return available
     }
-  
+
+    async order() {
+      //ORDER LOGIN
+      this.isOrdered = true
+      await this.save()
+      return true
+    }
+
     /*
     instanceLevelMethod() {
       return this.first_name
     }
     */
-
-    async order() {
-      this.ordered = true
-      return await this.save()
+    async addToVercel() {
+      if (this.vercelDomainId) {
+        //TODO Raise error = this domain is already on Vervel
+        return false
+      }
+      const options = {}
+      if(this.vercelTeamId)  {
+        options['teamId'] = this.vercelTeamId
+      }
+      const { domain } = await VercelAPI.post.addDomain(options, {name: this.name})
+      this.vercelDomainId = domain.id
+      this.isInstalled = false
+      await this.save()
+      return true
     }
     
-    validDns() {
+    async deleteFromVercel() {
+      const options = {
+        name:this.name
+      }
 
+      if(this.vercelTeamId)  {
+        options['teamId'] = this.vercelTeamId
+      }
+
+      const { uid } = await VercelAPI.delete.domain(options)
+
+      this.vercelDomainId = null
+      this.isInstalled = false
+      await this.save()
+
+      return true 
     }
 
-    async validateDns() {
-      this.valid = true
-      return await this.save()
+    
+    async validateVercelDns() {
+      const options = {name: this.name}
+      
+      if(this.vercelTeamId)  {
+        options['teamId'] = this.vercelTeamId
+      }
+
+      try {
+        const { domain } = await VercelAPI.post.verifyDomain(options)
+        this.bought = true //In case this wasnt activated TODO remove and move
+        this.isInstalled = true 
+        return await this.save()
+      } catch(e) {
+        return false
+      }
     }
 
-  
+    async getInfoFromVercel() {
+      const options = {name: this.name}
+      
+      if(this.vercelTeamId)  {
+        options['teamId'] = this.vercelTeamId
+      }
+
+      const { domain } = await VercelAPI.get.domain(options)
+
+      return domain
+    }
   } 
   
   Domain.init({
     id:{
-      type         :DataTypes.INTEGER,
-      allowNull    :false,
-      autoIncrement:true,
-      primaryKey   :true,
+      type        :DataTypes.UUIDV4,
+      defaultValue:Sequelize.UUIDV4,
+      allowNull   :false,
+      primaryKey  :true,
     },
 
     name:{
@@ -55,19 +109,19 @@ export default sequelize => {
       unique   :true
     },
 
-    ordered:{
+    isOrdered:{
       type        :DataTypes.BOOLEAN,
       allowNull   :false,
       defaultValue:false,
     },
 
-    bought:{
+    isBought:{
       type        :DataTypes.BOOLEAN,
       allowNull   :false,
       defaultValue:false,
     },
   
-    installed:{
+    isInstalled:{
       type        :DataTypes.BOOLEAN,
       allowNull   :false,
       defaultValue:false,
@@ -77,10 +131,26 @@ export default sequelize => {
       type:DataTypes.JSON,
     },
 
+    vercelTeamId:{
+      type        :DataTypes.STRING,
+      defaultValue:process.env.VERCEL_TEAM_ID
+    },
+
+    vercelDomainId:{
+      type:DataTypes.STRING,
+    },
+
     main:{
-      type:new DataTypes.VIRTUAL(DataTypes.STRING, ['name', 'alt', 'installed']),
+      type:new DataTypes.VIRTUAL(DataTypes.STRING, ['name', 'alt', 'isInstalled']),
       get :function() {
-        return this.get('installed') ? this.get('name') : this.get('alt')
+        return this.get('isInstalled') ? this.get('name') : this.get('alt')
+      }
+    },
+
+    isAddedToVercel:{
+      type:new DataTypes.VIRTUAL(DataTypes.BOOLEAN, ['vercelDomainId']),
+      get :function() {
+        return this.get('vercelDomainId').length ? true : false
       }
     }
 
@@ -100,9 +170,19 @@ export default sequelize => {
     //models.User.hasMany() //this will give this model a UserId field and make it available from user
   }
 
+  Domain.addHook('beforeDestroy', 'removeFromVercel', async (e, options) => {
+    if(e.vercelDomainId)  {
+      try {
+        await e.deleteFromVercel()
+      } catch (e) {
+        //console.log(`Tried to delete ${e.name} from Vercel, but wasnt found`)
+      }
+    } 
+
+  })
+
   return Domain
 
-  //Domain.addHook('afterCreate', 'hookName', (e, options) => {})
 }
 
 

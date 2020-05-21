@@ -46,8 +46,8 @@ const Controller = {
     if (!item) {
       return false
     }
-    item.destroy()
-    return true
+    await item.destroy()
+    return item.id
   },
 
   update:async (root, { input, id }) => {
