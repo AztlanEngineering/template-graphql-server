@@ -15,79 +15,76 @@ const headers = {
   Authorization:`Bearer ${process.env.VERCEL_SECRET_TOKEN}`
 }
 
-const endpoints = {
+const apiEndpoints = {
   GET:{
     domains          :(params) => `/v5/domains${getQs(params)}`,
     domain           :({ name, ...params }) => `/v4/domains/${name}${getQs(params)}`,
     isDomainAvailable:(name) => `/v4/domains/status?name=${name}`,
     teams            :() => '/v1/teams'
   },
-  POST  :{},
+  POST:{
+    verifyDomain:({ name, ...params }) => `/v4/domains/${name}/verify${getQs(params)}`,
+    addDomain   :( params ) => `/v4/domains${getQs(params)}`
+  },
   DELETE:{
-    domain:(param) => `/v4/domains/${param}`
+    domain:({name, ...params}) => `/v4/domains/${name}${getQs(params)}`
   },
 }
 
+const apiMethods = {
+  GET:getEndpoint => async(params={}) => {
+    const endpoint = getEndpoint(params)
 
-const getFromVercel = getEndpoint => async(params={}) => {
-  const endpoint = getEndpoint(params)
+    var options = {
+      headers,
+      method:'GET',
+      uri   :base_url + endpoint,
+      json  :true
+    }
+    //console.log(endpoint, params, options)
 
-  var options = {
-    headers,
-    method:'GET',
-    uri   :base_url + endpoint,
-    json  :true
+    return await rp(options)
+
+  },
+
+  POST:getEndpoint => async(params={}, body) => {
+    const endpoint = getEndpoint(params)
+
+    var options = {
+      headers,
+      body,
+      method:'POST',
+      uri   :base_url + endpoint,
+      json  :true,
+    }
+
+    return await rp(options)
+  },
+
+  DELETE:getEndpoint => async(params={}) => {
+    const endpoint = getEndpoint(params)
+
+    var options = {
+      headers,
+      method:'DELETE',
+      uri   :base_url + endpoint,
+      json  :true,
+    }
+
+    return await rp(options)
+
   }
-  //console.log(endpoint, params, options)
-
-  return await rp(options)
-
 }
 
-const postToVercel = getEndpoint => async(params={}, body) => {
-  const endpoint = getEndpoint(params)
+const VercelAPI = {}
 
-  var options = {
-    headers,
-    body,
-    method:'POST',
-    uri   :base_url + endpoint,
-    json  :true,
-  }
-
-  return await rp(options)
-}
-
-const deleteFromVercel =  getEndpoint => async(params={}) => {
-  const endpoint = getEndpoint(params)
-
-  var options = {
-    headers,
-    method:'DELETE',
-    uri   :base_url + endpoint,
-    json  :true,
-  }
-
-  return await rp(options)
-}
-
-const vercelConnectors = {
-  GET   :getFromVercel,
-  POST  :postToVercel,
-  DELETE:deleteFromVercel
-}
-
-const VercelAPI = {
-
-}
-
-Object.keys(endpoints).forEach(e => {
+Object.keys(apiEndpoints).forEach(e => {
 
   VercelAPI[e.toLowerCase()] = {}
   const m = VercelAPI[e.toLowerCase()]
 
-  Object.keys(endpoints[e]).forEach(f => {
-    m[f] = vercelConnectors[e](endpoints[e][f])
+  Object.keys(apiEndpoints[e]).forEach(f => {
+    m[f] = apiMethods[e](apiEndpoints[e][f])
   })
 })
 
