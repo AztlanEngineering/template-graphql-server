@@ -27,9 +27,10 @@ export default sequelize => {
 
   Setter.init({
     id:{
-      type         :DataTypes.INTEGER,
-      autoIncrement:true,
-      primaryKey   :true
+      type        :DataTypes.UUIDV4,
+      defaultValue:Sequelize.UUIDV4,
+      allowNull   :false,
+      primaryKey  :true,
     },
     expires:{
       type        :DataTypes.DATE,
@@ -44,7 +45,7 @@ export default sequelize => {
       type        :DataTypes.STRING,
       allowNull   :false,
       defaultValue:() => randomString(64),
-      unique:true
+      unique      :true
     },
     provider:{
       type:DataTypes.STRING

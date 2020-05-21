@@ -23,9 +23,10 @@ export default sequelize => {
 
   Token.init({
     id:{
-      type         :DataTypes.INTEGER,
-      autoIncrement:true,
-      primaryKey   :true
+      type        :DataTypes.UUIDV4,
+      defaultValue:Sequelize.UUIDV4,
+      allowNull   :false,
+      primaryKey  :true,
     },
     maxAge:{
       type        :DataTypes.INTEGER,
