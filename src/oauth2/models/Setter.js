@@ -66,7 +66,14 @@ export default sequelize => {
   })
 
   Setter.associate = models => {
-    Setter.belongsTo(models.User)
+    Setter.belongsTo(models.User, {
+      targetKey :'id',
+      foreignKey:{
+        name:'userId',
+        type:DataTypes.UUID,
+        //allowNull:false
+      }
+    })
   }
 
   return Setter

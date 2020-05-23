@@ -23,38 +23,66 @@ export default sequelize => {
       primaryKey  :true,
     },
 
-    a:{
+    name:{
       type     :DataTypes.STRING,
-      //type: DataTypes.BOOLEAN,
-      //type: DataTypes.INTEGER,
-      //type: DataTypes.BIGINT,
       allowNull:false,
       //defaultValue:'john',
       //unique:true
       //field:'column_name_here'
     },
+
+    slug:{
+      type     :DataTypes.STRING,
+      allowNull:true,
+      //defaultValue:'john',
+      //field:'column_name_here'
+    },
+
+    metaData:{
+      type:DataTypes.JSON,
+    },
+
+    data:{
+      type:DataTypes.JSON,
+    },
   
-    /*
-    uuid:{
-      type: DataTypes.UUID,
-      defaultValue: Sequelize.UUIDV4
-    }
-    */
   },{
     sequelize,
     modelName:'Page',
     tableName:'website_pages',
     updatedAt:'updatedAt',
-    createdAt:'createdAt'
+    createdAt:'createdAt',
+    indexes  :[
+      {
+        unique:true,
+        fields:['slug', 'siteId']
+      }
+    ]
     //tableName: 'pages'
     //freezeTableName: true
   })
 
   
   Page.associate = models => {
-    models.Site.hasMany(Page) //this will give a foreign key to user here, and make it available from here
-    //Page.hasOne(models.Site)
-    //models.User.hasMany() //this will give this model a UserId field and make it available from user
+
+    models.Site.hasMany(Page, {
+      targetKey :'id',
+      foreignKey:{
+        name:'siteId',
+        type:DataTypes.UUID,
+        //allowNull:false
+      }
+    })
+    
+    Page.belongsTo(models.Site, {
+      targetKey :'id',
+      foreignKey:{
+        name:'siteId',
+        type:DataTypes.UUID,
+        //allowNull:false
+      }
+    })
+    
   }
 
   return Page

@@ -208,7 +208,7 @@ export default sequelize => {
   
   Domain.associate = models => {
     //Domain.belongsTo(models.Site) //this will give a foreign key to B here, and make it available from here
-    models.Site.belongsTo(Domain)
+    //models.Site.belongsTo(Domain)
     //models.User.hasMany() //this will give this model a UserId field and make it available from user
   }
 

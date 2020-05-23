@@ -52,7 +52,22 @@ export default (sequelize) => {
 
   OAuth2.associate = models => {
     //reverse association to keep this package independent from auth
-    models.User.hasMany(OAuth2)
+    models.User.hasMany(OAuth2, {
+      targetKey :'id',
+      foreignKey:{
+        name:'userId',
+        type:DataTypes.UUID,
+        //allowNull:false
+      }
+    })
+    OAuth2.belongsTo(models.User, {
+      targetKey :'id',
+      foreignKey:{
+        name:'userId',
+        type:DataTypes.UUID,
+        //allowNull:false
+      }
+    })
   }
 
   return OAuth2

@@ -49,7 +49,14 @@ export default sequelize => {
 
   //Token.addHook('afterCreate', 'hookName', (e, options) => {})
   Token.associate = models => {
-    Token.belongsTo(models.User)
+    Token.belongsTo(models.User, {
+      targetKey :'id',
+      foreignKey:{
+        name     :'userId',
+        type     :DataTypes.UUID,
+        allowNull:false
+      }
+    })
   }
   return Token
 }
