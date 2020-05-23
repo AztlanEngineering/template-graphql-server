@@ -17,13 +17,13 @@ const Model = models.User
 
 const generateFakeData = (options = {}) => {
   const data = {
-    first_name:faker.name.firstName(),
-    last_name :faker.name.lastName(),
-    email     :faker.internet.email(),
-    username  :faker.internet.userName(),
-    handle    :faker.internet.userName(),
-    superuser :faker.random.boolean(),
-    is_active :faker.random.boolean(),
+    firstName:faker.name.firstName(),
+    lastName :faker.name.lastName(),
+    email    :faker.internet.email(),
+    username :faker.internet.userName(),
+    handle   :faker.internet.userName(),
+    superuser:faker.random.boolean(),
+    isActive :faker.random.boolean(),
   }
 
   const final_data = {}
@@ -44,12 +44,12 @@ describe('Auth -> User Model', function() {
   */
 
   describe('Model -> Instance Method -> setPassword', function() {
-    it('Model API -> Set the instance password_hash using bcrypt', async function() {
+    it('Model API -> Set the instance passwordHash using bcrypt', async function() {
       const data = generateFakeData()
       const password = faker.internet.password()
       const item = await Model.create( data )
       await item.setPassword(password)
-      const result = bcrypt.compareSync(password, item.password_hash)
+      const result = bcrypt.compareSync(password, item.passwordHash)
       expect( result ).to.equal(true)
       item.destroy()
     })
@@ -62,9 +62,9 @@ describe('Auth -> User Model', function() {
       const password = faker.internet.password()
       const item = await Model.create({
         ...data,
-        password_hash:bcrypt.hashSync(password, 8)
+        passwordHash:bcrypt.hashSync(password, 8)
       })
-      expect(item.password_hash).to.not.have.lengthOf(0)
+      expect(item.passwordHash).to.not.have.lengthOf(0)
       const result = await item.isPasswordValid(password) 
       expect( result ).to.equal(true)
       item.destroy()

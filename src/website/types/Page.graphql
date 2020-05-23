@@ -1,7 +1,7 @@
 # @fwrlines/generator-graphql-server-type 2.1.1 
 extend type Query {
   allPages: [Page]
-  getPage(id: ID!): Page
+  getPage(id: ID!): Page!
   #paginatedPage (page:Int, category: String):PaginatedPages
 }
 
@@ -9,7 +9,7 @@ extend type Mutation {
   #Admin mutations
   addPage(input:PageInput!): Page!
   updatePage(id: ID!, input: PageInput!): Page!
-  deletePage(id: ID!): Boolean!
+  deletePage(id: ID!): ID!
 
   #User mutations
   }

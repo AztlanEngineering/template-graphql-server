@@ -1,14 +1,14 @@
 # @fwrlines/generator-graphql-server-type 1.3.1 
 extend type Query {
   allServices: [Service]
-  getService(id: ID!): Service
+  getService(id: ID!): Service!
   #paginatedService (page:Int, category: String):PaginatedServices
 }
 
 extend type Mutation {
   addService(input:ServiceInput!): Service!
   updateService(id: ID!, input: ServiceInput!): Boolean!
-  deleteService(id: ID!): Boolean!
+  deleteService(id: ID!): ID!
   }
 
 input ServiceInput {

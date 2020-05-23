@@ -1,6 +1,6 @@
 extend type Query {
  	allUsers: [User]!
- 	user(id:ID!): User
+ 	user(id:ID!): User!
  	me: User
   hello: String!
 }
@@ -9,7 +9,7 @@ extend type Mutation {
   #Admin Mutations
  	addUser(input:UserInput): User!,
  	updateUser(id: ID!, input:UserInput): User!,
- 	deleteUser(id: ID!): Boolean!,
+ 	deleteUser(id: ID!): ID!,
  	setSuperuser(id: ID!, value: String!): Boolean!,
  	setUserPassword(id: ID!, value: String!): Boolean!,
 
@@ -21,26 +21,26 @@ extend type Mutation {
 }
 
 input UserInput {
-  first_name: String
-  last_name: String
+  firstName: String
+  lastName: String
   email: String
   username: String
   password: String
   superuser: Boolean
   operator: Boolean
   handle: String
-  profile_picture: String
-  is_active:Boolean
+  profilePicture: String
+  isActive:Boolean
 }
 
 input MeInput {
-  first_name: String
-  last_name: String
+  firstName: String
+  lastName: String
   email: String
   username: String
   password: String
   handle: String
-  profile_picture: String
+  profilePicture: String
 }
 
 input UserLogin {
@@ -50,41 +50,37 @@ input UserLogin {
 
 type OAuth2Data {
   id: ID
- 	ts_created: String
- 	ts_updated: String
   name: String
   scope: String
   picture: String
   locale: String
   email: String
-  email_verified: Boolean
+  emailVerified: Boolean
   provider: String 
 }
 
 type User {
  	id: ID
- 	ts_created: String
- 	ts_updated: String
- 	first_name: String
- 	last_name: String
+ 	firstName: String
+ 	lastName: String
  	email: String
   username: String
   superuser: Boolean
   operator: Boolean
   password: String
   handle: String
-  profile_picture: String
-  is_active:Boolean
+  profilePicture: String
+  isActive:Boolean
   oauth2:[OAuth2Data]
 }
 
 type MinUser {
  	id: ID
- 	first_name: String
- 	last_name: String
+ 	firstName: String
+ 	lastName: String
   username: String
   handle: String
-  profile_picture: String
-  is_active:Boolean
+  profilePicture: String
+  isActive:Boolean
 }
 

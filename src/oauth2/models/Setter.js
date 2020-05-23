@@ -10,8 +10,8 @@ export default sequelize => {
 
     async login() {
       //console.log(this)
-      if (this.is_valid && this.use_to_login){
-        this.use_to_login = false
+      if (this.isValid && this.useToLogin){
+        this.useToLogin = false
         await this.save()
         return true
       }
@@ -36,7 +36,7 @@ export default sequelize => {
       type        :DataTypes.DATE,
       defaultValue:getDefaultExpireTime
     },
-    use_to_login:{
+    useToLogin:{
       type        :DataTypes.BOOLEAN,
       allowNull   :false,
       defaultValue:false
@@ -50,7 +50,7 @@ export default sequelize => {
     provider:{
       type:DataTypes.STRING
     },
-    is_valid:{
+    isValid:{
       type:new DataTypes.VIRTUAL(DataTypes.BOOLEAN, 'expires'),
       get() {
         return this.get('expires') >= Date.now()
@@ -59,7 +59,10 @@ export default sequelize => {
 
   },{
     sequelize,
-    modelName:'Setter'
+    modelName:'Setter',
+    tableName:'oauth2_setters',
+    updatedAt:'updatedAt',
+    createdAt:'createdAt'
   })
 
   Setter.associate = models => {

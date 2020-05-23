@@ -8,8 +8,8 @@ const Model = models.Setter
 
 const generateFakeData = (options = {}) => {
   const data = {
-    provider    :faker.commerce.product(),
-    use_to_login:faker.random.boolean(),
+    provider  :faker.commerce.product(),
+    useToLogin:faker.random.boolean(),
   }
 
   const final_data = {}
@@ -51,8 +51,8 @@ describe('OAuth2 -> Setter Model', function() {
       const data1 = generateFakeData()
       const data2 = generateFakeData({ expires: Date.now() - (Number(200 * 1000)) })
       const records = await Model.bulkCreate([data1, data2])
-      expect( records[0].is_valid ).to.equal(true)
-      expect( records[1].is_valid ).to.equal(false)
+      expect( records[0].isValid ).to.equal(true)
+      expect( records[1].isValid ).to.equal(false)
       records.forEach((e) =>
         e.destroy()
       )
@@ -60,16 +60,16 @@ describe('OAuth2 -> Setter Model', function() {
   })
   describe('Model -> Instance Method -> Login', function() {
     it('Model API -> When we login a valid instance, it should be not valid anymore', async function() {
-      const data1 = generateFakeData({ use_to_login: true })
-      const data2 = generateFakeData({ use_to_login: false })
-      const data3 = generateFakeData({ use_to_login: true, expires: Date.now() - (Number(200 * 1000)) })
+      const data1 = generateFakeData({ useToLogin: true })
+      const data2 = generateFakeData({ useToLogin: false })
+      const data3 = generateFakeData({ useToLogin: true, expires: Date.now() - (Number(200 * 1000)) })
       const records = await Model.bulkCreate([data1, data2, data3])
       const [e1, e2, e3] = records
-      //console.log(999, records[0].is_valid, records[0].use_to_login, await records[0].login())
+      //console.log(999, records[0].isValid, records[0].useToLogin, await records[0].login())
       expect( await e1.login() ).to.equal(true)
       expect( await e2.login() ).to.equal(false)
       expect( await e3.login() ).to.equal(false)
-      expect( await e1.use_to_login ).to.equal(false)
+      expect( await e1.useToLogin ).to.equal(false)
       records.forEach(e => {
         e.destroy()
       })

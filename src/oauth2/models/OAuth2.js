@@ -12,10 +12,10 @@ export default (sequelize) => {
       allowNull   :false,
       primaryKey  :true,
     },
-    access_token:{
+    accessToken:{
       type:DataTypes.STRING
     },
-    refresh_token:{
+    refreshToken:{
       type:DataTypes.STRING
     },
     provider:{
@@ -33,7 +33,7 @@ export default (sequelize) => {
     email:{
       type:DataTypes.STRING
     },
-    email_verified:{
+    emailVerified:{
       type        :DataTypes.BOOLEAN,
       defaultValue:false
     },
@@ -44,7 +44,9 @@ export default (sequelize) => {
   },{
     sequelize,
     modelName:'OAuth2',
-    tableName:'oauth2'
+    tableName:'oauth2',
+    updatedAt:'updatedAt',
+    createdAt:'createdAt'
   //freezeTableName: true
   })
 

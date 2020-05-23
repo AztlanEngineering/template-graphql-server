@@ -4,15 +4,17 @@ import { Sequelize, DataTypes, Model } from 'sequelize'
 export default sequelize => {
   class Token extends Model {
 
+    /*
     async login() {
       //console.log(this)
-      if (this.valid && this.use_to_login){
-        this.use_to_login = false,
+      if (this.valid && this.useToLogin){
+        this.useToLogin = false,
         await this.save()
         return true
       }
       return false
     }
+    */
 
   /*
   static classLevelMethod() {
@@ -35,11 +37,14 @@ export default sequelize => {
     token:{
       type     :DataTypes.TEXT,
       allowNull:false
-    }
+    },
 
   },{
     sequelize,
-    modelName:'Token'
+    modelName:'Token',
+    updatedAt:'updatedAt',
+    tableName:'auth_tokens',
+    createdAt:'createdAt'
   })
 
   //Token.addHook('afterCreate', 'hookName', (e, options) => {})

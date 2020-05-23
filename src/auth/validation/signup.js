@@ -6,24 +6,24 @@ const Model = models.User
 
 export default async(d) => {
   let e = {}
-  d.last_name = !isEmpty(d.last_name) ? d.last_name : ''
+  d.lastName = !isEmpty(d.lastName) ? d.lastName : ''
   d.username = !isEmpty(d.username) ? d.username : ''
-  d.first_name = !isEmpty(d.first_name) ? d.first_name : ''
+  d.firstName = !isEmpty(d.firstName) ? d.firstName : ''
   d.email = !isEmpty(d.email) ? d.email : ''
   d.password = !isEmpty(d.password) ? d.password : ''
   // d.password_confirm = !isEmpty(d.password_confirm) ? d.password_confirm : ''
   //
 
-  if (!V.isLength(d.first_name, { min: 2, max: 30 })) {
-    e.first_name = 'First name must be between 2 to 30 chars'
+  if (!V.isLength(d.firstName, { min: 2, max: 30 })) {
+    e.firstName = 'First name must be between 2 to 30 chars'
   }
 
-  if (V.isEmpty(d.last_name)) {
-    e.last_name = 'Last name field is required'
+  if (V.isEmpty(d.lastName)) {
+    e.lastName = 'Last name field is required'
   }
 
-  if (V.isEmpty(d.first_name)) {
-    e.first_name = 'First name field is required'
+  if (V.isEmpty(d.firstName)) {
+    e.firstName = 'First name field is required'
   }
 
   if (V.isEmpty(d.username)) {

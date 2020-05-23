@@ -7,16 +7,16 @@ const Model = models.Make
 
 const generateFakeData = (options = {}) => {
   const data = {
-    name       :faker.company.companyName(),
-    slug       :faker.helpers.slugify(faker.company.companyName().toLowerCase()),
-    active_from:'1920',
-    active_to  :'present',
-    country    :faker.address.country(),
-    is_common  :faker.random.boolean(),
-    is_active  :faker.random.boolean(),
-    car        :faker.random.boolean(),
-    motorcycle :faker.random.boolean(),
-    seotext    :faker.lorem.paragraph(5),
+    name      :faker.company.companyName(),
+    slug      :faker.helpers.slugify(faker.company.companyName().toLowerCase()),
+    activeFrom:'1920',
+    activeTo  :'present',
+    country   :faker.address.country(),
+    isCommon  :faker.random.boolean(),
+    isActive  :faker.random.boolean(),
+    car       :faker.random.boolean(),
+    motorcycle:faker.random.boolean(),
+    seotext   :faker.lorem.paragraph(5),
   } 
 
   const final_data = {}

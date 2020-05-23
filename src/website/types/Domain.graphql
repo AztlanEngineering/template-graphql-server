@@ -1,7 +1,7 @@
 # @fwrlines/generator-graphql-server-type 2.1.1 
 extend type Query {
   allDomains: [Domain]
-  getDomain(id: ID!): Domain
+  getDomain(id: ID!): Domain!
   #paginatedDomain (page:Int, category: String):PaginatedDomains
 }
 
@@ -9,7 +9,7 @@ extend type Mutation {
   #Admin mutations
   addDomain(input:DomainInput!): Domain!
   updateDomain(id: ID!, input: DomainInput!): Domain!
-  deleteDomain(id: ID!): Boolean!
+  deleteDomain(id: ID!): ID!
 
   #User mutations
   }

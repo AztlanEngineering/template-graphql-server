@@ -1,14 +1,14 @@
 # Generator version : 1.1.1
 extend type Query {
   allSetters: [Setter]
-  getSetter: Setter
+  getSetter: Setter!
   #paginatedSetter (page:Int, category: String):PaginatedSetters
 }
 
 extend type Mutation {
   addSetter(input:SetterInput!): Setter!
   updateSetter(id: ID!, input: SetterInput!): Setter!
-  deleteSetter(id: ID!): Boolean!
+  deleteSetter(id: ID!): ID!
   }
 
 input SetterInput {
@@ -23,8 +23,8 @@ type Setter {
   s:String
   provider:String
   expires:Int
-  ts_created:Int
-  is_valid:Boolean
+  createdAt:Int!
+  updatedAt:Int!
 }
 
 #type PaginatedSetters {

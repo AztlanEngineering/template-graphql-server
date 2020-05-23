@@ -43,6 +43,7 @@ export default sequelize => {
   },{
     sequelize,
     modelName:'Page',
+    tableName:'website_pages',
     updatedAt:'updatedAt',
     createdAt:'createdAt'
     //tableName: 'pages'

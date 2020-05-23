@@ -199,7 +199,7 @@ export default sequelize => {
   },{
     sequelize,
     modelName:'Domain',
-    //tableName: 'domains'
+    tableName:'domains',
     //freezeTableName: true
     updatedAt:'updatedAt',
     createdAt:'createdAt'

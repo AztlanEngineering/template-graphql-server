@@ -35,7 +35,7 @@ export default sequelize => {
     category:{
       type:DataTypes.STRING
     },
-    is_active:{
+    isActive:{
       type        :DataTypes.BOOLEAN,
       allowNull   :false,
       defaultValue:true
@@ -50,13 +50,13 @@ export default sequelize => {
       allowNull   :false,
       defaultValue:false
     },
-    generic_cta:{
+    genericCta:{
       type:DataTypes.TEXT
     },
-    carbutton:{
+    carButton:{
       type:DataTypes.STRING
     },
-    motobutton:{
+    motoButton:{
       type:DataTypes.STRING
     },
     seotext:{
@@ -75,8 +75,10 @@ export default sequelize => {
     }
   },{
     sequelize,
-    modelName:'Service'
-  //tableName: 'services'
+    modelName:'Service',
+    tableName:'services',
+    updatedAt:'updatedAt',
+    createdAt:'createdAt',
   //freezeTableName: true
   })
   //Service.addHook('afterCreate', 'hookName', (e, options) => {})

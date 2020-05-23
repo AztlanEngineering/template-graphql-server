@@ -31,21 +31,21 @@ export default sequelize => {
       allowNull:false,
       unique   :true
     },
-    active_from:{
+    activeFrom:{
       type:DataTypes.STRING
     },
-    active_to:{
+    activeTo:{
       type:DataTypes.STRING
     },
     country:{
       type:DataTypes.STRING
     },
-    is_common:{
+    isCommon:{
       type        :DataTypes.BOOLEAN,
       allowNull   :false,
       defaultValue:false
     },
-    is_active:{
+    isActive:{
       type        :DataTypes.BOOLEAN,
       allowNull   :false,
       defaultValue:false
@@ -66,7 +66,10 @@ export default sequelize => {
 
   },{
     sequelize,
-    modelName:'Make'
+    modelName:'Make',
+    tableName:'makes',
+    updatedAt:'updatedAt',
+    createdAt:'createdAt'
   })
 
   return Make

@@ -51,6 +51,7 @@ export default sequelize => {
   },{
     sequelize,
     modelName:'Site',
+    tableName:'website',
     updatedAt:'updatedAt',
     createdAt:'createdAt'
     //tableName: 'sites'

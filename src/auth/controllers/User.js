@@ -75,6 +75,7 @@ const Controller = {
     const { errors, isValid } = await validateSignupInput(args)
 
     if (!isValid) {
+      console.log(errors)
       throw new ValidationError({ data: errors })
     }
     
@@ -106,6 +107,7 @@ const Controller = {
 
     if (item) {
       if (await item.isPasswordValid(password)) {
+        //TODO add more login here, for instance if the account is valid
         return await item.getAuthToken()
       }
       
@@ -132,7 +134,7 @@ const Controller = {
 
   setMyPassword:async (root, { oldPassword, newPassword }, context) => {
     const item = await Model.findByPk( context.user.id )
-    const canChangePassword = (item.password_hash && await item.isPasswordValid(oldPassword)) || !item.password_hash
+    const canChangePassword = (item.passwordHash && await item.isPasswordValid(oldPassword)) || !item.passwordHash
     if(canChangePassword) {
       await item.setPassword(newPassword)
       return true

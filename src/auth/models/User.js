@@ -17,13 +17,13 @@ export default sequelize => {
   */
 
     async setPassword(password) {
-      this.password_hash = await bcrypt.hash(password, 8)
+      this.passwordHash = await bcrypt.hash(password, 8)
       await this.save()
       return true
     }
 
     async isPasswordValid(password) {
-      return await bcrypt.compare(password, this.password_hash)
+      return await bcrypt.compare(password, this.passwordHash)
     }
 
     async getAuthToken() {
@@ -46,10 +46,10 @@ export default sequelize => {
         isEmail:true
       },
     },
-    first_name:{
+    firstName:{
       type:DataTypes.STRING
     },
-    last_name:{
+    lastName:{
       type:DataTypes.STRING
     },
     username:{
@@ -65,19 +65,21 @@ export default sequelize => {
       allowNull   :false,
       defaultValue:false
     },
-    is_active:{
+    isActive:{
       type        :DataTypes.BOOLEAN,
       allowNull   :false,
       defaultValue:false
     },
-    password_hash:{
+    passwordHash:{
       type:DataTypes.STRING
     },
 
   },{
     sequelize,
-    modelName:'User'
-  //tableName: 'services'
+    modelName:'User',
+    tableName:'users',
+    updatedAt:'updatedAt',
+    createdAt:'createdAt'
   //freezeTableName: true
   })
   

@@ -1,7 +1,7 @@
 # @fwrlines/generator-graphql-server-type 2.1.1 
 extend type Query {
   allSites: [Site]
-  getSite(id: ID!): Site
+  getSite(id: ID!): Site!
   #paginatedSite (page:Int, category: String):PaginatedSites
 }
 
@@ -9,7 +9,7 @@ extend type Mutation {
   #Admin mutations
   addSite(input:SiteInput!): Site!
   updateSite(id: ID!, input: SiteInput!): Site!
-  deleteSite(id: ID!): Boolean!
+  deleteSite(id: ID!): ID!
 
   #User mutations
   }
