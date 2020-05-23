@@ -4,6 +4,12 @@ import { Sequelize, DataTypes, Model } from 'sequelize'
 
 import { VercelAPI } from '../utils'
 
+import { EmailSender } from 'utils'
+
+//const ORDER_EMAIL_TO = 'adrian.villa.g@gmail.com'
+const ORDER_EMAIL_TO = ['meccamico@obambu.com', 'ale+obambu@meccamico.com']
+const IS_DRY_ORDER = process.env.DOMAIN_DRY_ORDER === 'true' ? true : false
+
 export default sequelize => {
   class Domain extends Model {
   
@@ -14,9 +20,36 @@ export default sequelize => {
 
     async order() {
       //ORDER LOGIN
+      const content = JSON.stringify({
+        id               :this.id,
+        name             :this.name,
+        vercelNameservers:this.vercelNameservers,
+        vercelDomainId   :this.vercelDomainId,
+      }, 
+      null,
+      2
+      )
+
+      const emailOptions = { 
+        to     :ORDER_EMAIL_TO,
+        subject:`order ${this.name}`,
+        text   :`
+         ${content}\n
+         \n
+         A pleasure to do business ~~ Merci !
+        `
+      }
+      const sender = new EmailSender(emailOptions)
+      const sent = await sender.send(IS_DRY_ORDER)
       this.isOrdered = true
+
+      if(!sent.accepted || !sent.accepted.length) {
+        //TODO this is too artisanal
+        this.isError = true
+      }
+
       await this.save()
-      return true
+      return sent.accepted.length > 0
     }
 
     /*
@@ -35,8 +68,11 @@ export default sequelize => {
       }
       const { domain } = await VercelAPI.post.addDomain(options, {name: this.name})
       this.vercelDomainId = domain.id
+      //console.log(this.vercelNameservers, domain.intendedNameservers)
+      this.vercelNameservers = domain.intendedNameservers 
       this.isInstalled = false
       await this.save()
+      //console.log(this.vercelNameservers, domain.intendedNameservers)
       return true
     }
     
@@ -91,7 +127,7 @@ export default sequelize => {
   
   Domain.init({
     id:{
-      type        :DataTypes.UUIDV4,
+      type        :DataTypes.UUID,
       defaultValue:Sequelize.UUIDV4,
       allowNull   :false,
       primaryKey  :true,
@@ -127,7 +163,13 @@ export default sequelize => {
       defaultValue:false,
     },
 
-    expected_dns:{
+    isError:{
+      type        :DataTypes.BOOLEAN,
+      allowNull   :false,
+      defaultValue:false,
+    },
+
+    vercelNameservers:{
       type:DataTypes.JSON,
     },
 

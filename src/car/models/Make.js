@@ -16,7 +16,7 @@ export default sequelize => {
 
   Make.init({
     id:{
-      type        :DataTypes.UUIDV4,
+      type        :DataTypes.UUID,
       defaultValue:Sequelize.UUIDV4,
       allowNull   :false,
       primaryKey  :true,

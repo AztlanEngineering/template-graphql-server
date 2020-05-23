@@ -14,12 +14,13 @@ const generateFakeDomain = () => 'auto-testing-available-domain' + faker.random.
 
 const generateFakeData = (options = {}) => {
   const data = {
-    name        :faker.internet.domainName(),
-    alt         :faker.internet.domainName(),
-    isOrdered   :faker.random.boolean(),
-    isBought    :faker.random.boolean(),
-    isInstalled :faker.random.boolean(),
-    expected_dns:[
+    name             :faker.internet.domainName(),
+    alt              :faker.internet.domainName(),
+    isOrdered        :faker.random.boolean(),
+    isBought         :faker.random.boolean(),
+    isInstalled      :faker.random.boolean(),
+    isError          :faker.random.boolean(),
+    vercelNameservers:[
       faker.internet.domainName(),
       faker.internet.domainName(),
       faker.internet.domainName(),
@@ -92,8 +93,14 @@ describe('Website -> Domain Model', function() {
   describe('Domain Model -> Instance Method -> Order', function() {
     it('Model API -> The domain gets its ordered status toggled, and is connected to the ordering api', async function() {
       //TODO test email sending (?)
-      const data = generateFakeData({ isOrdered: false })
+      const data = generateFakeData({ 
+        name          :generateFakeDomain(),
+        vercelDomainId:null,
+        isOrdered     :false,
+        isError:false
+      })
       const inst = await Model.create(data)
+      const addedToVercel = await inst.addToVercel()
       const ordered = await inst.order()
       expect(ordered).to.be.equal(true)
       const uInst = await MainController.get({}, { id: inst.id })
