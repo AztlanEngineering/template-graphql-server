@@ -1,19 +1,20 @@
-const tableName = 'auth_tokens' //Should equal the one defined in models
-const foreignKeyColumnName = 'userId'
-const foreignKeyTableName = 'users'
+/* @fwrlines/generator-graphql-server-type 2.4.8 */
+const tableName = '' //Should equal the one defined in models
+const foreignKeyColumnName = ''
+const foreignModelTableName = ''
 
 async function up(queryInterface, Sequelize) {
   return queryInterface.addColumn(
-    tableName, 
+    tableName,
     foreignKeyColumnName,
     {
       type      :Sequelize.DataTypes.UUID,
       references:{
-        model:foreignKeyTableName,
+        model:foreignModelTableName,
         key  :'id',
       },
       onUpdate:'CASCADE',
-      onDelete:'CASCADE'
+      onDelete:'SET NULL'
     }
 
   )
@@ -27,3 +28,4 @@ async function down(queryInterface, Sequelize) {
 }
 
 module.exports = { up, down }
+

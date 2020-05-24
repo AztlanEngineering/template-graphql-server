@@ -53,19 +53,20 @@ export default sequelize => {
       as        :'user',
       targetKey :'id',
       foreignKey:{
-        name     :'userId',
-        type     :Sequelize.DataTypes.UUID,
-        allowNull:false
-      }
+        name:'userId',
+        type:Sequelize.DataTypes.UUID,
+      },
+      onDelete:'CASCADE', //RESTRICT, CASCADE, SET DEFAULT
+      //'onUpdate':'CASCADE', //RESTRICT, SET_NULL, SET DEFAULT
     })
     models.User.hasMany(Token, {
       as        :'tokens',
       targetKey :'id',
       foreignKey:{
-        name     :'userId',
-        type     :Sequelize.DataTypes.UUID,
-        allowNull:false
-      }
+        name:'userId',
+        type:Sequelize.DataTypes.UUID,
+      },
+      onDelete:'CASCADE', //RESTRICT, CASCADE, SET DEFAULT
     })
   }
   return Token

@@ -1,5 +1,9 @@
-/* @fwrlines/generator-graphql-server-type 2.1.1 */
-import { assert, expect } from 'chai'
+/* @fwrlines/generator-graphql-server-type 2.4.8 */
+import chai from 'chai'
+import chaiAsPromised from 'chai-as-promised'
+chai.use(chaiAsPromised)
+const { assert, expect } = chai
+
 import { TokenController as MainController } from '../controllers'
 import models from 'models'
 import * as faker from 'faker'
@@ -8,16 +12,9 @@ const Model = models.Token
 
 const generateFakeData = (options = {}) => {
   const data = {
-    name       :faker.company.companyName(),
-    slug       :faker.helpers.slugify(faker.company.companyName().toLowerCase()),
-    active_from:'1920',
-    active_to  :'present',
-    country    :faker.address.country(),
-    is_common  :faker.random.boolean(),
-    is_active  :faker.random.boolean(),
-    car        :faker.random.boolean(),
-    motorcycle :faker.random.boolean(),
-    seotext    :faker.lorem.paragraph(5),
+    maxAge:faker.random.number({min: 1000, max: 604800}),
+    token :faker.random.alphaNumeric(800),
+    //userId:faker.random.uuid()
   }
 
   const final_data = {}
@@ -28,14 +25,13 @@ const generateFakeData = (options = {}) => {
   return { ...options, ...final_data }
 }
 
-describe('Token Model', function() {
+describe('Auth -> Token Model', function() {
   /*
   before( function(){
   })
 
   beforeEach( function(){
   })
-  */
 
   describe('Model -> Key -> Code', function() {
     it('Default Value -> The default code is a unique 64 char string', async function() {
@@ -68,7 +64,6 @@ describe('Token Model', function() {
   
   })
 
-  /*
   afterEach( function(){
   })
 
@@ -77,7 +72,7 @@ describe('Token Model', function() {
   */
 })
 
-describe('Token Controller', function() {
+describe('Auth -> Token Controller', function() {
   /*
   before( function(){
   })
@@ -99,6 +94,8 @@ describe('Token Controller', function() {
       const rows = await MainController.all({})
       const r1 = await Model.findByPk(id1)
       const r2 = await Model.findByPk(id2)
+      assert.exists(r1.id, 'We shouldnt deep test inclusion of empty item')
+      assert.exists(r2.id, 'We shouldnt deep test inclusion of empty item')
       expect(rows).to.deep.include.members([ r1, r2 ])
       records.forEach((e) =>
         e.destroy()
@@ -142,7 +139,7 @@ describe('Token Controller', function() {
       const data = generateFakeData()
       const { id } = await Model.create( data )
       const success = await MainController.delete({}, { id })
-      assert( success == true, 'The controller should respond true to the deletion command' )
+      assert( success === id, `The controller should respond ${id} to the deletion command`)
       await Model.findByPk(id, { transaction: null }) //there is a little time for the deletion to actually happen, so we auery twice
       const objectShouldntRemain = await Model.findByPk(id, { transaction: null })
       expect( objectShouldntRemain ).to.equal(null)
