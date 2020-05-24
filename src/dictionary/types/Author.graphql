@@ -1,0 +1,44 @@
+# @fwrlines/generator-graphql-server-type 2.4.6 
+extend type Query {
+  allDictionaryAuthors: [DictionaryAuthor]
+  getDictionaryAuthor(id: ID!): DictionaryAuthor!
+  #paginatedDictionaryAuthor (page:Int, category: String):PaginatedDictionaryAuthors
+}
+
+extend type Mutation {
+  #Admin mutations
+  addDictionaryAuthor(input:DictionaryAuthorInput!): DictionaryAuthor!
+  updateDictionaryAuthor(id: ID!, input: DictionaryAuthorInput!): DictionaryAuthor!
+  deleteDictionaryAuthor(id: ID!): ID!
+
+  #User mutations
+  }
+
+input DictionaryAuthorInput {
+  x:Int
+  y:String
+  z:Boolean
+  }
+
+type DictionaryAuthor {
+  id:ID!
+  x:Int
+  y:String
+  z:Boolean
+  zz:Float
+  createdAt:Int!
+  updatedAt:Int!
+}
+
+#type PaginatedDictionaryAuthors {
+#  docs: [DictionaryAuthor]
+#  totalDocs: Int!
+#  limit: Int!
+#  hasPrevPage: Boolean!
+#  hasNextPage: Boolean!
+#  page: Int!
+#  totalPages: Int!
+#  pagingCounter: Int!
+#  prevPage: Int
+#  nextPage: Int
+#}

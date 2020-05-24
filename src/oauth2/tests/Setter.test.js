@@ -1,10 +1,10 @@
 /* @fwrlines/generator-graphql-server-type 2.1.1 */
 import { assert, expect } from 'chai'
-import { SetterController as MainController } from '../controllers'
+import { OAuth2SetterController as MainController } from '../controllers'
 import models from 'models'
 import * as faker from 'faker'
 
-const Model = models.Setter
+const Model = models.OAuth2Setter
 
 const generateFakeData = (options = {}) => {
   const data = {
@@ -20,7 +20,7 @@ const generateFakeData = (options = {}) => {
   return { ...options, ...final_data }
 }
 
-describe('OAuth2 -> Setter Model', function() {
+describe('OAuth2 -> OAuth2Setter Model', function() {
   /*
   before( function(){
   })
@@ -85,7 +85,7 @@ describe('OAuth2 -> Setter Model', function() {
   */
 })
 
-describe('OAuth2 -> Setter Controller', function() {
+describe('OAuth2 -> OAuth2Setter Controller', function() {
 
   /*
   before( function(){

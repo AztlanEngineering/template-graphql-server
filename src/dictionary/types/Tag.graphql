@@ -1,0 +1,44 @@
+# @fwrlines/generator-graphql-server-type 2.4.6 
+extend type Query {
+  allDictionaryTags: [DictionaryTag]
+  getDictionaryTag(id: ID!): DictionaryTag!
+  #paginatedDictionaryTag (page:Int, category: String):PaginatedDictionaryTags
+}
+
+extend type Mutation {
+  #Admin mutations
+  addDictionaryTag(input:DictionaryTagInput!): DictionaryTag!
+  updateDictionaryTag(id: ID!, input: DictionaryTagInput!): DictionaryTag!
+  deleteDictionaryTag(id: ID!): ID!
+
+  #User mutations
+  }
+
+input DictionaryTagInput {
+  x:Int
+  y:String
+  z:Boolean
+  }
+
+type DictionaryTag {
+  id:ID!
+  x:Int
+  y:String
+  z:Boolean
+  zz:Float
+  createdAt:Int!
+  updatedAt:Int!
+}
+
+#type PaginatedDictionaryTags {
+#  docs: [DictionaryTag]
+#  totalDocs: Int!
+#  limit: Int!
+#  hasPrevPage: Boolean!
+#  hasNextPage: Boolean!
+#  page: Int!
+#  totalPages: Int!
+#  pagingCounter: Int!
+#  prevPage: Int
+#  nextPage: Int
+#}

@@ -24,17 +24,17 @@ export default sequelize => {
   
   Site.init({
     id:{
-      type        :DataTypes.UUID,
+      type        :Sequelize.DataTypes.UUID,
       defaultValue:Sequelize.UUIDV4,
       allowNull   :false,
       primaryKey  :true,
     },
 
     name:{
-      type        :DataTypes.STRING,
-      //type: DataTypes.BOOLEAN,
-      //type: DataTypes.INTEGER,
-      //type: DataTypes.BIGINT,
+      type        :Sequelize.DataTypes.STRING,
+      //type: Sequelize.DataTypes.BOOLEAN,
+      //type: Sequelize.DataTypes.INTEGER,
+      //type: Sequelize.DataTypes.BIGINT,
       allowNull   :false,
       defaultValue:'john',
       //unique:true
@@ -44,14 +44,14 @@ export default sequelize => {
   
     /*
     uuid:{
-      type: DataTypes.UUID,
+      type: Sequelize.DataTypes.UUID,
       defaultValue: Sequelize.UUIDV4
     }
     */
   },{
     sequelize,
     modelName:'Site',
-    tableName:'website',
+    tableName:'websites',
     updatedAt:'updatedAt',
     createdAt:'createdAt'
     //tableName: 'sites'
@@ -60,19 +60,21 @@ export default sequelize => {
 
   
   Site.associate = models => {
+    //Here we do a reverse association to be able to query both the site and the domain doing one request less
     Site.belongsTo(models.Domain, {
       targetKey :'name',
       foreignKey:{
         name:'domainName',
-        type:DataTypes.STRING,
+        type:Sequelize.DataTypes.STRING,
         //allowNull:false
       }
     })
+
     models.Domain.hasOne(Site, {
       targetKey :'name',
       foreignKey:{
         name:'domainName',
-        type:DataTypes.STRING,
+        type:Sequelize.DataTypes.STRING,
         //allowNull:false
       }
     })

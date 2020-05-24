@@ -1,75 +1,75 @@
 /* @fwrlines/generator-graphql-server-type 1.3.1 */
-import { Sequelize, DataTypes, Model } from 'sequelize'
+import { Sequelize, Model } from 'sequelize'
 
 export default (sequelize) => {
-  class OAuth2 extends Model {
+  class Profile extends Model {
   }
 
-  OAuth2.init({
+  Profile.init({
     id:{
-      type        :DataTypes.UUID,
+      type        :Sequelize.DataTypes.UUID,
       defaultValue:Sequelize.UUIDV4,
       allowNull   :false,
       primaryKey  :true,
     },
     accessToken:{
-      type:DataTypes.STRING
+      type:Sequelize.DataTypes.STRING
     },
     refreshToken:{
-      type:DataTypes.STRING
+      type:Sequelize.DataTypes.STRING
     },
     provider:{
-      type:DataTypes.STRING
+      type:Sequelize.DataTypes.STRING
     },
     scope:{
-      type:DataTypes.STRING
+      type:Sequelize.DataTypes.STRING
     },
     locale:{
-      type:DataTypes.STRING
+      type:Sequelize.DataTypes.STRING
     },
     name:{
-      type:DataTypes.STRING
+      type:Sequelize.DataTypes.STRING
     },
     email:{
-      type:DataTypes.STRING
+      type:Sequelize.DataTypes.STRING
     },
     emailVerified:{
-      type        :DataTypes.BOOLEAN,
+      type        :Sequelize.DataTypes.BOOLEAN,
       defaultValue:false
     },
     expires:{
-      type:DataTypes.DATE
+      type:Sequelize.DataTypes.DATE
     }
 
   },{
     sequelize,
-    modelName:'OAuth2',
-    tableName:'oauth2',
+    modelName:'OAuth2Profile',
+    tableName:'oauth2_profiles',
     updatedAt:'updatedAt',
     createdAt:'createdAt'
   //freezeTableName: true
   })
 
-  OAuth2.associate = models => {
+  Profile.associate = models => {
     //reverse association to keep this package independent from auth
-    models.User.hasMany(OAuth2, {
+    models.User.hasMany(Profile, {
       targetKey :'id',
       foreignKey:{
         name:'userId',
-        type:DataTypes.UUID,
+        type:Sequelize.DataTypes.UUID,
         //allowNull:false
       }
     })
-    OAuth2.belongsTo(models.User, {
+    Profile.belongsTo(models.User, {
       targetKey :'id',
       foreignKey:{
         name:'userId',
-        type:DataTypes.UUID,
+        type:Sequelize.DataTypes.UUID,
         //allowNull:false
       }
     })
   }
 
-  return OAuth2
+  return Profile
 }
 

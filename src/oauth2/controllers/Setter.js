@@ -1,7 +1,7 @@
 import models from 'models'
 import { ObjectNotFoundError } from 'utils'
 
-const Model = models.Setter
+const Model = models.OAuth2Setter
 
 /*
 import {

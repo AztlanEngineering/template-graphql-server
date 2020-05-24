@@ -1,6 +1,6 @@
 /* @fwrlines/generator-graphql-server-type 2.1.1 */
 
-import { Sequelize, DataTypes, Model } from 'sequelize'
+import { Sequelize, Model } from 'sequelize'
 
 import { VercelAPI } from '../utils'
 
@@ -127,70 +127,70 @@ export default sequelize => {
   
   Domain.init({
     id:{
-      type        :DataTypes.UUID,
+      type        :Sequelize.DataTypes.UUID,
       defaultValue:Sequelize.UUIDV4,
       allowNull   :false,
       primaryKey  :true,
     },
 
     name:{
-      type     :DataTypes.STRING,
+      type     :Sequelize.DataTypes.STRING,
       allowNull:false,
       unique   :true
     },
 
     alt:{
-      type     :DataTypes.STRING,
+      type     :Sequelize.DataTypes.STRING,
       allowNull:false,
       unique   :true
     },
 
     isOrdered:{
-      type        :DataTypes.BOOLEAN,
+      type        :Sequelize.DataTypes.BOOLEAN,
       allowNull   :false,
       defaultValue:false,
     },
 
     isBought:{
-      type        :DataTypes.BOOLEAN,
+      type        :Sequelize.DataTypes.BOOLEAN,
       allowNull   :false,
       defaultValue:false,
     },
   
     isInstalled:{
-      type        :DataTypes.BOOLEAN,
+      type        :Sequelize.DataTypes.BOOLEAN,
       allowNull   :false,
       defaultValue:false,
     },
 
     isError:{
-      type        :DataTypes.BOOLEAN,
+      type        :Sequelize.DataTypes.BOOLEAN,
       allowNull   :false,
       defaultValue:false,
     },
 
     vercelNameservers:{
-      type:DataTypes.JSON,
+      type:Sequelize.DataTypes.JSON,
     },
 
     vercelTeamId:{
-      type        :DataTypes.STRING,
+      type        :Sequelize.DataTypes.STRING,
       defaultValue:process.env.VERCEL_TEAM_ID
     },
 
     vercelDomainId:{
-      type:DataTypes.STRING,
+      type:Sequelize.DataTypes.STRING,
     },
 
     main:{
-      type:new DataTypes.VIRTUAL(DataTypes.STRING, ['name', 'alt', 'isInstalled']),
+      type:new Sequelize.DataTypes.VIRTUAL(Sequelize.DataTypes.STRING, ['name', 'alt', 'isInstalled']),
       get :function() {
         return this.get('isInstalled') ? this.get('name') : this.get('alt')
       }
     },
 
     isAddedToVercel:{
-      type:new DataTypes.VIRTUAL(DataTypes.BOOLEAN, ['vercelDomainId']),
+      type:new Sequelize.DataTypes.VIRTUAL(Sequelize.DataTypes.BOOLEAN, ['vercelDomainId']),
       get :function() {
         return this.get('vercelDomainId').length ? true : false
       }
@@ -199,7 +199,7 @@ export default sequelize => {
   },{
     sequelize,
     modelName:'Domain',
-    tableName:'domains',
+    tableName:'website_domains',
     //freezeTableName: true
     updatedAt:'updatedAt',
     createdAt:'createdAt'

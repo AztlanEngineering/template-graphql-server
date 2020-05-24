@@ -224,7 +224,7 @@ describe('Auth -> User Controller', function() {
         }
       )
       expect( loginToken.maxAge ).to.be.equal(Number(process.env.SESSION_DURATION))
-      expect( loginToken.UserId ).to.be.equal(item.id)
+      expect( loginToken.userId ).to.be.equal(item.id)
       expect( ver.id ).to.be.equal(item.id)
       expect( ver.email ).to.be.equal(item.email)
       expect( ver.username ).to.be.equal(item.username)
@@ -254,7 +254,7 @@ describe('Auth -> User Controller', function() {
       )
       //console.log(9998877, ver)
       expect( loginToken.maxAge ).to.be.equal(Number(process.env.SESSION_DURATION))
-      expect( loginToken.UserId ).to.be.equal(item.id)
+      expect( loginToken.userId ).to.be.equal(item.id)
       expect( ver.id ).to.be.equal(item.id)
       expect( ver.email ).to.be.equal(item.email)
       expect( ver.username ).to.be.equal(item.username)

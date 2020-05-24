@@ -1,5 +1,5 @@
 /* @fwrlines/generator-graphql-server-type 1.3.1 */
-import { Sequelize, DataTypes, Model } from 'sequelize'
+import { Sequelize, Model } from 'sequelize'
 
 export default sequelize => {
   class Token extends Model {
@@ -25,17 +25,17 @@ export default sequelize => {
 
   Token.init({
     id:{
-      type        :DataTypes.UUID,
+      type        :Sequelize.DataTypes.UUID,
       defaultValue:Sequelize.UUIDV4,
       allowNull   :false,
       primaryKey  :true,
     },
     maxAge:{
-      type        :DataTypes.INTEGER,
+      type        :Sequelize.DataTypes.INTEGER,
       defaultValue:3600
     },
     token:{
-      type     :DataTypes.TEXT,
+      type     :Sequelize.DataTypes.TEXT,
       allowNull:false
     },
 
@@ -53,7 +53,15 @@ export default sequelize => {
       targetKey :'id',
       foreignKey:{
         name     :'userId',
-        type     :DataTypes.UUID,
+        type     :Sequelize.DataTypes.UUID,
+        allowNull:false
+      }
+    })
+    models.User.hasMany(Token, {
+      targetKey :'id',
+      foreignKey:{
+        name     :'userId',
+        type     :Sequelize.DataTypes.UUID,
         allowNull:false
       }
     })

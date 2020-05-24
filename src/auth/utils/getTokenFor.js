@@ -49,7 +49,7 @@ export default async (user, secret=process.env.JWT_SECRET) => {
   // As it is the case here...
   return await Token.create({ 
     maxAge:tokenDuration, 
-    UserId:user.id,
+    userId:user.id,
     token, 
   })
 }

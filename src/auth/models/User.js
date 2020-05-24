@@ -1,5 +1,5 @@
 /* @fwrlines/generator-graphql-server-type 1.3.1 */
-import { Sequelize, DataTypes, Model } from 'sequelize'
+import { Sequelize, Model } from 'sequelize'
 import bcrypt from 'bcrypt'
 
 import { getTokenFor } from '../utils'
@@ -34,44 +34,44 @@ export default sequelize => {
 
   User.init({
     id:{
-      type        :DataTypes.UUID,
+      type        :Sequelize.DataTypes.UUID,
       defaultValue:Sequelize.UUIDV4,
       allowNull   :false,
       primaryKey  :true,
     },
     email:{
-      type    :DataTypes.STRING,
+      type    :Sequelize.DataTypes.STRING,
       unique  :true,
       validate:{
         isEmail:true
       },
     },
     firstName:{
-      type:DataTypes.STRING
+      type:Sequelize.DataTypes.STRING
     },
     lastName:{
-      type:DataTypes.STRING
+      type:Sequelize.DataTypes.STRING
     },
     username:{
-      type  :DataTypes.STRING,
+      type  :Sequelize.DataTypes.STRING,
       unique:true
     },
     handle:{
-      type  :DataTypes.STRING,
+      type  :Sequelize.DataTypes.STRING,
       unique:true
     },
     superuser:{
-      type        :DataTypes.BOOLEAN,
+      type        :Sequelize.DataTypes.BOOLEAN,
       allowNull   :false,
       defaultValue:false
     },
     isActive:{
-      type        :DataTypes.BOOLEAN,
+      type        :Sequelize.DataTypes.BOOLEAN,
       allowNull   :false,
       defaultValue:false
     },
     passwordHash:{
-      type:DataTypes.STRING
+      type:Sequelize.DataTypes.STRING
     },
 
   },{

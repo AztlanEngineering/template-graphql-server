@@ -1,5 +1,5 @@
 /* @fwrlines/generator-graphql-server-type 2.1.1 */
-import { Sequelize, DataTypes, Model } from 'sequelize'
+import { Sequelize, Model } from 'sequelize'
 
 export default sequelize => {
   class Page extends Model {
@@ -17,33 +17,28 @@ export default sequelize => {
   
   Page.init({
     id:{
-      type        :DataTypes.UUID,
+      type        :Sequelize.DataTypes.UUID,
       defaultValue:Sequelize.UUIDV4,
       allowNull   :false,
       primaryKey  :true,
     },
 
     name:{
-      type     :DataTypes.STRING,
+      type     :Sequelize.DataTypes.STRING,
       allowNull:false,
-      //defaultValue:'john',
-      //unique:true
-      //field:'column_name_here'
     },
 
     slug:{
-      type     :DataTypes.STRING,
+      type     :Sequelize.DataTypes.STRING,
       allowNull:true,
-      //defaultValue:'john',
-      //field:'column_name_here'
     },
 
     metaData:{
-      type:DataTypes.JSON,
+      type:Sequelize.DataTypes.JSON,
     },
 
     data:{
-      type:DataTypes.JSON,
+      type:Sequelize.DataTypes.JSON,
     },
   
   },{
@@ -69,7 +64,7 @@ export default sequelize => {
       targetKey :'id',
       foreignKey:{
         name:'siteId',
-        type:DataTypes.UUID,
+        type:Sequelize.DataTypes.UUID,
         //allowNull:false
       }
     })
@@ -78,7 +73,7 @@ export default sequelize => {
       targetKey :'id',
       foreignKey:{
         name:'siteId',
-        type:DataTypes.UUID,
+        type:Sequelize.DataTypes.UUID,
         //allowNull:false
       }
     })

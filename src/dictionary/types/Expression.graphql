@@ -1,0 +1,44 @@
+# @fwrlines/generator-graphql-server-type 2.4.6 
+extend type Query {
+  allDictionaryExpressions: [DictionaryExpression]
+  getDictionaryExpression(id: ID!): DictionaryExpression!
+  #paginatedDictionaryExpression (page:Int, category: String):PaginatedDictionaryExpressions
+}
+
+extend type Mutation {
+  #Admin mutations
+  addDictionaryExpression(input:DictionaryExpressionInput!): DictionaryExpression!
+  updateDictionaryExpression(id: ID!, input: DictionaryExpressionInput!): DictionaryExpression!
+  deleteDictionaryExpression(id: ID!): ID!
+
+  #User mutations
+  }
+
+input DictionaryExpressionInput {
+  x:Int
+  y:String
+  z:Boolean
+  }
+
+type DictionaryExpression {
+  id:ID!
+  x:Int
+  y:String
+  z:Boolean
+  zz:Float
+  createdAt:Int!
+  updatedAt:Int!
+}
+
+#type PaginatedDictionaryExpressions {
+#  docs: [DictionaryExpression]
+#  totalDocs: Int!
+#  limit: Int!
+#  hasPrevPage: Boolean!
+#  hasNextPage: Boolean!
+#  page: Int!
+#  totalPages: Int!
+#  pagingCounter: Int!
+#  prevPage: Int
+#  nextPage: Int
+#}

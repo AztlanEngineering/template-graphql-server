@@ -1,0 +1,44 @@
+# @fwrlines/generator-graphql-server-type 2.4.5 
+extend type Query {
+  allShops: [Shop]
+  getShop(id: ID!): Shop!
+  #paginatedShop (page:Int, category: String):PaginatedShops
+}
+
+extend type Mutation {
+  #Admin mutations
+  addShop(input:ShopInput!): Shop!
+  updateShop(id: ID!, input: ShopInput!): Shop!
+  deleteShop(id: ID!): ID!
+
+  #User mutations
+  }
+
+input ShopInput {
+  x:Int
+  y:String
+  z:Boolean
+  }
+
+type Shop {
+  id:ID!
+  x:Int
+  y:String
+  z:Boolean
+  zz:Float
+  createdAt:Int!
+  updatedAt:Int!
+}
+
+#type PaginatedShops {
+#  docs: [Shop]
+#  totalDocs: Int!
+#  limit: Int!
+#  hasPrevPage: Boolean!
+#  hasNextPage: Boolean!
+#  page: Int!
+#  totalPages: Int!
+#  pagingCounter: Int!
+#  prevPage: Int
+#  nextPage: Int
+#}

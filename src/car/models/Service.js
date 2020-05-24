@@ -1,5 +1,5 @@
 /* @fwrlines/generator-graphql-server-type 1.3.1 */
-import { Sequelize, DataTypes, Model } from 'sequelize'
+import { Sequelize, Model } from 'sequelize'
 //import sequelize from 'connector'
 
 export default sequelize => {
@@ -17,61 +17,61 @@ export default sequelize => {
 
   Service.init({
     id:{
-      type        :DataTypes.UUID,
+      type        :Sequelize.DataTypes.UUID,
       defaultValue:Sequelize.UUIDV4,
       allowNull   :false,
       primaryKey  :true,
     },
     name:{
-      type     :DataTypes.STRING,
+      type     :Sequelize.DataTypes.STRING,
       allowNull:false,
       unique   :true
     },
     slug:{
-      type     :DataTypes.STRING,
+      type     :Sequelize.DataTypes.STRING,
       allowNull:false,
       unique   :true
     },
     category:{
-      type:DataTypes.STRING
+      type:Sequelize.DataTypes.STRING
     },
     isActive:{
-      type        :DataTypes.BOOLEAN,
+      type        :Sequelize.DataTypes.BOOLEAN,
       allowNull   :false,
       defaultValue:true
     },
     car:{
-      type        :DataTypes.BOOLEAN,
+      type        :Sequelize.DataTypes.BOOLEAN,
       allowNull   :false,
       defaultValue:false
     },
     motorcycle:{
-      type        :DataTypes.BOOLEAN,
+      type        :Sequelize.DataTypes.BOOLEAN,
       allowNull   :false,
       defaultValue:false
     },
     genericCta:{
-      type:DataTypes.TEXT
+      type:Sequelize.DataTypes.TEXT
     },
     carButton:{
-      type:DataTypes.STRING
+      type:Sequelize.DataTypes.STRING
     },
     motoButton:{
-      type:DataTypes.STRING
+      type:Sequelize.DataTypes.STRING
     },
     seotext:{
-      type:DataTypes.TEXT
+      type:Sequelize.DataTypes.TEXT
     },
 
     /*
   invisible: {
-    type: DataTypes.BOOLEAN,
+    type: Sequelize.DataTypes.BOOLEAN,
     allowNull: false,
     defaultValue:false,
   },
   */
     icon:{
-      type:DataTypes.STRING
+      type:Sequelize.DataTypes.STRING
     }
   },{
     sequelize,

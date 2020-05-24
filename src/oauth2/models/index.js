@@ -1,2 +1,2 @@
-export { default as Setter } from './Setter'
-export { default as OAuth2 } from './OAuth2'
+export { default as OAuth2Setter } from './Setter'
+export { default as OAuth2Profile } from './Profile'

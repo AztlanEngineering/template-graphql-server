@@ -1,5 +1,5 @@
 /* @fwrlines/generator-graphql-server-type 1.3.1 */
-import { Sequelize, DataTypes, Model } from 'sequelize'
+import { Sequelize, Model } from 'sequelize'
 
 import { randomString } from 'utils'
 
@@ -27,31 +27,31 @@ export default sequelize => {
 
   Setter.init({
     id:{
-      type        :DataTypes.UUID,
+      type        :Sequelize.DataTypes.UUID,
       defaultValue:Sequelize.UUIDV4,
       allowNull   :false,
       primaryKey  :true,
     },
     expires:{
-      type        :DataTypes.DATE,
+      type        :Sequelize.DataTypes.DATE,
       defaultValue:getDefaultExpireTime
     },
     useToLogin:{
-      type        :DataTypes.BOOLEAN,
+      type        :Sequelize.DataTypes.BOOLEAN,
       allowNull   :false,
       defaultValue:false
     },
     code:{
-      type        :DataTypes.STRING,
+      type        :Sequelize.DataTypes.STRING,
       allowNull   :false,
       defaultValue:() => randomString(64),
       unique      :true
     },
     provider:{
-      type:DataTypes.STRING
+      type:Sequelize.DataTypes.STRING
     },
     isValid:{
-      type:new DataTypes.VIRTUAL(DataTypes.BOOLEAN, 'expires'),
+      type:new Sequelize.DataTypes.VIRTUAL(Sequelize.DataTypes.BOOLEAN, 'expires'),
       get() {
         return this.get('expires') >= Date.now()
       }
@@ -59,18 +59,26 @@ export default sequelize => {
 
   },{
     sequelize,
-    modelName:'Setter',
+    modelName:'OAuth2Setter',
     tableName:'oauth2_setters',
     updatedAt:'updatedAt',
     createdAt:'createdAt'
   })
 
   Setter.associate = models => {
+    models.User.hasMany(Setter, {
+      targetKey :'id',
+      foreignKey:{
+        name:'userId',
+        type:Sequelize.DataTypes.UUID,
+        //allowNull:false
+      }
+    })
     Setter.belongsTo(models.User, {
       targetKey :'id',
       foreignKey:{
         name:'userId',
-        type:DataTypes.UUID,
+        type:Sequelize.DataTypes.UUID,
         //allowNull:false
       }
     })
