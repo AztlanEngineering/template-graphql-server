@@ -47,6 +47,9 @@ export default sequelize => {
 
     date:{
       type:Sequelize.DataTypes.DATE,
+      get :function(fieldName) {
+        return Number(this.getDataValue(fieldName))
+      }
     },
 
     location:{

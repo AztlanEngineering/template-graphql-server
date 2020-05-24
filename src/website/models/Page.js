@@ -61,6 +61,7 @@ export default sequelize => {
   Page.associate = models => {
 
     models.Site.hasMany(Page, {
+      as        :'pages',
       targetKey :'id',
       foreignKey:{
         name:'siteId',
@@ -69,7 +70,9 @@ export default sequelize => {
       }
     })
     
+    //This second association is unnecceaary
     Page.belongsTo(models.Site, {
+      as        :'website',
       targetKey :'id',
       foreignKey:{
         name:'siteId',

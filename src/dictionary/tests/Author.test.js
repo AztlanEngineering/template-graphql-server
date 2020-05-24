@@ -103,6 +103,8 @@ describe('Dictionary -> Author Controller', function() {
       const rows = await MainController.all({})
       const r1 = await Model.findByPk(id1)
       const r2 = await Model.findByPk(id2)
+      assert.exists(r1.id, 'We shouldnt deep test inclusion of empty item')
+      assert.exists(r2.id, 'We shouldnt deep test inclusion of empty item')
       expect(rows).to.deep.include.members([ r1, r2 ])
       records.forEach((e) =>
         e.destroy()

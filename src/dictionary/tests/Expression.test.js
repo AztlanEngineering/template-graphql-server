@@ -21,7 +21,7 @@ const generateFakeData = (options = {}) => {
     attributes:faker.random.words(),
     definition:faker.lorem.paragraph(5),
     usage     :faker.lorem.paragraph(5),
-    is_active :faker.random.boolean(),
+    isActive  :faker.random.boolean(),
     data      :{
       content :faker.random.words(8),
       otherKey:faker.random.words(8)
@@ -106,6 +106,8 @@ describe('Dictionary -> Expression Controller', function() {
       const rows = await MainController.all({})
       const r1 = await Model.findByPk(id1)
       const r2 = await Model.findByPk(id2)
+      assert.exists(r1.id, 'We shouldnt deep test inclusion of empty item')
+      assert.exists(r2.id, 'We shouldnt deep test inclusion of empty item')
       expect(rows).to.deep.include.members([ r1, r2 ])
       records.forEach((e) =>
         e.destroy()

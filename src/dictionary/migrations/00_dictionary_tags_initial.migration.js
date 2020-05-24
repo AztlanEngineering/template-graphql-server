@@ -15,7 +15,7 @@ async function up(queryInterface, Sequelize) {
     },
 
     slug:{
-      type     :Sequelize.DataTypes.BOOLEAN,
+      type     :Sequelize.DataTypes.STRING,
       allowNull:false,
       //field:'column_name_here'
     },

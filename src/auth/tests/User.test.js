@@ -19,7 +19,7 @@ const generateFakeData = (options = {}) => {
   const data = {
     firstName:faker.name.firstName(),
     lastName :faker.name.lastName(),
-    email    :faker.internet.email(),
+    email    :faker.internet.email().toLowerCase(),
     username :faker.internet.userName(),
     handle   :faker.internet.userName(),
     superuser:faker.random.boolean(),
@@ -103,12 +103,9 @@ describe('Auth -> User Controller', function() {
       const rows = await MainController.all({})
       const r1 = await Model.findByPk(id1)
       const r2 = await Model.findByPk(id2)
-      /*
-      expect(rows).to.deep.include.members([ 
-        { ...r1.dataValues, email: r1.email.toLowerCase() },
-        { ...r2.dataValues, email: r2.email.toLowerCase() }
-      ])
-      */
+      assert.exists(r1.id, 'We shouldnt deep test inclusion of empty item')
+      assert.exists(r2.id, 'We shouldnt deep test inclusion of empty item')
+      expect(rows).to.deep.include.members([ r1, r2])
       records.forEach((e) =>
         e.destroy()
       )

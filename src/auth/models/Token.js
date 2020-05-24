@@ -50,6 +50,7 @@ export default sequelize => {
   //Token.addHook('afterCreate', 'hookName', (e, options) => {})
   Token.associate = models => {
     Token.belongsTo(models.User, {
+      as        :'user',
       targetKey :'id',
       foreignKey:{
         name     :'userId',
@@ -58,6 +59,7 @@ export default sequelize => {
       }
     })
     models.User.hasMany(Token, {
+      as        :'tokens',
       targetKey :'id',
       foreignKey:{
         name     :'userId',

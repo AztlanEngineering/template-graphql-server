@@ -140,6 +140,7 @@ export default sequelize => {
   
   Shop.associate = models => {
     Shop.belongsTo(models.User, {
+      as        :'user',
       targetKey :'id',
       foreignKey:{
         name:'ownerId',
@@ -148,6 +149,7 @@ export default sequelize => {
     })
     models.User.hasMany(Shop, {
       targetKey :'id',
+      as        :'shops',
       foreignKey:{
         name:'ownerId',
         type:Sequelize.DataTypes.UUID,
@@ -155,6 +157,7 @@ export default sequelize => {
     })
 
     Shop.belongsTo(models.Site, {
+      as        :'website',
       targetKey :'id',
       foreignKey:{
         name:'siteId',
@@ -162,6 +165,7 @@ export default sequelize => {
       }
     })
     models.Site.hasOne(Shop, {
+      as        :'business',
       targetKey :'id',
       foreignKey:{
         name:'siteId',
