@@ -1,6 +1,6 @@
 {
   "name": "@fwrlines/template-graphql-server",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "description": "",
   "main": "api/server.js",
   "engines": {
@@ -16,9 +16,9 @@
     "deploy-commit": "git add . && git commit -m '|Auto] Compile and deploy from cli' && git push",
     "build:deploy": "npm run sc && npm run deploy-commit",
     "bd": "npm run build:deploy",
-    "migrate:up":"LOCAL=true babel-node src/migration/scripts/up.js --config-file ./babel.config.js",
-    "migrate:down":"LOCAL=true babel-node src/migration/scripts/down.js --config-file ./babel.config.js",
-    "migrate:status":"SQL_LOGGING=false LOCAL=true babel-node src/migration/scripts/status.js --config-file ./babel.config.js"
+    "migrate:up": "LOCAL=true babel-node src/migration/scripts/up.js --config-file ./babel.config.js",
+    "migrate:down": "LOCAL=true babel-node src/migration/scripts/down.js --config-file ./babel.config.js",
+    "migrate:status": "SQL_LOGGING=false LOCAL=true babel-node src/migration/scripts/status.js --config-file ./babel.config.js"
   },
   "author": "",
   "license": "ISC",
