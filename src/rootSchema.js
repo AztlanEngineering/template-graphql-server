@@ -5,7 +5,7 @@ import {
 //import typeDefs from './typeDefs'
 //import resolvers from './resolvers'
 
-import { typeDefs, resolvers } from 'loadApps'
+import { typeDefs, resolvers } from 'loadSchema'
 
 export default makeExecutableSchema({
   typeDefs,

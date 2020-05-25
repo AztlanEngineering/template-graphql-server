@@ -1,7 +1,8 @@
 import V from 'validator'
 import { isEmpty } from 'utils'
 
-const models = import('models')
+import models from 'models'
+
 const Model = models.User
 
 export default async(d) => {

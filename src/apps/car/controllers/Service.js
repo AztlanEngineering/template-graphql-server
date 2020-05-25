@@ -1,5 +1,7 @@
 /* @fwrlines/generator-graphql-server-type 2.1.1 */
+
 import models from 'models'
+
 import { ObjectNotFoundError } from 'utils'
 
 const Model = models.Service

@@ -4,6 +4,9 @@ import query from 'utils/schemas/query.graphql'
 import mutation from 'utils/schemas/mutation.graphql'
 
 
+if (process.env.DEBUG === 'true') {
+  console.log('LOADING => GraphQL Schema from :', config.installedApps)
+}
 
 const dependencies = [
  
@@ -27,11 +30,6 @@ const resolvers = [
 ]
 
 
-var models = {
-
-}
-
-
 config.installedApps.forEach(appName=>{
   const {
     dependencies:localDependencies,
@@ -39,6 +37,7 @@ config.installedApps.forEach(appName=>{
     resolvers:localResolvers,
     types:localTypes
   } = require(`./apps/${appName}`)
+
 
   dependencies.push(
     {
@@ -51,18 +50,24 @@ config.installedApps.forEach(appName=>{
     ...localTypes
   )
 
+
   localResolvers && resolvers.push(
     ...localResolvers
   )
 
+
+  /*
   if(localModels) {
     models = {
       ...models,
       ...localModels,
     }
   }
+  */
 
 })
+
+//console.log(131313, 'exporting soon')
 
 
 if (process.env.DEBUG === 'true') {
@@ -84,24 +89,17 @@ if (process.env.DEBUG === 'true') {
       //const dependenciesAreValid = { name: e.name, valid }
     })
 
-    try{
-
-
-    } catch(e) {
-    }
-
   }
 
   checkDependencies()
 
-  console.log(`${config.installedApps.length} apps loaded :`, config.installedApps)
-  //console.log(`${Object.keys(models).length} models loaded :`, Object.keys(models))
+  console.log(`OK => ${config.installedApps.length} apps loaded :`, config.installedApps)
 }
+
 
 
 export {
   typeDefs,
   resolvers,
-  models
 }
 
