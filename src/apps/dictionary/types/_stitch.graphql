@@ -1,0 +1,12 @@
+extend input DictionaryExpressionInput {
+  authorId:ID
+}
+
+extend type DictionaryExpression {
+  authorId:ID
+  author:DictionaryAuthor
+}
+
+extend type DictionaryAuthor {
+  expressions:[DictionaryExpression]
+}

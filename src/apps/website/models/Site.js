@@ -55,6 +55,12 @@ export default sequelize => {
       defaultValue:{}
     },
   
+    _string:{
+      type:new Sequelize.DataTypes.VIRTUAL(Sequelize.DataTypes.STRING, ['name']),
+      get :function() {
+        return this.get('name')
+      }
+    },
   
     /*
     uuid:{
@@ -76,6 +82,7 @@ export default sequelize => {
   Site.associate = models => {
     //Here we do a reverse association to be able to query both the site and the domain doing one request less
     Site.belongsTo(models.Domain, {
+      as        :'domain',
       targetKey :'name',
       foreignKey:{
         name:'domainName',
@@ -85,6 +92,7 @@ export default sequelize => {
     })
 
     models.Domain.hasOne(Site, {
+      as        :'site',
       targetKey :'name',
       foreignKey:{
         name:'domainName',

@@ -62,7 +62,14 @@ export default sequelize => {
     },
     seotext:{
       type:Sequelize.DataTypes.TEXT
-    }
+    },
+
+    _string:{
+      type:new Sequelize.DataTypes.VIRTUAL(Sequelize.DataTypes.STRING, ['name']),
+      get :function() {
+        return this.get('name')
+      }
+    },
 
   },{
     sequelize,

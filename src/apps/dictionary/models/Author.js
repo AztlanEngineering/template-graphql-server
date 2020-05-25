@@ -47,8 +47,7 @@ export default sequelize => {
     },
 
     altName:{
-      type     :Sequelize.DataTypes.STRING,
-      allowNull:false,
+      type:Sequelize.DataTypes.STRING,
       //unique:true
     },
 
@@ -70,7 +69,14 @@ export default sequelize => {
 
     data:{
       type:Sequelize.DataTypes.JSON,
-    }
+    },
+
+    _string:{
+      type:new Sequelize.DataTypes.VIRTUAL(Sequelize.DataTypes.STRING, ['name']),
+      get :function() {
+        return this.get('name')
+      }
+    },
   
   },{
     sequelize,

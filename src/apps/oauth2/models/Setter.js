@@ -55,7 +55,14 @@ export default sequelize => {
       get() {
         return this.get('expires') >= Date.now()
       }
-    }
+    },
+
+    _string:{
+      type:new Sequelize.DataTypes.VIRTUAL(Sequelize.DataTypes.STRING, ['id']),
+      get :function() {
+        return this.get('id').slice(8)
+      }
+    },
 
   },{
     sequelize,

@@ -142,6 +142,13 @@ export default sequelize => {
         return this.get('closesAt') < this.get('opensAt')
       }
     },
+
+    _string:{
+      type:new Sequelize.DataTypes.VIRTUAL(Sequelize.DataTypes.STRING, ['city', 'name']),
+      get :function() {
+        return `${this.get('city')}/${this.get('name')}`
+      }
+    },
   
     /*
     uuid:{

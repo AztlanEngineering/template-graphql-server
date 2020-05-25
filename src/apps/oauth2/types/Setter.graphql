@@ -18,13 +18,14 @@ input SetterInput {
   }
 
 type Setter {
-  id:ID
+  id:ID!
+  _string:String!
   user:User
   s:String
   provider:String
   expires:Int
-  createdAt:Int!
-  updatedAt:Int!
+  createdAt:Float!
+  updatedAt:Float!
 }
 
 #type PaginatedSetters {

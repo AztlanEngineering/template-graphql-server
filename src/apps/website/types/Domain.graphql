@@ -15,18 +15,31 @@ extend type Mutation {
   }
 
 input DomainInput {
-  x:Int
-  y:String
-  z:Boolean
-  }
+  name:String
+  slug:String
+  isOrdered:Boolean
+  isBought:Boolean
+  isInstalled:Boolean
+  isError:Boolean
+  vercelNameservers:[String]
+  vercelTeamId:String
+ }
 
 type Domain {
   id:ID!
-  x:Int
-  y:String
-  z:Boolean
-  createdAt:Float
-  updatedAt:Float
+  _string:String!
+  name:String!
+  slug:String!
+  isOrdered:Boolean!
+  isBought:Boolean!
+  isInstalled:Boolean!
+  isError:Boolean!
+  vercelNameservers:[String]
+  vercelTeamId:String
+  main:String!
+  isAddedToVercel:Boolean!
+  createdAt:Float!
+  updatedAt:Float!
 }
 
 #type PaginatedDomains {

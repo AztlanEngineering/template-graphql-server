@@ -39,6 +39,13 @@ export default sequelize => {
       allowNull:false
     },
 
+    _string:{
+      type:new Sequelize.DataTypes.VIRTUAL(Sequelize.DataTypes.STRING, ['token']),
+      get :function() {
+        return this.get('token').slice(0,20) + '...'
+      }
+    },
+
   },{
     sequelize,
     modelName:'Token',

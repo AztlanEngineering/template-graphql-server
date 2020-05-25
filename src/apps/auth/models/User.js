@@ -74,6 +74,13 @@ export default sequelize => {
       type:Sequelize.DataTypes.STRING
     },
 
+    _string:{
+      type:new Sequelize.DataTypes.VIRTUAL(Sequelize.DataTypes.STRING, ['email']),
+      get :function() {
+        return this.get('email')
+      }
+    },
+
   },{
     sequelize,
     modelName:'User',

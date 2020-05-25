@@ -15,18 +15,19 @@ extend type Mutation {
   }
 
 input PageInput {
-  x:Int
-  y:String
-  z:Boolean
+  name:String
+  slug:String
   }
 
 type Page {
   id:ID!
-  x:Int
-  y:String
-  z:Boolean
-  createdAt:Float
-  updatedAt:Float
+  _string:String!
+  name:String!
+  slug:String!
+  #metadata:String
+  #data:String
+  createdAt:Float!
+  updatedAt:Float!
 }
 
 #type PaginatedPages {

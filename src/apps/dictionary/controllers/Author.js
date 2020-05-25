@@ -4,6 +4,11 @@ import { ObjectNotFoundError } from 'utils'
 
 const Model = models.DictionaryAuthor
 
+const include = [
+  { all: true }
+  //{ model: models.DictionaryExpression, as: 'expressions' }
+]
+
 /*
 import {
   ConfigurationError,
@@ -14,7 +19,7 @@ import {
 */
 
 const Controller = {
-  all:(root, args) => Model.findAll({}),
+  all:(root, args) => Model.findAll({ include }),
 
   /*
   paginated:(r, {
@@ -36,9 +41,9 @@ const Controller = {
   },
   */
 
-  get:(root, { id }) => Model.findByPk( id ),
+  get:(root, { id }) => Model.findByPk( id, { include } ),
 
-  add:async (root, { input }) => await Model.create( input ),
+  add:async (root, { input }) => await Model.create( input, { include } ),
 
   delete:async (root, { id }) => {
     const item = await Model.findByPk(id).catch(e => {

@@ -1,0 +1,8 @@
+extend type Token {
+  userId:ID!
+  user:User
+}
+
+#extend type TokenInput {
+#  userId:ID!
+#}

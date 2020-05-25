@@ -22,7 +22,6 @@ async function up(queryInterface, Sequelize) {
 
     altName:{
       type     :Sequelize.DataTypes.STRING,
-      allowNull:false,
     },
 
     publicPicture:{

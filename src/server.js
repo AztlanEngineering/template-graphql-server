@@ -3,13 +3,10 @@ if (process.env.LOCAL) {
   require('dotenv').config()
 }
 
-//import { models } from './loadApps'
-
-
 import fs from 'fs'
 
-//import JWTStrategy from 'apps/auth/passport'
-//import { User, Token } from 'apps/auth/models'
+import JWTStrategy from 'apps/auth/passport'
+//import { User, Token } from 'models'
 import schema from 'rootSchema'
 
 import { ApolloServer } from 'apollo-server-express'
@@ -20,7 +17,7 @@ import express from 'express'
 import passport from 'passport'
 
 import helmet from 'helmet'
-//import oAuth2Router from 'apps/oauth2/router'
+import oAuth2Router from 'apps/oauth2/router'
 
 //import bodyParser from 'body-parser'
 
@@ -144,9 +141,9 @@ app.use('/', (req, res, next) => {
 //app.use(bodyParser.json())
 app.use(helmet())
 
-//passport.use(JWTStrategy)
+passport.use(JWTStrategy)
 app.use(passport.initialize())
-//app.use('/auth', oAuth2Router)
+app.use('/auth', oAuth2Router)
 app.use('/', (req, res, next) => {
   passport.authenticate(
     'jwt',

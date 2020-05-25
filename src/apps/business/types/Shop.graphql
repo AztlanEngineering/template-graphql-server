@@ -22,12 +22,13 @@ input ShopInput {
 
 type Shop {
   id:ID!
+  _string:String!
   x:Int
   y:String
   z:Boolean
   zz:Float
-  createdAt:Int!
-  updatedAt:Int!
+  createdAt:Float!
+  updatedAt:Float!
 }
 
 #type PaginatedShops {

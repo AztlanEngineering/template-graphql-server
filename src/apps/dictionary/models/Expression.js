@@ -84,7 +84,15 @@ export default sequelize => {
 
     data:{
       type:Sequelize.DataTypes.JSON,
-    }
+    },
+
+    _string:{
+      type:new Sequelize.DataTypes.VIRTUAL(Sequelize.DataTypes.STRING, ['name']),
+      get :function() {
+        return this.get('name')
+      }
+    },
+  
 
   
   },{
@@ -109,6 +117,7 @@ export default sequelize => {
     })
 
     models.DictionaryAuthor.hasMany(Expression, {
+      as        :'expressions',
       targetKey :'expression',
       foreignKey:{
         name:'authorId',

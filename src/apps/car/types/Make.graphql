@@ -26,6 +26,7 @@ input MakeInput {
 
 type Make {
   id:ID!
+  _string:String!
   name:String
   slug:String
   active_from:String

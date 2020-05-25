@@ -26,6 +26,7 @@ input ServiceInput {
 
 type Service {
   id:ID
+  _string:String!
   name:String
   slug:String
   category:String

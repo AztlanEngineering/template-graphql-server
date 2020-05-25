@@ -63,6 +63,13 @@ export default sequelize => {
       type:Sequelize.DataTypes.TEXT
     },
 
+    _string:{
+      type:new Sequelize.DataTypes.VIRTUAL(Sequelize.DataTypes.STRING, ['name']),
+      get :function() {
+        return this.get('name')
+      }
+    },
+
     /*
   invisible: {
     type: Sequelize.DataTypes.BOOLEAN,

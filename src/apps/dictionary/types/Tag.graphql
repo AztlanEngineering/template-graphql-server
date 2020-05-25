@@ -15,19 +15,18 @@ extend type Mutation {
   }
 
 input DictionaryTagInput {
-  x:Int
-  y:String
-  z:Boolean
-  }
+  name:String
+  slug:String
+}
 
 type DictionaryTag {
   id:ID!
-  x:Int
-  y:String
-  z:Boolean
-  zz:Float
-  createdAt:Int!
-  updatedAt:Int!
+  _string:String!
+  name:String!
+  slug:String!
+  #data:String
+  createdAt:Float!
+  updatedAt:Float!
 }
 
 #type PaginatedDictionaryTags {

@@ -1,5 +1,5 @@
 /* @fwrlines/generator-graphql-server-type 2.4.6 */
-import { uthorController as MainController } from '../controllers'
+import { AuthorController as MainController } from '../controllers'
 import { suMethod as su } from 'utils'
 
 export default {

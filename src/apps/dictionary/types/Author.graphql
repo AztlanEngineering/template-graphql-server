@@ -15,19 +15,29 @@ extend type Mutation {
   }
 
 input DictionaryAuthorInput {
-  x:Int
-  y:String
-  z:Boolean
+  name:String
+  slug:String
+  altName:String
+  publicPicture:String
+  authorityLink:String
+  publicLink:String
+  description:String
+  #data:String
   }
 
 type DictionaryAuthor {
   id:ID!
-  x:Int
-  y:String
-  z:Boolean
-  zz:Float
-  createdAt:Int!
-  updatedAt:Int!
+  _string:String!
+  name:String!
+  slug:String!
+  altName:String
+  publicPicture:String
+  authorityLink:String
+  publicLink:String
+  description:String
+  #data:String
+  createdAt:Float!
+  updatedAt:Float!
 }
 
 #type PaginatedDictionaryAuthors {

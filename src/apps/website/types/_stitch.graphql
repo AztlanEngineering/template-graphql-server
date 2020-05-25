@@ -1,0 +1,25 @@
+extend input SiteInput {
+  domainName:String
+}
+
+extend type Site {
+  domainName:String
+  domain:Domain
+}
+
+extend type Domain {
+  site:Site
+}
+
+extend input PageInput {
+  siteId:ID 
+}
+
+extend type Page {
+  siteId:ID
+  website:Site
+}
+
+extend type Site {
+  pages:[Page]
+}

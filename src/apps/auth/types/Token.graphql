@@ -1,4 +1,6 @@
 type Token {
+  id:ID!
+  _string:String!
   token: String!
   maxAge: String!
 }

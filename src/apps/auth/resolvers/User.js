@@ -40,7 +40,11 @@ export default {
   Query:{
     allUsers(r, a, c) {
       // use context if you want to restrict the usage
-      return su(UserController.users(r, a), c.user)
+      return su(UserController.all(r, a, c), c.user)
+    },
+    getUser(r, a, c) {
+      // use context if you want to restrict the usage
+      return su(MainController.get(r, a, c), c.user)
     },
     me(root, args, context) {
       //console.log('👽 in the resolver', context)

@@ -194,7 +194,14 @@ export default sequelize => {
       get :function() {
         return this.get('vercelDomainId').length ? true : false
       }
-    }
+    },
+
+    _string:{
+      type:new Sequelize.DataTypes.VIRTUAL(Sequelize.DataTypes.STRING, ['name']),
+      get :function() {
+        return this.get('name')
+      }
+    },
 
   },{
     sequelize,

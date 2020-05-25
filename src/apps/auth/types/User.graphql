@@ -1,6 +1,6 @@
 extend type Query {
  	allUsers: [User]!
- 	user(id:ID!): User!
+ 	getUser(id:ID!): User!
  	me: User
   hello: String!
 }

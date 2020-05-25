@@ -39,7 +39,17 @@ export default (sequelize) => {
     },
     expires:{
       type:Sequelize.DataTypes.DATE
-    }
+    },
+
+    _string:{
+      type:new Sequelize.DataTypes.VIRTUAL(Sequelize.DataTypes.STRING, ['provider', 'email', 'id']),
+      get :function() {
+        return this.get('email') ?
+          `${this.get(provider)}/${this.get(email)}` :
+          `${this.get(provider)}/${this.get(id).slice(8)}`
+      }
+    },
+  
 
   },{
     sequelize,
