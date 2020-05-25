@@ -10,6 +10,6 @@
     "js": "babel-node --config-file ./babel.config.js"
   },
   "ext": ".js,.md,.graphql",
-  "ignore":["**/test/*"],
+  "ignore":["**/test", "**/tests", "**/*.migration.js", "**/scripts"],
   "watch": "./src/"
 }

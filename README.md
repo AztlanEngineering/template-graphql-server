@@ -31,6 +31,10 @@ Todo :
   + `JWT_SECRET` : The key to encrypt the jwts. `openssl rand -base64 172 | tr -d '\n'` (https://stackoverflow.com/questions/33960565/how-to-generate-a-hs512-secret-key-to-use-with-jwt)
 
 TEMP
+On the Database
++ Create postgres schema 'meta' to save the migration table
++ Run migrations with npm run migrate:up
++ After migrations are run, change default table users to cloudsqlsuperuser iin pg_admin if using google cloud sal
 
 + `POSTGRES_DB_NAME`
 + `POSTGRES_HOST`
