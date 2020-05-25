@@ -5,8 +5,8 @@ if (process.env.LOCAL) {
 
 import fs from 'fs'
 
-import JWTStrategy from 'auth/passport'
-import { User, Token } from 'auth/models'
+import JWTStrategy from 'apps/auth/passport'
+import { User, Token } from 'apps/auth/models'
 import schema from 'rootSchema'
 
 import { ApolloServer } from 'apollo-server-express'
@@ -17,11 +17,11 @@ import express from 'express'
 import passport from 'passport'
 
 import helmet from 'helmet'
-import oAuth2Router from 'oauth2/router'
+import oAuth2Router from 'apps/oauth2/router'
 
 //import bodyParser from 'body-parser'
 
-import sequelize from './connector'
+import sequelize from 'database/connector'
 import models from 'models'
 
 import { CacheControlExtension } from 'apollo-cache-control'

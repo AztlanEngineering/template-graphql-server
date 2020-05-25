@@ -1,7 +1,7 @@
 import { Umzug, SequelizeStorage } from 'umzug'
 import { Sequelize } from 'sequelize'
 
-import sequelize from 'connector'
+import sequelize from 'database/connector'
 
 const umzug = new Umzug({
   migrations:{

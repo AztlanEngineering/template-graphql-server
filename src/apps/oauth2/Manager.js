@@ -1,9 +1,6 @@
 import rp from 'request-promise'
 import queryString from 'query-string'
-import {
-  User
-} from 'auth/models'
-import { Setter } from './models'
+import { User, Setter } from 'models'
 import { SetterController } from './controllers'
 
 export default class Manager {

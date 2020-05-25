@@ -9,43 +9,7 @@ import * as faker from 'faker'
 
 const Model = models.Shop
 
-const generateFakeData = (options = {}) => {
-  const data = {
-    name               :faker.company.companyName(),
-    slug               :faker.helpers.slugify(faker.company.companyName().toLowerCase()),
-    //publicPhoneNumber  :faker.phone.phoneNumber(),
-    publicPhoneNumber  :String(faker.random.number(10**6, 10**10)),
-    privatePhoneNumber :String(faker.random.number(10**6, 10**10)),
-    address            :faker.address.streetAddress(),
-    address2           :faker.address.streetAddress(),
-    city               :faker.address.city(),
-    postcode           :faker.address.zipCode(),
-    country            :faker.address.country(),
-    regularOpeningTimes:{
-      1:faker.random.words(8),
-      2:faker.random.words(8),
-      3:faker.random.words(8),
-      4:faker.random.words(8),
-      5:faker.random.words(8),
-      6:faker.random.words(8),
-      7:faker.random.words(8)
-    },
-    specialOpeningTimes:{
-      christmas:faker.random.words(8)
-    },
-    data:{
-      k:faker.random.words(8)
-    }
-
-  }
-
-  const final_data = {}
-  Object.keys(data).forEach(e => {
-    final_data[e] = (e in options) ? options[e] : data[e]
-  })
-
-  return { ...options, ...final_data }
-}
+import { generateTestShop as generateFakeData} from './generators'
 
 describe('Business -> Shop Model', function() {
   /*

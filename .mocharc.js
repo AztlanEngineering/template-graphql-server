@@ -4,7 +4,7 @@ const args = process.argv.slice(2)
 const pkg = args.indexOf('-p') > -1 ? args[args.indexOf('-p') + 1 ]: '**'
 
 module.exports = {
-  "spec":`src/${pkg}/tests/*.test.js`,
+  "spec":`src/**/${pkg}/**/tests/*.test.js`,
   "diff": true,
   "extension": ["js"],
   "package": "./package.json",

@@ -1,6 +1,6 @@
 import {
   User
-} from 'auth/models'
+} from 'models'
 import {
   Setter
 } from './models'
