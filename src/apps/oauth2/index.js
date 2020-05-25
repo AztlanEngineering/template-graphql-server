@@ -1,13 +1,8 @@
-if (process.env.LOCAL) {
-  require('dotenv').config()
-}
-import Manager from './Manager'
-import { GoogleConfig } from './Google'
+import * as models from './models'
 
-const GoogleManager = (overrides, context) =>
-  new Manager({ ...GoogleConfig, ...overrides }, context)
-
+export { default as dependencies } from './dependencies.json'
+export { default as types } from './types'
+export { default as resolvers } from './resolvers'
 export {
-  Manager,
-  GoogleManager
+  models,
 }
