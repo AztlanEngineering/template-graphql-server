@@ -3,29 +3,9 @@ import { MakeController as MainController } from '../controllers'
 import models from 'models'
 import * as faker from 'faker'
 
+import { generateTestMake as generateFakeData } from './generators'
+
 const Model = models.Make
-
-const generateFakeData = (options = {}) => {
-  const data = {
-    name      :faker.company.companyName(),
-    slug      :faker.helpers.slugify(faker.company.companyName().toLowerCase()),
-    activeFrom:'1920',
-    activeTo  :'present',
-    country   :faker.address.country(),
-    isCommon  :faker.random.boolean(),
-    isActive  :faker.random.boolean(),
-    car       :faker.random.boolean(),
-    motorcycle:faker.random.boolean(),
-    seotext   :faker.lorem.paragraph(5),
-  } 
-
-  const final_data = {}
-  Object.keys(data).forEach(e => {
-    final_data[e] = (e in options) ? options[e] : data[e]
-  })
-
-  return final_data
-}
 
 describe('Car -> Make Controller', function() {
 

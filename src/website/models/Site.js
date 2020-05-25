@@ -19,6 +19,15 @@ export default sequelize => {
     async verifyDomain() {
 
     }
+
+    async updateData(newData) {
+      const oldData = this.data
+      this.data = {
+        ...oldData,
+        ...newData
+      }
+      return await this.save()
+    }
   
   } 
   
@@ -39,6 +48,11 @@ export default sequelize => {
       defaultValue:'john',
       //unique:true
       //field:'column_name_here'
+    },
+
+    data:{
+      type        :Sequelize.DataTypes.JSON,
+      defaultValue:{}
     },
   
   

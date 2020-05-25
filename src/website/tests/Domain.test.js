@@ -8,35 +8,12 @@ import chaiAsPromised from 'chai-as-promised'
 chai.use(chaiAsPromised)
 const { assert, expect } = chai
 
+import { generateTestDomain as generateFakeData } from './generators'
+
 const Model = models.Domain
 
-const generateFakeDomain = () => 'auto-testing-available-domain' + faker.random.alphaNumeric(8).toLowerCase() + '.com'
+const generateFakeDomainName = () => 'auto-testing-available-domain' + faker.random.alphaNumeric(8).toLowerCase() + '.com'
 
-const generateFakeData = (options = {}) => {
-  const data = {
-    name             :faker.internet.domainName(),
-    alt              :faker.internet.domainName(),
-    isOrdered        :faker.random.boolean(),
-    isBought         :faker.random.boolean(),
-    isInstalled      :faker.random.boolean(),
-    isError          :faker.random.boolean(),
-    vercelNameservers:[
-      faker.internet.domainName(),
-      faker.internet.domainName(),
-      faker.internet.domainName(),
-      faker.internet.domainName(),
-    ],
-    vercelTeamId  :process.env.VERCEL_TEAM_ID, //Provided as default, but just for the eq check here
-    vercelDomainId:faker.random.uuid()
-  }
-
-  const final_data = {}
-  Object.keys(data).forEach(e => {
-    final_data[e] = (e in options) ? options[e] : data[e]
-  })
-
-  return { ...options, ...final_data }
-}
 
 describe('Website -> Domain Model', function() {
   /*
@@ -84,7 +61,7 @@ describe('Website -> Domain Model', function() {
 
   describe('Domain Model -> Class Method -> Is Available', function() {
     it('Model API -> A domain that should be available for sale', async function() {
-      const fakeDomain = generateFakeDomain()
+      const fakeDomain = generateFakeDomainName()
       const isAvailable = await Model.isAvailable(fakeDomain)
       expect(isAvailable).to.equal(true)
     }) 
@@ -94,7 +71,7 @@ describe('Website -> Domain Model', function() {
     it('Model API -> The domain gets its ordered status toggled, and is connected to the ordering api', async function() {
       //TODO test email sending (?)
       const data = generateFakeData({ 
-        name          :generateFakeDomain(),
+        name          :generateFakeDomainName(),
         vercelDomainId:null,
         isOrdered     :false,
         isError       :false
@@ -113,7 +90,7 @@ describe('Website -> Domain Model', function() {
   describe('Domain Model -> Instance Method -> Add To Vercel', function() {
     it('Model API -> The domain should be added to Vercel', async function() {
       const data = generateFakeData({ 
-        name          :generateFakeDomain(),
+        name          :generateFakeDomainName(),
         vercelDomainId:null,
         isOrdered     :true,
         isBought      :true,
@@ -149,7 +126,7 @@ describe('Website -> Domain Model', function() {
   describe('Domain Model -> Instance Method -> Delete from Vercel', function() {
     it('Model API -> The domain should be deleted from vercel', async function() {
       const data = generateFakeData({ 
-        name          :generateFakeDomain(),
+        name          :generateFakeDomainName(),
         vercelDomainId:null,
         isOrdered     :true,
         isBought      :true,
@@ -188,7 +165,7 @@ describe('Website -> Domain Model', function() {
   describe('Domain Model -> Instance Method -> Get Domain Info Vercel', function() {
     it('Model API -> We should get the right info from vercel with a synced domain', async function() {
       const data = generateFakeData({ 
-        name          :generateFakeDomain(),
+        name          :generateFakeDomainName(),
         vercelDomainId:null,
         isOrdered     :true,
         isBought      :true,
@@ -211,7 +188,7 @@ describe('Website -> Domain Model', function() {
   describe('Domain Model -> Hook -> Delete from Vercel', function() {
     it('Model API -> The domain should be automatically deleted from vercel before instance deletion', async function() {
       const data = generateFakeData({ 
-        name          :generateFakeDomain(),
+        name          :generateFakeDomainName(),
         vercelDomainId:null,
         isOrdered     :true,
         isBought      :true,

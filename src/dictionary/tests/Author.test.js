@@ -7,32 +7,9 @@ const { assert, expect } = chai
 import { AuthorController as MainController } from '../controllers'
 import models from 'models'
 import * as faker from 'faker'
+import { generateTestAuthor as generateFakeData } from './generators'
 
 const Model = models.DictionaryAuthor
-
-const generateFakeData = (options = {}) => {
-  const data = {
-    name         :faker.name.findName(),
-    slug         :faker.helpers.slugify(faker.name.findName().toLowerCase()),
-    altName      :faker.name.findName(),
-    publicPicture:faker.internet.url(),
-    authorityLink:faker.internet.url(),
-    publicLink   :faker.internet.url(),
-    description  :faker.lorem.paragraph(5),
-    data         :{
-      content :faker.random.words(8),
-      otherKey:faker.random.words(8)
-    }
-
-  }
-
-  const final_data = {}
-  Object.keys(data).forEach(e => {
-    final_data[e] = (e in options) ? options[e] : data[e]
-  })
-
-  return { ...options, ...final_data }
-}
 
 describe('Dictionary -> Author Model', function() {
   /*

@@ -4,29 +4,9 @@ import { ServiceController as MainController } from '../controllers'
 import models from 'models'
 import * as faker from 'faker'
 
+import { generateTestService as generateFakeData } from './generators'
+
 const Model = models.Service
-
-const generateFakeData = (options = {}) => {
-  const data = {
-    name      :faker.lorem.words(8),
-    slug      :faker.helpers.slugify(faker.lorem.words(8).toLowerCase()),
-    category  :faker.commerce.department(),
-    isActive  :faker.random.boolean(),
-    car       :faker.random.boolean(),
-    motorcycle:faker.random.boolean(),
-    genericCta:faker.lorem.paragraph(2),
-    carButton :faker.lorem.words(6),
-    motoButton:faker.lorem.words(6),
-    seotext   :faker.lorem.paragraph(5),
-  }
-
-  const final_data = {}
-  Object.keys(data).forEach(e => {
-    final_data[e] = (e in options) ? options[e] : data[e]
-  })
-
-  return final_data
-}
 
 describe('Car -> Service Controller', function() {
 

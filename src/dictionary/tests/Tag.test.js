@@ -7,26 +7,9 @@ const { assert, expect } = chai
 import { TagController as MainController } from '../controllers'
 import models from 'models'
 import * as faker from 'faker'
+import { generateTestTag as generateFakeData } from './generators'
 
 const Model = models.DictionaryTag
-
-const generateFakeData = (options = {}) => {
-  const data = {
-    name:faker.random.words(8),
-    slug:faker.helpers.slugify(faker.random.words(8).toLowerCase()),
-    data:{
-      content :faker.random.words(8),
-      otherKey:faker.random.words(8)
-    }
-  }
-
-  const final_data = {}
-  Object.keys(data).forEach(e => {
-    final_data[e] = (e in options) ? options[e] : data[e]
-  })
-
-  return { ...options, ...final_data }
-}
 
 describe('Dictionary -> Tag Model', function() {
   /*

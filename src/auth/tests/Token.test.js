@@ -6,24 +6,11 @@ const { assert, expect } = chai
 
 import { TokenController as MainController } from '../controllers'
 import models from 'models'
+
 import * as faker from 'faker'
+import { generateTestToken as generateFakeData } from './generators'
 
 const Model = models.Token
-
-const generateFakeData = (options = {}) => {
-  const data = {
-    maxAge:faker.random.number({min: 1000, max: 604800}),
-    token :faker.random.alphaNumeric(800),
-    //userId:faker.random.uuid()
-  }
-
-  const final_data = {}
-  Object.keys(data).forEach(e => {
-    final_data[e] = (e in options) ? options[e] : data[e]
-  })
-
-  return { ...options, ...final_data }
-}
 
 describe('Auth -> Token Model', function() {
   /*
@@ -32,38 +19,18 @@ describe('Auth -> Token Model', function() {
 
   beforeEach( function(){
   })
+  */
 
-  describe('Model -> Key -> Code', function() {
-    it('Default Value -> The default code is a unique 64 char string', async function() {
-      const data1 = generateFakeData()
-      const data2 = generateFakeData()
-      const records = await Model.bulkCreate([data1, data2])
-      const { code:code1 } = records[0]
-      const { code:code2 } = records[1]
-      expect( code1 ).to.have.lengthOf(64)
-      expect( code2 ).to.have.lengthOf(64)
-      expect( code1 ).to.not.deep.equal(code2)
-      records.forEach((e) =>
-        e.destroy()
-      )
+  describe('Model -> Association -> User', function() {
+    it('Token User -> Belongs To : Should be able to add and delete users from the Token model', async function() {
     })
-  
+
+    it('User -> Has One : Should be able to add and delete users from the User model', async function() {
+    })
+
   })
   
-  describe('Model -> Virtual -> IsValid', function() {
-    it('Model API -> An instance is valid ioi it expires later than now', async function() {
-      const data1 = generateFakeData()
-      const data2 = generateFakeData({ expires: Date.now() - (Number(200 * 1000)) })
-      const records = await Model.bulkCreate([data1, data2])
-      expect( records[0].is_valid ).to.equal(true)
-      expect( records[1].is_valid ).to.equal(false)
-      records.forEach((e) =>
-        e.destroy()
-      )
-    })
-  
-  })
-
+  /*
   afterEach( function(){
   })
 

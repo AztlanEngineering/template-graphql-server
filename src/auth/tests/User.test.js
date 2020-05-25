@@ -2,9 +2,11 @@
 import { assert, expect } from 'chai'
 import { UserController as MainController } from '../controllers'
 import models from 'models'
-import * as faker from 'faker'
 import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
+
+import * as faker from 'faker'
+import { generateTestUser as generateFakeData } from './generators'
 
 import {
   ConfigurationError,
@@ -14,25 +16,6 @@ import {
 } from 'utils'
 
 const Model = models.User
-
-const generateFakeData = (options = {}) => {
-  const data = {
-    firstName:faker.name.firstName(),
-    lastName :faker.name.lastName(),
-    email    :faker.internet.email().toLowerCase(),
-    username :faker.internet.userName(),
-    handle   :faker.internet.userName(),
-    superuser:faker.random.boolean(),
-    isActive :faker.random.boolean(),
-  }
-
-  const final_data = {}
-  Object.keys(data).forEach(e => {
-    final_data[e] = (e in options) ? options[e] : data[e]
-  })
-
-  return { ...options, ...final_data }
-}
 
 describe('Auth -> User Model', function() {
   /*

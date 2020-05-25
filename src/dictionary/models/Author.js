@@ -12,6 +12,15 @@ export default sequelize => {
       return this.first_name
     }
     */
+
+    async updateData(newData) {
+      const oldData = this.data
+      this.data = {
+        ...oldData,
+        ...newData
+      }
+      return await this.save()
+    }
   
   } 
   

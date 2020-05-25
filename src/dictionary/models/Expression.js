@@ -12,6 +12,14 @@ export default sequelize => {
       return this.first_name
     }
     */
+    async updateData(newData) {
+      const oldData = this.data
+      this.data = {
+        ...oldData,
+        ...newData
+      }
+      return await this.save()
+    }
   
   } 
   
@@ -96,12 +104,12 @@ export default sequelize => {
       foreignKey:{
         name:'authorId',
         type:Sequelize.Sequelize.DataTypes.UUID,
-      }
+      },
+      onDelete:'CASCADE', //RESTRICT, SET_NULL, CASCADE, SET DEFAULT
     })
 
     models.DictionaryAuthor.hasMany(Expression, {
-      as        :'expressions',
-      targetKey :'id',
+      targetKey :'expression',
       foreignKey:{
         name:'authorId',
         type:Sequelize.Sequelize.DataTypes.UUID,
@@ -137,6 +145,7 @@ export default sequelize => {
         type:Sequelize.Sequelize.DataTypes.UUID,
       }
     })
+    
   }
 
   return Expression

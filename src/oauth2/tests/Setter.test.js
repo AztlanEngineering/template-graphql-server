@@ -4,21 +4,9 @@ import { OAuth2SetterController as MainController } from '../controllers'
 import models from 'models'
 import * as faker from 'faker'
 
+import { generateTestSetter as generateFakeData } from './generators'
+
 const Model = models.OAuth2Setter
-
-const generateFakeData = (options = {}) => {
-  const data = {
-    provider  :faker.commerce.product(),
-    useToLogin:faker.random.boolean(),
-  }
-
-  const final_data = {}
-  Object.keys(data).forEach(e => {
-    final_data[e] = (e in options) ? options[e] : data[e]
-  })
-
-  return { ...options, ...final_data }
-}
 
 describe('OAuth2 -> OAuth2Setter Model', function() {
   /*

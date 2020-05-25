@@ -7,35 +7,9 @@ const { assert, expect } = chai
 import { ExpressionController as MainController } from '../controllers'
 import models from 'models'
 import * as faker from 'faker'
+import { generateTestExpression as generateFakeData } from './generators'
 
 const Model = models.DictionaryExpression
-
-const generateFakeData = (options = {}) => {
-  const data = {
-    name      :faker.company.companyName(),
-    slug      :faker.helpers.slugify(faker.company.companyName().toLowerCase()),
-    sourceName:faker.random.words(),
-    sourceLink:faker.internet.url(),
-    date      :Date.now(),
-    location  :faker.address.country(),
-    attributes:faker.random.words(),
-    definition:faker.lorem.paragraph(5),
-    usage     :faker.lorem.paragraph(5),
-    isActive  :faker.random.boolean(),
-    data      :{
-      content :faker.random.words(8),
-      otherKey:faker.random.words(8)
-    }
-
-  }
-
-  const final_data = {}
-  Object.keys(data).forEach(e => {
-    final_data[e] = (e in options) ? options[e] : data[e]
-  })
-
-  return { ...options, ...final_data }
-}
 
 describe('Dictionary -> Expression Model', function() {
   /*
