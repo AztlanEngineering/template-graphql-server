@@ -12,32 +12,28 @@ import {
 } from 'utils'
 */
 
+const include = [
+  { all: true }
+  //{ model: models.DictionaryExpression, as: 'expressions' }
+]
+
 const Controller = {
-  all:(root, args) => Model.findAll({}),
+  all:(root, args) => Model.findAll({
+    include, 
+    raw :true,
+    nest:true
+    //plain:true
+  }),
 
-  /*
-  paginated:(r, {
-    page=1,
-    //category,
-    limit=LIMIT_PER_PAGE
-  }, c) => {
-    let args = {
-      //published: {$lte : Date.now()}
-    }
-    //if (category) args['categoryRef'] = category
-    return Model.paginate(args,
-      {
-        //sort: { published:-1 },
-        limit,
-        page
-      }
-    )
-  },
-  */
+  get:(root, { id }) => Model.findByPk( id, { 
+    include, 
+    plain:true 
+  } ),
 
-  get:(root, { id }) => Model.findByPk( id ),
-
-  add:async (root, { input }) => await Model.create( input ),
+  add:async (root, { input }) => await Model.create( input, { 
+    include, 
+    plain:true 
+  } ),
 
   delete:async (root, { id }) => {
     const item = await Model.findByPk(id).catch(e => {

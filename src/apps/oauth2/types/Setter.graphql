@@ -12,18 +12,21 @@ extend type Mutation {
   }
 
 input SetterInput {
-  user:String
-  s:String
+  expires:Float
+  useToLogin:Boolean
+  code:String
   provider:String
+  isValid:Boolean
   }
 
 type Setter {
   id:ID!
   _string:String!
-  user:User
-  s:String
-  provider:String
-  expires:Int
+  expires:Float
+  useToLogin:Boolean!
+  code:String!
+  provider:String!
+  isValid:Boolean!
   createdAt:Float!
   updatedAt:Float!
 }

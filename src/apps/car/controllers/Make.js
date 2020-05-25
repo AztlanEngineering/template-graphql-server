@@ -14,31 +14,19 @@ import {
 */
 
 const Controller = {
-  all:(root, args) => Model.findAll({}),
+  all:(root, args) => Model.findAll({
+    raw :true,
+    nest:true
+    //plain:true
+  }),
 
-  /*
-  paginated:(r, {
-    page=1,
-    //category,
-    limit=LIMIT_PER_PAGE
-  }, c) => {
-    let args = {
-      //published: {$lte : Date.now()}
-    }
-    //if (category) args['categoryRef'] = category
-    return Model.paginate(args,
-      {
-        //sort: { published:-1 },
-        limit,
-        page
-      }
-    )
-  },
-  */
+  get:(root, { id }) => Model.findByPk( id , { 
+    plain:true 
+  }),
 
-  get:(root, { id }) => Model.findByPk( id ),
-
-  add:async (root, { input }) => await Model.create( input ),
+  add:async (root, { input }) => await Model.create( input, { 
+    plain:true 
+  }),
 
   delete:async (root, { id }) => {
     const item = await Model.findByPk(id).catch(e => {

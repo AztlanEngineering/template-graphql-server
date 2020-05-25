@@ -1,0 +1,12 @@
+extend input SetterInput {
+  userId:ID
+}
+
+extend type Setter {
+  userId:ID
+  user:MinUser
+}
+
+extend type User {
+  oAuth2Setters:Setter 
+}

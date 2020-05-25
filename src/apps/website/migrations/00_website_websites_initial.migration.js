@@ -14,12 +14,16 @@ async function up(queryInterface, Sequelize) {
     },
 
     createdAt:{
-      type     :Sequelize.Sequelize.DataTypes.DATE,
+      type     :Sequelize.DataTypes.DATE,
       allowNull:false,
     },
     updatedAt:{
-      type     :Sequelize.Sequelize.DataTypes.DATE,
+      type     :Sequelize.DataTypes.DATE,
       allowNull:false,
+    },
+
+    data:{
+      type:Sequelize.DataTypes.JSON,
     }
   })
 }

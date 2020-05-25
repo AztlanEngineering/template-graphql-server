@@ -1,6 +1,14 @@
+extend input TokenInput {
+  userId:ID
+}
+
 extend type Token {
-  userId:ID!
+  userId:ID
   user:User
+}
+
+extend type User {
+  tokens:Token
 }
 
 #extend type TokenInput {

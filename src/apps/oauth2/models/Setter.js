@@ -74,6 +74,7 @@ export default sequelize => {
 
   Setter.associate = models => {
     models.User.hasMany(Setter, {
+      as        :'oAuth2Setters',
       targetKey :'id',
       foreignKey:{
         name:'userId',
@@ -82,6 +83,7 @@ export default sequelize => {
       }
     })
     Setter.belongsTo(models.User, {
+      as        :'user',
       targetKey :'id',
       foreignKey:{
         name:'userId',

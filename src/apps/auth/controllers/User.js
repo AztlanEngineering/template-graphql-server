@@ -19,6 +19,10 @@ import {
 
 const Model = models.User
 
+const include = [
+  { all: true }
+  //{ model: models.DictionaryExpression, as: 'expressions' }
+]
 
 /*
 import {
@@ -29,11 +33,22 @@ import {
 } from 'utils'
 */
 const Controller = {
-  all:(root, args) => Model.findAll({}),
+  all:(root, args) => Model.findAll({
+    include, 
+    raw :true,
+    nest:true
+    //plain:true
+  }),
 
-  get:(root, { id }) => Model.findByPk( id ),
+  get:(root, { id }) => Model.findByPk( id, { 
+    include, 
+    plain:true 
+  } ),
 
-  add:async (root, { input }) => await Model.create( input ),
+  add:async (root, { input }) => await Model.create( input, { 
+    include, 
+    plain:true 
+  } ),
 
   delete:async (root, { id }) => {
     const item = await Model.findByPk(id).catch(e => {

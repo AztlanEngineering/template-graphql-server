@@ -1,0 +1,8 @@
+extend type User {
+  shops:Shop
+}
+
+extend type Shop {
+  ownerId:ID!
+  owner:MinUser
+}

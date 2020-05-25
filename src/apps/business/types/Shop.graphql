@@ -15,18 +15,35 @@ extend type Mutation {
   }
 
 input ShopInput {
-  x:Int
-  y:String
-  z:Boolean
+  name:String
+  slug:String
+  publicPhoneNumber:Float
+  privatePhoneNumber:Float
+  address:String
+  address2:String
+  city:String
+  postcode:String
+  country:String
+  #regularOpeningTimes:String
+  #specialOpeningTimes:String
+  #data:String
   }
 
 type Shop {
   id:ID!
   _string:String!
-  x:Int
-  y:String
-  z:Boolean
-  zz:Float
+  name:String!
+  slug:String!
+  publicPhoneNumber:Float
+  privatePhoneNumber:Float
+  address:String
+  address2:String
+  city:String!
+  postcode:String!
+  country:String!
+  #regularOpeningTimes:String
+  #specialOpeningTimes:String
+  #data:String
   createdAt:Float!
   updatedAt:Float!
 }
