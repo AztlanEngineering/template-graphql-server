@@ -7,6 +7,15 @@ const getDefaultExpireTime = () => Date.now() + (Number(process.env.TIME_TO_LOGI
 
 export default sequelize => {
   class Setter extends Model {
+    static clean() {
+      this.destroy({
+        where:{
+          expires:{
+            [Sequelize.Op.lte]:Date.now()
+          }
+        }
+      })
+    }
 
     async login() {
       //console.log(this)

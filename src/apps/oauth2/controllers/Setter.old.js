@@ -88,10 +88,6 @@ const Controller = {
     
   },
 
-  clean:async (root) => {
-    const deleted = await Model.deleteMany({ expires: { $lte: Date.now() } })
-    //console.log(999, deleted)
-  }
 }
 
 export default Controller

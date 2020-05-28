@@ -58,6 +58,8 @@ const Controller = {
     return updated[1][0] //we return the first updated item
   },
 
+  clean:() => Model.clean()
+
   /*
   login:async(root, { code }) => {
     const item = await Model.findOne(where:{ code })

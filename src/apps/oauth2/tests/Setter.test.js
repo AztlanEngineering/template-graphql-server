@@ -57,6 +57,7 @@ describe('OAuth2 -> OAuth2Setter Model', function() {
       )
     })
   })
+
   describe('Model -> Instance Method -> Login', function() {
     it('Model API -> When we login a valid instance, it should be not valid anymore', async function() {
       const data1 = generateFakeData({ useToLogin: true })
@@ -72,6 +73,24 @@ describe('OAuth2 -> OAuth2Setter Model', function() {
       records.forEach(e => {
         e.destroy()
       })
+    })
+  })
+
+  describe('Model -> Class Method -> Clean', function() {
+    it('Model API -> After using the clean method, we shouldnt have any expired objects in the database', async function() {
+      const data1 = generateFakeData({ useToLogin: true, expires: Date.now() - 1 })
+      const data2 = generateFakeData({ useToLogin: true, expires: Date.now() - 10 })
+      const data3 = generateFakeData({ useToLogin: true, expires: Date.now() - (Number(200 * 1000)) })
+      const records = await Model.bulkCreate([data1, data2, data3])
+      const [e1, e2, e3] = records
+      await Model.clean()
+      await Model.findByPk(e1.id)
+      const i1 = await Model.findByPk(e1.id)
+      const i2 = await Model.findByPk(e2.id)
+      const i3 = await Model.findByPk(e3.id)
+      expect(i1).to.equal(null)
+      expect(i2).to.equal(null)
+      expect(i3).to.equal(null)
     })
   })
 

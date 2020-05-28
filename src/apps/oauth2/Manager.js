@@ -292,7 +292,7 @@ export default class Manager {
 
     }
     
-    TODO
+    //TODO
     //We're connecting an existing account to this oAuth2 account, so we'll fetch the user first and then add the oAuth identity to his profile
 
     //The setter gave us the user
