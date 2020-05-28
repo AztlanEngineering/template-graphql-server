@@ -6,7 +6,8 @@ const Model = models.Shop
 
 const include = [
   { all: true }
-  //{ model: models.DictionaryExpression, as: 'expressions' }
+  //{ model: models.User, as: 'user' },
+  //{ model: models.Site, as: 'website' }
 ]
 
 /*
@@ -34,6 +35,7 @@ const Controller = {
   add:async (root, { input }) => await Model.create( input, { 
     include,
     plain:true
+    //plain:true
   } ),
 
   delete:async (root, { id }) => {

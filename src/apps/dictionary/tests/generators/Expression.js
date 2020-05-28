@@ -24,7 +24,7 @@ const generateFake = () => {
   }
 }
 
-export default (options={}) => generateTestDataFrom(
+export default (options={}, generateForeignModels=false) => generateTestDataFrom(
   generateFake,
-  options
+  options,
 )

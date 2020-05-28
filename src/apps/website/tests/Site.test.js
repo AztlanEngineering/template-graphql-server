@@ -3,30 +3,10 @@ import { assert, expect } from 'chai'
 import { SiteController as MainController } from '../controllers'
 import models from 'models'
 import * as faker from 'faker'
+import { generateTestSite as generateFakeData } from './generators'
 
 const Model = models.Site
 
-const generateFakeData = (options = {}) => {
-  const data = {
-    name       :faker.company.companyName(),
-    slug       :faker.helpers.slugify(faker.company.companyName().toLowerCase()),
-    active_from:'1920',
-    active_to  :'present',
-    country    :faker.address.country(),
-    is_common  :faker.random.boolean(),
-    is_active  :faker.random.boolean(),
-    car        :faker.random.boolean(),
-    motorcycle :faker.random.boolean(),
-    seotext    :faker.lorem.paragraph(5),
-  }
-
-  const final_data = {}
-  Object.keys(data).forEach(e => {
-    final_data[e] = (e in options) ? options[e] : data[e]
-  })
-
-  return { ...options, ...final_data }
-}
 
 describe('Website -> Site Model', function() {
   /*
@@ -37,6 +17,7 @@ describe('Website -> Site Model', function() {
   })
   */
 
+  /*
   describe('Model -> Key -> Code', function() {
     it('Default Value -> The default code is a unique 64 char string', async function() {
       const data1 = generateFakeData()
@@ -68,6 +49,7 @@ describe('Website -> Site Model', function() {
   
   })
 
+*/
   /*
   afterEach( function(){
   })
