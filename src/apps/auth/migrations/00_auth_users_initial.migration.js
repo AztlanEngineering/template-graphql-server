@@ -39,6 +39,11 @@ async function up(queryInterface, Sequelize) {
       type:Sequelize.DataTypes.STRING
     },
 
+    onboardingStatus:{
+      type     :Sequelize.DataTypes.INTEGER,
+      allowNull:false,
+    },
+
     createdAt:{
       type     :Sequelize.DataTypes.DATE,
       allowNull:false,
@@ -46,7 +51,7 @@ async function up(queryInterface, Sequelize) {
     updatedAt:{
       type     :Sequelize.DataTypes.DATE,
       allowNull:false,
-    }
+    },
 
   })
 }

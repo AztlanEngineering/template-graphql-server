@@ -74,6 +74,12 @@ export default sequelize => {
       type:Sequelize.DataTypes.STRING
     },
 
+    onboardingStatus:{
+      type        :Sequelize.DataTypes.INTEGER,
+      defaultValue:0,
+      allowNull   :false,
+    },
+
     _string:{
       type:new Sequelize.DataTypes.VIRTUAL(Sequelize.DataTypes.STRING, ['email']),
       get :function() {

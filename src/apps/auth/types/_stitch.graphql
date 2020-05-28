@@ -1,6 +1,6 @@
-extend input TokenInput {
-  userId:ID
-}
+#extend input TokenInput {
+  #userId:ID
+  #}
 
 extend type Token {
   userId:ID

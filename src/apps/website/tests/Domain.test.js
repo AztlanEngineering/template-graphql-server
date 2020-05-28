@@ -236,19 +236,32 @@ assert.exists(r2.id, 'We shouldnt deep test inclusion of empty item')
 
   describe('Controller -> Get all', function() {
     it('Admin API -> The objects retrieved equals the objects looked for', async function() {
+      // 1. We generate two items
       const data1 = generateFakeData()
       const data2 = generateFakeData()
-      const records = await Model.bulkCreate([data1, data2])
+      const records = await Model.bulkCreate([data1, data2], {})
+
+      // 2. We test they are generated properly, and we keep their irds
       expect(records[0]).to.deep.include(data1)
       expect(records[1]).to.deep.include(data2)
+  
       const { id:id1 } = records[0]
       const { id:id2 } = records[1]
+
+      // 3. We get all the items in the DB, in which we check the generated items are present
       const rows = await MainController.all({})
-      const r1 = await Model.findByPk(id1)
-      const r2 = await Model.findByPk(id2)
-      assert.exists(r1.id, 'We shouldnt deep test inclusion of empty item')
-      assert.exists(r2.id, 'We shouldnt deep test inclusion of empty item')
-      expect(rows).to.deep.include.members([ r1, r2 ])
+
+      const s1 = rows.find(e => e.id === id1)
+      const s2 = rows.find(e => e.id === id2)
+      assert.exists(s1.id, 'We shouldnt deep test inclusion of empty item')
+      assert.exists(s2.id, 'We shouldnt deep test inclusion of empty item')
+
+      // 4. We compare the found item with the generated one
+      expect(s1).to.deep.include(data1)
+      expect(s2).to.deep.include(data2) //Include instead of equal because if there is a foreign key, it will be developped in the controller get all method
+      //expect(rows).to.deep.include.members([ r1, r2 ])
+
+      // 5.Cleanup
       records.forEach((e) =>
         e.destroy()
       )

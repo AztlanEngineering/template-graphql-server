@@ -18,7 +18,7 @@ const generateFake = () => {
       faker.internet.domainName(),
     ],
     vercelTeamId  :process.env.VERCEL_TEAM_ID, //Provided as default, but just for the eq check here
-    vercelDomainId:faker.random.uuid()
+    vercelDomainId:faker.random.alphaNumeric(20)
 
   }
 }

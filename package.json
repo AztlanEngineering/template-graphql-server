@@ -8,6 +8,7 @@
   },
   "scripts": {
     "test": "SQL_LOGGING=false LOCAL=true mocha",
+    "test:sql": "LOCAL=true mocha",
     "test-eslint": "eslint src/server.js",
     "server:start": "nodemon src/server.js",
     "server:compile": "webpack --config ./webpack.js",

@@ -5,7 +5,7 @@ import { ObjectNotFoundError } from 'utils'
 const Model = models.Domain
 
 const include = [
-  { all: true }
+  //{ all: true }
   //{ model: models.DictionaryExpression, as: 'expressions' }
 ]
 
