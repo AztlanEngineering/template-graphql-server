@@ -14,6 +14,24 @@ import { generateTestShop as generateFakeData} from './generators'
 import { generateTestUser } from 'apps/auth/tests/generators'
 import { generateTestSite } from 'apps/website/tests/generators'
 
+//FM for ForeignModel
+const FM_A = {
+  generateData:() => generateTestUser(),
+  model       :models.User,
+  foreignKey  :'ownerId',
+  references  :'id',
+  as          :'user'
+}
+
+const FM_B = {
+  generateData:() => generateTestSite(),
+  model       :models.Site,
+  foreignKey  :'siteId',
+  references  :'id',
+  as          :'website'
+}
+
+
 describe('Business -> Shop Model', function() {
   /*
   before( function(){
@@ -106,23 +124,23 @@ describe('Business -> Shop Controller', function() {
 
     it('Admin API -> The objects retrieved equals the objects looked for, including associations', async function() {
       // O. We prepare the FK Data
+      const instFM_A1 = await FM_A.model.create(FM_A.generateData(), { plain: true })
+      const instFM_A2 = await FM_A.model.create(FM_A.generateData(), { plain: true })
 
-      const instUser1 = await models.User.create(generateTestUser(), { plain: true })
-      const instUser2 = await models.User.create(generateTestUser(), { plain: true })
+      const instFM_B1 = await FM_B.model.create(FM_B.generateData(), { plain: true })
+      const instFM_B2 = await FM_B.model.create(FM_B.generateData(), { plain: true })
 
-      const instSite1 = await models.Site.create(generateTestSite(), { plain: true })
-      const instSite2 = await models.Site.create(generateTestSite(), { plain: true })
       //console.log(instUser1, instSite2)
 
       // 1. We generate two items
       const data1 = generateFakeData({
-        ownerId:instUser1.id,
-        siteId:instSite1.id
+        [FM_A.foreignKey]:instFM_A1[FM_A.references],
+        [FM_B.foreignKey]:instFM_B1[FM_B.references]
       })
 
       const data2 = generateFakeData({
-        ownerId:instUser2.id,
-        siteId:instSite2.id
+        [FM_A.foreignKey]:instFM_A2[FM_A.references],
+        [FM_B.foreignKey]:instFM_B2[FM_B.references]
       })
 
       const records = await Model.bulkCreate([data1, data2], {})
@@ -145,13 +163,13 @@ describe('Business -> Shop Controller', function() {
       // 4. We compare the found item with the generated one
       expect(s1).to.deep.include({
         ...data1, 
-        user   :instUser1.dataValues,
-        website:instSite1.dataValues
+        [FM_A.as]:instFM_A1.dataValues,
+        [FM_B.as]:instFM_B1.dataValues
       })
       expect(s2).to.deep.include({
         ...data2, 
-        user   :instUser2.dataValues,
-        website:instSite2.dataValues
+        [FM_A.as]:instFM_A2.dataValues,
+        [FM_B.as]:instFM_B2.dataValues
       })
       //expect(rows).to.deep.include.members([ r1, r2 ])
 
@@ -159,15 +177,15 @@ describe('Business -> Shop Controller', function() {
       records.forEach((e) =>
         e.destroy()
       )
-      instUser1.destroy()
-      instUser2.destroy()
-      instSite1.destroy()
-      instSite2.destroy()
+      instFM_A1.destroy()
+      instFM_A2.destroy()
+      instFM_B1.destroy()
+      instFM_B2.destroy()
     })
   })
 
   describe('Controller -> Get one', function() {
-    it('Admin API -> The object retrieved correspond to the objects looked fori, with no association', async function() {
+    it('Admin API -> The object retrieved correspond to the objects looked for, with no association', async function() {
       const data = generateFakeData()
       const { id } = await Model.create( data )
       const inst = await MainController.get({}, { id })
@@ -176,22 +194,22 @@ describe('Business -> Shop Controller', function() {
     }),
 
     it('Admin API -> The object retrieved correspond to the objects looked for, including associations', async function() {
-      const instUser = await models.User.create(generateTestUser(), { plain: true })
-      const instSite = await models.Site.create(generateTestSite(), { plain: true })
+      const instFM_A = await FM_A.model.create(FM_A.generateData(), { plain: true })
+      const instFM_B = await FM_B.model.create(FM_B.generateData(), { plain: true })
 
       const data = generateFakeData({
-        ownerId:instUser.id,
-        siteId :instSite.id
+        [FM_A.foreignKey]:instFM_A[FM_A.references],
+        [FM_B.foreignKey]:instFM_B[FM_B.references]
       })
 
       const { id } = await Model.create( data )
       const inst = await MainController.get({}, { id })
       expect(inst).to.deep.include({ id, ...data })
-      expect(inst.user.dataValues).to.deep.include(instUser.dataValues)
-      expect(inst.website.dataValues).to.deep.include(instSite.dataValues)
+      expect(inst[FM_A.as].dataValues).to.deep.include(instFM_A.dataValues)
+      expect(inst[FM_B.as].dataValues).to.deep.include(instFM_B.dataValues)
       inst.destroy()
-      instUser.destroy()
-      instSite.destroy()
+      instFM_A.destroy()
+      instFM_B.destroy()
     })
   })
 
@@ -205,12 +223,12 @@ describe('Business -> Shop Controller', function() {
     })
 
     it('Admin API -> The object created equals the specs given, including associations', async function() {
-      const instUser = await models.User.create(generateTestUser(), { plain: true })
-      const instSite = await models.Site.create(generateTestSite(), { plain: true })
+      const instFM_A = await FM_A.model.create(FM_A.generateData(), { plain: true })
+      const instFM_B = await FM_B.model.create(FM_B.generateData(), { plain: true })
 
       const input = generateFakeData({
-        ownerId:instUser.id,
-        siteId :instSite.id
+        [FM_A.foreignKey]:instFM_A[FM_A.references],
+        [FM_B.foreignKey]:instFM_B[FM_B.references]
       })
 
       const inst = await MainController.add({}, { input })
@@ -219,8 +237,8 @@ describe('Business -> Shop Controller', function() {
       //expect(inst.website.dataValues).to.deep.include(instSite.dataValues) //
       //https://github.com/sequelize/sequelize/issues/3807
       inst.destroy()
-      instUser.destroy()
-      instSite.destroy()
+      instFM_A.destroy()
+      instFM_B.destroy()
     })
 
   })
@@ -234,13 +252,14 @@ describe('Business -> Shop Controller', function() {
       expect(inst).to.deep.include({id, ...input})
       inst.destroy()
     })
+
     it('Admin API -> The object is successfully updated, with associations', async function() {
-      const instUser = await models.User.create(generateTestUser(), { plain: true })
-      const instSite = await models.Site.create(generateTestSite(), { plain: true })
+      const instFM_A = await FM_A.model.create(FM_A.generateData(), { plain: true })
+      const instFM_B = await FM_B.model.create(FM_B.generateData(), { plain: true })
 
       const data = generateFakeData({
-        ownerId:instUser.id,
-        siteId :instSite.id
+        [FM_A.foreignKey]:instFM_A[FM_A.references],
+        [FM_B.foreignKey]:instFM_B[FM_B.references]
       })
 
       const { id } = await Model.create( data )
@@ -248,8 +267,8 @@ describe('Business -> Shop Controller', function() {
       const inst = await MainController.update({}, { id, input })
       expect(inst).to.deep.include({id, ...input})
       inst.destroy()
-      instUser.destroy()
-      instSite.destroy()
+      instFM_A.destroy()
+      instFM_B.destroy()
     })
   })
 

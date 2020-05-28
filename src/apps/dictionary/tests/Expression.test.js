@@ -15,6 +15,15 @@ import {
 
 const Model = models.DictionaryExpression
 
+//FM for ForeignModel
+const FM_A = {
+  generateData:() => generateTestAuthor(),
+  model       :models.DictionaryAuthor,
+  foreignKey  :'authorId',
+  references  :'id',
+  as          :'author'
+}
+
 describe('Dictionary -> Expression Model', function() {
   /*
   before( function(){
@@ -109,27 +118,20 @@ describe('Dictionary -> Expression Controller', function() {
     it('Admin API -> The objects retrieved equals the objects looked for, including associations', async function() {
       // O. We prepare the FK Data
 
-
-      const instAuthor1 = await models.DictionaryAuthor.create(generateTestAuthor(), { plain: true })
-      const instAuthor2 = await models.DictionaryAuthor.create(generateTestAuthor(), { plain: true })
-
-      //const instSite1 = await models.Site.create(generateTestSite(), { plain: true })
-      //const instSite2 = await models.Site.create(generateTestSite(), { plain: true })
-      //console.log(instAuthor1, instSite2)
+      const instFM_A_A1 = await FM_A.model.create(FM_A.generateData(), { plain: true })
+      const instFM_A_A2 = await FM_A.model.create(FM_A.generateData(), { plain: true })
+      //console.log(instUser1, instFM_A2)
 
       // 1. We generate two items
       const data1 = generateFakeData({
-        date:new Date(),
-        authorId:instAuthor1.id,
-        //siteId:instSite1.id
+        date             :new Date(),
+        [FM_A.foreignKey]:instFM_A_A1[FM_A.references]
       })
 
       const data2 = generateFakeData({
-        date:new Date(),
-        authorId:instAuthor2.id,
-        //siteId:instSite2.id
+        date             :new Date(),
+        [FM_A.foreignKey]:instFM_A_A2[FM_A.references]
       })
-      
 
       const records = await Model.bulkCreate([data1, data2], {})
 
@@ -151,13 +153,11 @@ describe('Dictionary -> Expression Controller', function() {
       // 4. We compare the found item with the generated one
       expect(s1).to.deep.include({
         ...data1, 
-        author   :instAuthor1.dataValues,
-        //website:instSite1.dataValues
+        [FM_A.as]:instFM_A_A1.dataValues
       })
       expect(s2).to.deep.include({
         ...data2, 
-        author   :instAuthor2.dataValues,
-        //website:instSite2.dataValues
+        [FM_A.as]:instFM_A_A2.dataValues
       })
       //expect(rows).to.deep.include.members([ r1, r2 ])
 
@@ -165,68 +165,64 @@ describe('Dictionary -> Expression Controller', function() {
       records.forEach((e) =>
         e.destroy()
       )
-      instAuthor1.destroy()
-      instAuthor2.destroy()
-      //instSite1.destroy()
-      //instSite2.destroy()
+      instFM_A_A1.destroy()
+      instFM_A_A2.destroy()
     })
-    
   })
 
   describe('Controller -> Get one', function() {
-    it('Admin API -> The object retrieved correspond to the objects looked fori, with no association', async function() {
+    it('Admin API -> The object retrieved correspond to the objects looked for, with no association', async function() {
       const data = generateFakeData()
       const { id } = await Model.create( data )
       const inst = await MainController.get({}, { id })
       expect(inst).to.deep.include({id, ...data})
       inst.destroy()
-    }),
+    })
 
     it('Admin API -> The object retrieved correspond to the objects looked for, including associations', async function() {
-      const instAuthor = await models.DictionaryAuthor.create(generateTestAuthor(), { plain: true })
+      const instFM_A = await FM_A.model.create(FM_A.generateData(), { plain: true })
 
       const data = generateFakeData({
-        authorId:instAuthor.id,
+        [FM_A.foreignKey]:instFM_A[FM_A.references]
       })
 
       const { id } = await Model.create( data )
       const inst = await MainController.get({}, { id })
       expect(inst).to.deep.include({ id, ...data })
-      expect(inst.author.dataValues).to.deep.include(instAuthor.dataValues)
+      expect(inst[FM_A.as].dataValues).to.deep.include(instFM_A.dataValues)
       inst.destroy()
-      instAuthor.destroy()
+      instFM_A.destroy()  
     })
   })
 
   describe('Controller -> Add', function() {
     it('Admin API -> The object created equals the specs given, with no association', async function() {
       const input = generateFakeData()
-
       const inst = await MainController.add({}, { input })
       expect(inst).to.deep.include(input)
       inst.destroy()
     })
 
     it('Admin API -> The object created equals the specs given, including associations', async function() {
-      const instAuthor = await models.DictionaryAuthor.create(generateTestAuthor(), { plain: true })
+      const instFM_A = await FM_A.model.create(FM_A.generateData(), { plain: true })
 
       const input = generateFakeData({
-        authorId:instAuthor.id,
+        [FM_A.foreignKey]:instFM_A[FM_A.references]
       })
 
       const inst = await MainController.add({}, { input })
       expect(inst).to.deep.include(input)
-      //expect(inst.user.dataValues).to.deep.include(instAuthor.dataValues)
-      //expect(inst.website.dataValues).to.deep.include(instSite.dataValues) //
+      //expect(inst.user.dataValues).to.deep.include(instUser.dataValues)
+      //expect(inst[FM_A.as].dataValues).to.deep.include(instFM_A.dataValues) //
       //https://github.com/sequelize/sequelize/issues/3807
       inst.destroy()
-      instAuthor.destroy()
+      instFM_A.destroy()
     })
 
   })
 
   describe('Controller -> Update', function() {
-    it('Admin API -> The object is successfully updated, with no associations', async function() {
+    it('Admin API -> The object is successfully updated, with no association', async function() {
       const data = generateFakeData()
       const { id } = await Model.create( data )
       const input = generateFakeData()
@@ -236,10 +232,10 @@ describe('Dictionary -> Expression Controller', function() {
     })
 
     it('Admin API -> The object is successfully updated, with associations', async function() {
-      const instAuthor = await models.DictionaryAuthor.create(generateTestAuthor(), { plain: true })
+      const instFM_A = await FM_A.model.create(FM_A.generateData(), { plain: true })
 
       const data = generateFakeData({
-        authorId:instAuthor.id,
+        [FM_A.foreignKey]:instFM_A[FM_A.references]
       })
 
       const { id } = await Model.create( data )
@@ -247,7 +243,7 @@ describe('Dictionary -> Expression Controller', function() {
       const inst = await MainController.update({}, { id, input })
       expect(inst).to.deep.include({id, ...input})
       inst.destroy()
-      instAuthor.destroy()
+      instFM_A.destroy()
     })
   })
 
@@ -271,7 +267,7 @@ describe('Dictionary -> Expression Controller', function() {
   after( function(){
   })
   */
+
+
+
 })
-
-
-
