@@ -83,9 +83,17 @@ const server = new ApolloServer({
   },
 
   extensions:[
-    () => new CacheControlExtension({ defaultMaxAge: 604800, calculateHttpHeaders: true })
+    () => new CacheControlExtension({ 
+      defaultMaxAge       :604800, 
+      calculateHttpHeaders:true 
+    })
   ],
   context:async ({ req }) => {
+    const c = {}
+    c.user = req.user
+    return c
+
+    /* THIS if we decide to store the JWT. Else we use the JWTStrategy
     let c = {}
     const token = req.headers.authorization ? req.headers.authorization.split(' ')[1] : ''
     if (token){
@@ -110,12 +118,11 @@ const server = new ApolloServer({
         throw new AuthenticationError('must authenticate')
       }
 
-      /*
       c = {
         user      :t.user,
         token     :t,
         authorized:ver
-      }*/
+      }
     }
     c.user = req.user
     c.client = {
@@ -127,6 +134,8 @@ const server = new ApolloServer({
       console.log('Context : ', c)
     }
     return c
+    */
+    
   }
 })
 

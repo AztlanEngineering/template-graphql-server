@@ -136,7 +136,7 @@ export default class Manager {
       token_type
       //id_token: body.id_token,
     }
-    //console.log('POST w params', request_params, this.authData)
+    console.log('POST w params', request_params, this.authData)
 
   }
 

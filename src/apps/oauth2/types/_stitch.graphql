@@ -10,3 +10,26 @@ extend type Setter {
 extend type User {
   oAuth2Setters:Setter 
 }
+
+type OAuth2Profile {
+  id: ID!
+  #refreshToken:pdrivate
+  picture: String
+  provider: String 
+  scope: String
+  locale: String
+  name: String
+  email: String
+  emailVerified: Boolean
+  createdAt:Float
+  updatedAt:Float
+  #scope:private
+}
+
+extend type MinUser {
+  oAuth2Profiles:[OAuth2Profile]
+}
+
+extend type User {
+  oAuth2Profiles:[OAuth2Profile]
+}

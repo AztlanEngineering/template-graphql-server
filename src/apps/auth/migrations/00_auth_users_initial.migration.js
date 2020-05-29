@@ -12,6 +12,10 @@ async function up(queryInterface, Sequelize) {
       type  :Sequelize.DataTypes.STRING,
       unique:true,
     },
+    emailVerified:{
+      type     :Sequelize.DataTypes.BOOLEAN,
+      allowNull:false,
+    },
 
     firstName:{
       type:Sequelize.DataTypes.STRING

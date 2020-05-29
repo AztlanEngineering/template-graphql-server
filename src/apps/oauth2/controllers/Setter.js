@@ -3,14 +3,12 @@ import { ObjectNotFoundError } from 'utils'
 
 const Model = models.OAuth2Setter
 
-/*
 import {
-  ConfigurationError,
+  //ConfigurationError,
   ValidationError,
-  NotUniqueError,
-  ObjectNotFoundError
+  //NotUniqueError,
+  //ObjectNotFoundError
 } from 'utils'
-*/
 
 const include = [
   { all: true }
@@ -58,32 +56,25 @@ const Controller = {
     return updated[1][0] //we return the first updated item
   },
 
-  clean:() => Model.clean()
-
-  /*
-  login:async(root, { code }) => {
-    const item = await Model.findOne(where:{ code })
-
-    //console.log('got setter, ready to l/I', tempItem, tempItem.is_valid, code)
-    if (item && item.login()){
-      item = await User.populate(item,
-        { path: 'user', model: User }
-      )
-      // Do Login
-      const token = getTokenFor(item.user)
-      item.destroy()
-      return token
-      //TODO delete all expired codes here (????)
+  login:async(root, { authorization_code }) => {
+    const item = await Model.findOne({
+      where:{
+        code:authorization_code
+      },
+      include:{ all: true },
+      plain  :true,
+    }) 
+    if(item && item.login()) {
+      if(item.user.canLogIn()) {
+        const token = await item.user.getAuthToken() 
+        item.destroy()
+        return token
+      }
     }
- 
-    throw new ValidationError({ message: 'Wrong authorization code' })
-    
+    throw new ValidationError({ message: 'Incorrect credentials' }) //User not found
   },
 
-  clean:async (root) => {
-    const deleted = await Model.deleteMany({ expires: { $lte: Date.now() } })
-    //console.log(999, deleted)
-  }*/
+  clean:() => Model.clean(),
 }
 
 export default Controller

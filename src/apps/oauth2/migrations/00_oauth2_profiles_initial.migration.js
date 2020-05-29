@@ -7,14 +7,19 @@ async function up(queryInterface, Sequelize) {
       allowNull :false,
       primaryKey:true,
     },
+    /*
     accessToken:{
       type:Sequelize.DataTypes.STRING
     },
+    */
     refreshToken:{
       type:Sequelize.DataTypes.STRING
     },
     provider:{
       type:Sequelize.DataTypes.STRING
+    },
+    picture:{
+      type:Sequelize.DataTypes.TEXT
     },
     scope:{
       type:Sequelize.DataTypes.STRING

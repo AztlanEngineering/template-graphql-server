@@ -3,5 +3,10 @@ type Token {
   _string:String!
   token: String!
   maxAge: String!
+  tokenType:String
+
+  expires_in:Float! #Based on maxAge and Date.now
+  access_token:String! #same as token
+  token_type:String #same as tokenType
 }
 

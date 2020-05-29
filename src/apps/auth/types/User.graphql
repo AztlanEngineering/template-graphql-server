@@ -1,7 +1,7 @@
 extend type Query {
  	allUsers: [User]!
  	getUser(id:ID!): User!
- 	me: User
+ 	me: MinUser
   hello: String!
 }
 
@@ -48,17 +48,6 @@ input UserLogin {
   password:String!
 }
 
-type OAuth2Data {
-  id: ID
-  name: String
-  scope: String
-  picture: String
-  locale: String
-  email: String
-  emailVerified: Boolean
-  provider: String 
-}
-
 type User {
  	id: ID
  	firstName: String
@@ -69,18 +58,22 @@ type User {
   operator: Boolean
   password: String
   handle: String
-  profilePicture: String
   isActive:Boolean
-  oauth2:[OAuth2Data]
+  onboardingStatus:Int
+  createdAt:Float
+  updatedAt:Float
 }
 
 type MinUser {
  	id: ID
+  email:String
  	firstName: String
  	lastName: String
   username: String
   handle: String
-  profilePicture: String
   isActive:Boolean
+  onboardingStatus:Int
+  createdAt:Float
+  updatedAt:Float
 }
 

@@ -1,6 +1,7 @@
 import rp from 'request-promise'
-const base_url = 'https://api.vercel.com'
 import qs from 'querystring'
+
+const base_url = 'https://api.vercel.com'
 
 const isEmpty = (obj) => {
   return Object.keys(obj).length === 0

@@ -4,5 +4,5 @@ extend type Query {
 }
 
 extend type Mutation {
-  oAuth2Login(code:String): Token!
+  oAuth2Login(authorization_code:String): Token!
 }

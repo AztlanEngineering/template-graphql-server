@@ -30,13 +30,49 @@ export default sequelize => {
       allowNull   :false,
       primaryKey  :true,
     },
+
     maxAge:{
       type        :Sequelize.DataTypes.INTEGER,
       defaultValue:3600
     },
+
     token:{
       type     :Sequelize.DataTypes.TEXT,
       allowNull:false
+    },
+
+    tokenType:{
+      type        :Sequelize.DataTypes.STRING,
+      defaultValue:'Bearer'
+    },
+
+    // For OAuth2 compliance
+
+    expires_in:{
+      type:new Sequelize.DataTypes.VIRTUAL(Sequelize.DataTypes.BIGINT, ['maxAge, createdAt']),
+      get :function() {
+        const remainingDurationMS = Number(this.get('createdAt')) + this.get('maxAge') * 1000 - Number(Date.now())
+        return Math.floor(Math.max(0,remainingDurationMS / 1000))
+      }
+
+    },
+
+    // For OAuth2 compliance
+    
+    access_token:{
+      type:new Sequelize.DataTypes.VIRTUAL(Sequelize.DataTypes.TEXT, ['token']),
+      get :function() {
+        return this.get('token')
+      }
+    },
+
+    // For OAuth2 compliance
+
+    token_type:{
+      type:new Sequelize.DataTypes.VIRTUAL(Sequelize.DataTypes.STRING, ['tokenType']),
+      get :function() {
+        return this.get('tokenType')
+      }
     },
 
     _string:{
@@ -49,8 +85,8 @@ export default sequelize => {
   },{
     sequelize,
     modelName:'Token',
-    updatedAt:'updatedAt',
     tableName:'auth_tokens',
+    updatedAt:'updatedAt',
     createdAt:'createdAt'
   })
 

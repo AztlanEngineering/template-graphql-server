@@ -12,11 +12,16 @@ export default (sequelize) => {
       allowNull   :false,
       primaryKey  :true,
     },
+    /*
     accessToken:{
       type:Sequelize.DataTypes.STRING
     },
+    */
     refreshToken:{
       type:Sequelize.DataTypes.STRING
+    },
+    picture:{
+      type:Sequelize.DataTypes.TEXT
     },
     provider:{
       type:Sequelize.DataTypes.STRING
@@ -45,8 +50,8 @@ export default (sequelize) => {
       type:new Sequelize.DataTypes.VIRTUAL(Sequelize.DataTypes.STRING, ['provider', 'email', 'id']),
       get :function() {
         return this.get('email') ?
-          `${this.get(provider)}/${this.get(email)}` :
-          `${this.get(provider)}/${this.get(id).slice(8)}`
+          `${this.get('provider')}/${this.get('email')}` :
+          `${this.get('provider')}/${this.get('id').slice(8)}`
       }
     },
   
@@ -63,6 +68,7 @@ export default (sequelize) => {
   Profile.associate = models => {
     //reverse association to keep this package independent from auth
     models.User.hasMany(Profile, {
+      as        :'oAuth2Profiles',
       targetKey :'id',
       foreignKey:{
         name:'userId',
@@ -71,6 +77,7 @@ export default (sequelize) => {
       }
     })
     Profile.belongsTo(models.User, {
+      as        :'user',
       targetKey :'id',
       foreignKey:{
         name:'userId',

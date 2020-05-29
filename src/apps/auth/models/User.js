@@ -15,6 +15,9 @@ export default sequelize => {
     return this.first_name
   }
   */
+    canLogIn() {
+      return this.get('isActive')
+    }
 
     async setPassword(password) {
       this.passwordHash = await bcrypt.hash(password, 8)
@@ -45,6 +48,11 @@ export default sequelize => {
       validate:{
         isEmail:true
       },
+    },
+    emailVerified:{
+      type        :Sequelize.DataTypes.BOOLEAN,
+      allowNull   :false,
+      defaultValue:false
     },
     firstName:{
       type:Sequelize.DataTypes.STRING
@@ -101,7 +109,9 @@ export default sequelize => {
   }
 
   User.addHook('beforeValidate', 'lowercaseEmail', (item, options) => {
-    item.email = item.email.toLowerCase()
+    if(item.email) {
+      item.email = item.email.toLowerCase()
+    }
   })
   
   //User.addHook('afterCreate', 'hookName', (e, options) => {})
