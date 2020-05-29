@@ -30,7 +30,6 @@ export default sequelize => {
   /*
   static classLevelMethod() {
   }
-
   */
   }
 

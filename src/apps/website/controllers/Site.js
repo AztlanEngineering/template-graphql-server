@@ -58,7 +58,9 @@ const Controller = {
       e => console.log(e.message)
     )
     return updated[1][0] //we return the first updated item
-  }
+  },
+
+  
 }
 
 export default Controller
