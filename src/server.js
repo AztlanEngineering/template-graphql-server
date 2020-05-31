@@ -32,7 +32,9 @@ const {
   //DB_LOCAL //Deprecated
   DEBUG,
   CORS,
-  JWT_SECRET
+  JWT_SECRET,
+  PROFILE_NAME,
+  MODE
 } = process.env
 
 let playground, logError, logResponse
@@ -91,6 +93,7 @@ const server = new ApolloServer({
   context:async ({ req }) => {
     const c = {}
     c.user = req.user
+    c.headers = req.headers
     return c
 
     /* THIS if we decide to store the JWT. Else we use the JWTStrategy
@@ -177,7 +180,8 @@ sequelize.sync({ alter: true }).then(
 )
 */
 
-app.listen({ port }, () =>
-  console.log(`🌋 Server ready at http://localhost:${port}${server.graphqlPath}`)
-)
+app.listen({ port }, () =>{
+  console.log(`OK => Loaded profile  ${PROFILE_NAME} in mode ${MODE}`)
+  console.log(`OK => Server ready at http://localhost:${port}${server.graphqlPath}`)
+})
 

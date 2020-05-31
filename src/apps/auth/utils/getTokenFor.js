@@ -32,7 +32,7 @@ export default async (user, secret=process.env.JWT_SECRET) => {
 
   const key = secret
 
-  const tokenDuration = Number(process.env.SESSION_DURATION)
+  const tokenDuration = Number(process.env.AUTH_SESSION_DURATION)
 
   const token = jwt.sign(payload,
     key, {

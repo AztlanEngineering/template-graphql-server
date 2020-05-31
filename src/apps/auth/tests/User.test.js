@@ -212,11 +212,11 @@ describe('Auth -> User Controller', function() {
         loginToken.token, 
         process.env.JWT_SECRET,
         {
-          expiresIn:process.env.SESSION_DURATION,
+          expiresIn:process.env.AUTH_SESSION_DURATION,
           algorithm:['RS256']
         }
       )
-      expect( loginToken.maxAge ).to.be.equal(Number(process.env.SESSION_DURATION))
+      expect( loginToken.maxAge ).to.be.equal(Number(process.env.AUTH_SESSION_DURATION))
       expect( loginToken.userId ).to.be.equal(item.id)
       expect( ver.id ).to.be.equal(item.id)
       expect( ver.email ).to.be.equal(item.email)
@@ -241,12 +241,12 @@ describe('Auth -> User Controller', function() {
         loginToken.token, 
         process.env.JWT_SECRET,
         {
-          expiresIn:process.env.SESSION_DURATION,
+          expiresIn:process.env.AUTH_SESSION_DURATION,
           algorithm:['RS256']
         }
       )
       //console.log(9998877, ver)
-      expect( loginToken.maxAge ).to.be.equal(Number(process.env.SESSION_DURATION))
+      expect( loginToken.maxAge ).to.be.equal(Number(process.env.AUTH_SESSION_DURATION))
       expect( loginToken.userId ).to.be.equal(item.id)
       expect( ver.id ).to.be.equal(item.id)
       expect( ver.email ).to.be.equal(item.email)

@@ -8,14 +8,14 @@ const UserModel = models.User
 
 const callbacks = require('express').Router()
 
-const HOST_APP_URL = process.env.HOST_APP_URL
-const IS_SIGNUP_ALLOWED = process.env.SIGNUP === 'true'
+const OAUTH2_CLIENT_URL = process.env.OAUTH2_CLIENT_URL
+const IS_SIGNUP_ALLOWED = process.env.AUTH_SIGNUP_ENABLED === 'true'
 
 const redirectUrlMap = {
-  unauthorized:() => `${HOST_APP_URL}/unauthorized`,
+  unauthorized:() => `${OAUTH2_CLIENT_URL}/unauthorized`,
   google      :{
-    unauthorized:() => `${HOST_APP_URL}/unauthorized`,
-    authorized  :(authorizationCode) => `${HOST_APP_URL}/redeem/${authorizationCode}`
+    unauthorized:() => `${OAUTH2_CLIENT_URL}/unauthorized`,
+    authorized  :(authorizationCode) => `${OAUTH2_CLIENT_URL}/redeem/${authorizationCode}`
   }
 }
 

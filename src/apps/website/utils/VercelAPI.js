@@ -13,7 +13,7 @@ const getQs = (params) => {
 }
 
 const headers = {
-  Authorization:`Bearer ${process.env.VERCEL_SECRET_TOKEN}`
+  Authorization:`Bearer ${process.env.VERCEL_API_SECRET}`
 }
 
 const apiEndpoints = {

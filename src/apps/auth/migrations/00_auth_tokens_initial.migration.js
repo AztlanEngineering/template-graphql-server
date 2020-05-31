@@ -11,6 +11,7 @@ async function up(queryInterface, Sequelize) {
       type        :Sequelize.DataTypes.INTEGER,
       defaultValue:3600
     },
+
     token:{
       type     :Sequelize.DataTypes.TEXT,
       allowNull:false

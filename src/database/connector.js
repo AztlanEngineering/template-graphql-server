@@ -1,26 +1,30 @@
 import { Sequelize } from 'sequelize'
 import tls from 'tls'
 
+import config from './config.js'
+
+const C = config[process.env.MODE]
+
 const decodeBase64 = (s) =>
   String(new Buffer.from(s, 'base64'))
 
 const sequelize = new Sequelize(
-  process.env.POSTGRES_DB_NAME,
-  process.env.POSTGRES_USER,
-  process.env.POSTGRES_PASSWORD,
+  C.DB_NAME,
+  C.USER,
+  C.PASSWORD,
   {
-    host          :process.env.POSTGRES_HOST,
-    logging       :process.env.SQL_LOGGING === 'true'? console.log : false,
+    host          :C.HOST,
+    logging       :C.LOGGING,
     //logging       :false,
     dialect       :'postgres',
     dialectOptions:{
-      ssl:{
-        key               :decodeBase64(process.env.POSTGRES_CLIENT_KEY),
-        cert              :decodeBase64(process.env.POSTGRES_CLIENT_CERT),
-        ca                :decodeBase64(process.env.POSTGRES_SERVER_CA),
+      ssl:C.USE_SSL ? {
+        key               :decodeBase64(C.SSL_CLIENT_KEY),
+        cert              :decodeBase64(C.SSL_CLIENT_CERT),
+        ca                :decodeBase64(C.SSL_SERVER_CA),
         rejectUnauthorized:false
         //https://stackoverflow.com/questions/33878356/certificate-validation-on-cloud-sql
-      }
+      } : undefined
     }
   }
 )

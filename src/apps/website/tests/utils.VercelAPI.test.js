@@ -21,7 +21,7 @@ const generateFakeDomain = () => 'auto-testing-available-domain' + faker.random.
 
 describe('Website -> Vercel API', function() {
   before( function(){
-    assert(process.env.VERCEL_SECRET_TOKEN, 'Env var VERCEL_SECRET_TOKEN is not configured')
+    assert(process.env.VERCEL_API_SECRET, 'Env var VERCEL_API_SECRET is not configured')
   })
 
   /*

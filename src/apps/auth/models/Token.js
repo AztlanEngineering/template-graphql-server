@@ -49,7 +49,7 @@ export default sequelize => {
     // For OAuth2 compliance
 
     expires_in:{
-      type:new Sequelize.DataTypes.VIRTUAL(Sequelize.DataTypes.BIGINT, ['maxAge, createdAt']),
+      type:new Sequelize.DataTypes.VIRTUAL(Sequelize.DataTypes.BIGINT, ['maxAge', 'createdAt']),
       get :function() {
         const remainingDurationMS = Number(this.get('createdAt')) + this.get('maxAge') * 1000 - Number(Date.now())
         return Math.floor(Math.max(0,remainingDurationMS / 1000))

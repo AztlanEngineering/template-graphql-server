@@ -1,7 +1,8 @@
 import rp from 'request-promise'
 import qs from 'querystring'
 
-import { User, Setter } from 'models'
+import models from 'models'
+const Setter = models.Setter
 
 export default class Manager {
 
@@ -147,7 +148,7 @@ export default class Manager {
     }
     const res = await rp(options)
 
-    console.log(6667788, 'got this back sb refresh t', res)
+    //console.log(6667788, 'got this back sb refresh t', res)
 
     /* IF we configured everything properly, namely offline access, and prompting user for consent, we should get both an access and a refresh token like this. Here is an example of the answer
     res = {

@@ -4,6 +4,7 @@
     { "src": "/.*", "dest": "api/server.js" }
   ],
 	"env": {
+    "PROFILE_NAME":"fwrlines/remote",
     "MODE":"production",
     "DEBUG":"true",
     "SQL_LOGGING":"true",

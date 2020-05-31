@@ -1,5 +1,5 @@
 /* @fwrlines/generator-graphql-server-type 1.1.1 */
-import { SetterController as MainController } from '../controllers'
+import { OAuth2SetterController as MainController } from '../controllers'
 import { suMethod as su } from 'utils'
 
 export default {

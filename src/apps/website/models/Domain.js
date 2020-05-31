@@ -6,9 +6,11 @@ import { VercelAPI } from '../utils'
 
 import { EmailSender } from 'utils'
 
+import localAppConfig from '../config'
+
 //const ORDER_EMAIL_TO = 'adrian.villa.g@gmail.com'
-const ORDER_EMAIL_TO = ['meccamico@obambu.com', 'ale+obambu@meccamico.com']
-const IS_DRY_ORDER = process.env.DOMAIN_DRY_ORDER === 'true' ? true : false
+const ORDER_EMAIL_TO = localAppConfig.ORDER_DOMAINS_TO_EMAIL
+const IS_DRY_ORDER = process.env.WEBSITE_DOMAIN_DRY_ORDER === 'true' ? true : false
 
 export default sequelize => {
   class Domain extends Model {

@@ -20,11 +20,11 @@ export default class Config {
   static name = 'google'
 
   static service = {
-    clientId            :process.env.GOOGLE_OAUTH_CLIENT,
-    clientSecret        :process.env.GOOGLE_OAUTH_KEY,
+    clientId            :process.env.OAUTH2_GOOGLE_CLIENT,
+    clientSecret        :process.env.OAUTH2_GOOGLE_SECRET,
     authorizeFullPath   :'https://accounts.google.com/o/oauth2/auth', 
     accessType          :'offline',//'offline',
-    authorizeRedirectUri:`${process.env.GOOGLE_OAUTH_HOST_AUTHORIZE}/auth/google/callback`,
+    authorizeRedirectUri:`${process.env.OAUTH2_GOOGLE_HOST_AUTHORIZE}/auth/google/callback`,
     scope, 
   }
 
