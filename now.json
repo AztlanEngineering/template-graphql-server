@@ -34,7 +34,7 @@
     "VERCEL_TEST_DOMAIN_PERSONAL":"@srv-vercel-test-domain-personal",
     "UTILS_EMAIL_DEFAULT_SENDER":"ale@meccamico.com",
     "UTILS_EMAIL_GOOGLE_OAUTH2_CLIENT_ID":"@srv-utils-email-google-oauth2-client",
-    "UTILS_EMAIL_GOOGLE_OAUTH2_CLIENT_SECRET":"@srv-utils-email-google-oauth2-client-secret",
+    "UTILS_EMAIL_GOOGLE_OAUTH2_CLIENT_SECRET":"@srv-utils-email-google-oauth2-secret",
     "UTILS_EMAIL_GOOGLE_OAUTH2_REFRESH_TOKEN":"@srv-utils-email-google-oauth2-refresh-token"
 	}
 }
