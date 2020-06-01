@@ -38,7 +38,7 @@
       "UTILS_EMAIL_GOOGLE_OAUTH2_CLIENT_SECRET":"@srv-utils-email-google-oauth2-secret",
       "UTILS_EMAIL_GOOGLE_OAUTH2_REFRESH_TOKEN":"@srv-utils-email-google-oauth2-refresh-token"
 	  }
-  }
+  },
 	"env": {
     "PROFILE_NAME":"fwrlines/remote",
     "MODE":"production",
