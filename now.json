@@ -3,6 +3,42 @@
   "routes": [
     { "src": "/.*", "dest": "api/server.js" }
   ],
+  "build":{
+	  "env": {
+      "PROFILE_NAME":"fwrlines/remote",
+      "MODE":"production",
+      "DEBUG":"true",
+      "SQL_LOGGING":"true",
+      "POSTGRES_DEV_DB_NAME":"@srv-postgres-dev-db-name",
+      "POSTGRES_DEV_USER":"@srv-postgres-dev-user",
+      "POSTGRES_DEV_PASSWORD":"@srv-postgres-dev-password",
+      "POSTGRES_DEV_HOST":"@srv-postgres-dev-host",
+      "POSTGRES_DEV_USE_SSL":"false",
+      "POSTGRES_PROD_DB_NAME":"@srv-postgres-prod-db-name",
+      "POSTGRES_PROD_USER":"@srv-postgres-prod-user",
+      "POSTGRES_PROD_PASSWORD":"@srv-postgres-prod-password",
+      "POSTGRES_PROD_HOST":"@srv-postgres-prod-host",
+      "POSTGRES_PROD_USE_SSL":"false",
+      "AUTH_COOKIE_DURATION":"86400",
+      "AUTH_CODE_DURATION":"140",
+      "AUTH_SIGNUP_AUTHORIZED":"true",
+      "JWT_ISSUER":"fwrlines-srv",
+      "JWT_AUDIENCE":"fwrlines.com",
+      "JWT_SECRET":"@srv-jwt-secret",
+      "OAUTH2_GOOGLE_CLIENT":"@srv-oauth2-google-client",
+      "OAUTH2_GOOGLE_SECRET":"@srv-oauth2-google-secret",
+      "OAUTH2_GOOGLE_HOST_AUTHORIZE":"https://api.fwrlines.com",
+      "OAUTH2_GOOGLE_CLIENT_URL":"http://xyz.779.mx:3344",
+      "VERCEL_API_SECRET":"@srv-vercel-api-secret",
+      "VERCEL_TEAM_ID":"@srv-vercel-team-id",
+      "VERCEL_TEST_DOMAIN_TEAM":"@srv-vercel-test-domain-team",
+      "VERCEL_TEST_DOMAIN_PERSONAL":"@srv-vercel-test-domain-personal",
+      "UTILS_EMAIL_DEFAULT_SENDER":"ale@meccamico.com",
+      "UTILS_EMAIL_GOOGLE_OAUTH2_CLIENT_ID":"@srv-utils-email-google-oauth2-client",
+      "UTILS_EMAIL_GOOGLE_OAUTH2_CLIENT_SECRET":"@srv-utils-email-google-oauth2-secret",
+      "UTILS_EMAIL_GOOGLE_OAUTH2_REFRESH_TOKEN":"@srv-utils-email-google-oauth2-refresh-token"
+	  }
+  }
 	"env": {
     "PROFILE_NAME":"fwrlines/remote",
     "MODE":"production",
