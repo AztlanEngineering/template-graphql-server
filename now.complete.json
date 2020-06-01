@@ -24,7 +24,7 @@
     "POSTGRES_PROD_DB_SSL_CLIENT_KEY":"@srv-postgres-prod-ssl-client-key",
     "POSTGRES_PROD_DB_SSL_CLIENT_CERT":"@srv-postgres-prod-ssl-client-cert",
     "POSTGRES_PROD_DB_SSL_SERVER_CA":"@srv-postgres-prod-ssl-server-ca",
-    "AUTH_COOKIE_DURATION":"86400",
+    "AUTH_SESSION_DURATION":"86400",
     "AUTH_CODE_DURATION":"140",
     "AUTH_SIGNUP_AUTHORIZED":"true",
     "JWT_ISSUER":"fwrlines-srv",
