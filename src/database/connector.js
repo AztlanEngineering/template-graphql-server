@@ -8,6 +8,7 @@ import tls from 'tls'
 import config from './config.js'
 
 const C = config[process.env.MODE]
+console.log('HEYHEYHEYHEY', C, process.env, process.env.MODE)
 
 const decodeBase64 = (s) =>
   String(new Buffer.from(s, 'base64'))
