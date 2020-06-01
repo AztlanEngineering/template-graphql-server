@@ -20,7 +20,7 @@
     "migrate:up": "LOCAL=true babel-node src/migration/scripts/up.js --config-file ./babel.config.js",
     "migrate:down": "LOCAL=true babel-node src/migration/scripts/down.js --config-file ./babel.config.js",
     "migrate:status": "SQL_LOGGING=false LOCAL=true babel-node src/migration/scripts/status.js --config-file ./babel.config.js",
-    "now-build":"npm run test"
+    "now-build":"npm run sc"
   },
   "author": "",
   "license": "ISC",
