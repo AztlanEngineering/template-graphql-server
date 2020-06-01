@@ -9,11 +9,11 @@ class EmailSender {
     this.service = service
 
     this.props = { 
-      clientId    :process.env.EMAIL_API_CLIENT_ID,
-      clientSecret:process.env.EMAIL_API_CLIENT_SECRET,
-      refreshToken:process.env.EMAIL_API_REFRESH_TOKEN,
-      user        :process.env.SENDER_EMAIL_ADDRESS,
-      sender      :process.env.SENDER_EMAIL_ADDRESS,
+      clientId    :process.env.UTILS_EMAIL_GOOGLE_OAUTH2_CLIENT_ID,
+      clientSecret:process.env.UTILS_EMAIL_GOOGLE_OAUTH2_CLIENT_SECRET,
+      refreshToken:process.env.UTILS_EMAIL_GOOGLE_OAUTH2_REFRESH_TOKEN,
+      user        :process.env.UTILS_EMAIL_DEFAULT_SENDER,
+      sender      :process.env.UTILS_EMAIL_DEFAULT_SENDER,
     }
 
     this.props = {
