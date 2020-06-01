@@ -1,13 +1,10 @@
-if (process.env.LOCAL) {
-  require('dotenv').config()
-}
-
 import { Sequelize } from 'sequelize'
 import tls from 'tls'
 
 import config from './config.js'
 
 const C = config[process.env.MODE]
+console.log('HEYHEYHEY', process.env)
 
 const decodeBase64 = (s) =>
   String(new Buffer.from(s, 'base64'))
