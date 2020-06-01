@@ -1,3 +1,7 @@
+if (process.env.LOCAL) {
+  require('dotenv').config()
+}
+
 import { Sequelize } from 'sequelize'
 import tls from 'tls'
 
