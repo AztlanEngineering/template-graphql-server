@@ -34,6 +34,8 @@ const {
   CORS,
   JWT_SECRET,
   PROFILE_NAME,
+  SQL_LOGGING,
+  AUTH_SIGNUP_ENABLED,
   MODE
 } = process.env
 
@@ -51,14 +53,14 @@ if (IS_DEBUG) {
     }
   }
 
-  const logError= error => {
+  logError= error => {
     console.log('> > > ERROR')
     console.log(error)
     console.log('> > > END OF ERROR')
     return error
   }
 
-  const logResponse = res => {
+  logResponse = res => {
     console.log('> > > RESPONSE')
     console.log(res)
     console.log('< < < END OF RESPONSE')
@@ -182,6 +184,9 @@ sequelize.sync({ alter: true }).then(
 
 app.listen({ port }, () =>{
   console.log(`OK => Loaded profile  ${PROFILE_NAME} in mode ${MODE}`)
+  console.log(`OK => DEBUG is ${DEBUG}`)
+  console.log(`OK => SQL_LOGGING is ${SQL_LOGGING}`)
+  console.log(`OK => AUTH_SIGNUP_AUTHORIZED is ${AUTH_SIGNUP_ENABLED}`)
   console.log(`OK => Server ready at http://localhost:${port}${server.graphqlPath}`)
 })
 

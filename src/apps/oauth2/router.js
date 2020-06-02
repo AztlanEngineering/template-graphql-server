@@ -22,7 +22,6 @@ const redirectUrlMap = {
 callbacks.get(
   '/:setter/callback',
   async (req, res) => {
-    console.log('HEYHEYHEYHEYHEY')
     const { 
       state, 
       scope, 
@@ -49,6 +48,7 @@ callbacks.get(
     var provider
 
     if (req.params.setter === 'google'){
+      console.log('OAuth provider detected : Google')
 
       provider = 'google'
       
@@ -78,7 +78,7 @@ callbacks.get(
 
       const email = profile.email
 
-      console.log(profile)
+      //console.log(profile)
 
       // 4. We test whether there is already a OAuth2 Profile with this email
 
@@ -149,6 +149,7 @@ callbacks.get(
 
 
       } else {
+        console.log('520:Profile does not exist, proceeding ')
         
         // 5.2 We check whether a user with the same email exists
         
@@ -212,6 +213,7 @@ callbacks.get(
         } else {
 
           // 5.2.2 If signup is permitted, we create a new user
+          console.log('522 No profile no user : can signup ?')
 
           if(IS_SIGNUP_ALLOWED) {
             console.log('5.2.2 signup')
