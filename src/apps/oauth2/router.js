@@ -142,8 +142,9 @@ callbacks.get(
             provider
           })
           res.redirect(redirectUrlMap.google.authorized(setter.code))
-        } 
-        res.redirect(redirectUrlMap.google.unauthorized())
+        } else {
+          res.redirect(redirectUrlMap.google.unauthorized())
+        }
 
 
       } else {
@@ -201,8 +202,9 @@ callbacks.get(
               provider
             })
             res.redirect(redirectUrlMap.google.authorized(setter.code))
+          } else {
+            res.redirect(redirectUrlMap.google.unauthorized())
           } 
-          res.redirect(redirectUrlMap.google.unauthorized())
           
         } else {
 
@@ -244,19 +246,21 @@ callbacks.get(
                 provider
               })
               res.redirect(redirectUrlMap.google.authorized(setter.code))
-            } 
+            } else {
+              res.redirect(redirectUrlMap.google.unauthorized())
+            }
+          } else {
             res.redirect(redirectUrlMap.google.unauthorized())
           }
-
-          res.redirect(redirectUrlMap.google.unauthorized())
-
         }
 
       }
 
+    } else { //If provider is not google
       res.redirect(
         redirectUrlMap.unauthorized()
       )
+
     }
 
   }
