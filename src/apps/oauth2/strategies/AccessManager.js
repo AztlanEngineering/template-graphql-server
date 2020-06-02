@@ -146,7 +146,9 @@ export default class Manager {
       json  :true,
       body  :this.getTokensFromAuthCodeParameters() 
     }
-    const res = await rp(options)
+    const res = await rp(options).catch(e =>
+      console.log('ERROR EXCHANGING THE TOKENS', e)
+    )
 
     //console.log(6667788, 'got this back sb refresh t', res)
 

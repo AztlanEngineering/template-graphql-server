@@ -67,6 +67,7 @@ typings/
 
 # dotenv environment variables file
 .env
+.env.build
 .env.mc
 .env.test
 .env.back
