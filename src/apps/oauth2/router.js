@@ -201,8 +201,10 @@ callbacks.get(
               useToLogin:true,
               provider
             })
+            console.log('521:Profile Created:User will now log in')
             res.redirect(redirectUrlMap.google.authorized(setter.code))
           } else {
+            console.log('521:Profile Created:User cant log in')
             res.redirect(redirectUrlMap.google.unauthorized())
           } 
           
@@ -245,11 +247,14 @@ callbacks.get(
                 useToLogin:true,
                 provider
               })
+              console.log('522:New user created, allowed to log in')
               res.redirect(redirectUrlMap.google.authorized(setter.code))
             } else {
+              console.log('522:Created new user:Not Allowed to log in')
               res.redirect(redirectUrlMap.google.unauthorized())
             }
           } else {
+            console.log('522:User Not Existing:Signup Not allowed')
             res.redirect(redirectUrlMap.google.unauthorized())
           }
         }
@@ -257,6 +262,7 @@ callbacks.get(
       }
 
     } else { //If provider is not google
+      console.log('Provider not recognized:auth impossible')
       res.redirect(
         redirectUrlMap.unauthorized()
       )
