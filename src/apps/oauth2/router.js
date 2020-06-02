@@ -22,6 +22,7 @@ const redirectUrlMap = {
 callbacks.get(
   '/:setter/callback',
   async (req, res) => {
+    console.log('HEYHEYHEYHEYHEY')
     const { 
       state, 
       scope, 
