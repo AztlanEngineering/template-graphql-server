@@ -10,13 +10,18 @@ var modelGetters = {}
 const models = {}
 
 config.installedApps.forEach(appName=>{
-  const localModels = require(`./apps/${appName}/models`)
+  try {
+    const localModels = require(`./apps/${appName}/models`)
 
-  if(localModels) {
-    modelGetters = {
-      ...modelGetters,
-      ...localModels,
+    if(localModels) {
+      modelGetters = {
+        ...modelGetters,
+        ...localModels,
+      }
     }
+
+  } catch(e) {
+    console.log(`WARNING => No models found for package ${appName}`)
   }
 
 })

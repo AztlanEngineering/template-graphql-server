@@ -6,5 +6,6 @@ module.exports = {
     'dictionary',
     'website',
     'business',
+    'tstr'
   ]
 }
