@@ -2,6 +2,7 @@
 extend type Query {
   getSimpleHello: String
   getHello: Hello
+  time:Float
 }
 
 #extend type Mutation {

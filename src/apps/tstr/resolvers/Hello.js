@@ -14,6 +14,9 @@ export default {
       // use context if you want to restrict the usage
       return {y: "mini hello"}
       //return su(MainController.get(r, a), c.user)
+    },
+    time(r, a, c) {
+      return Date.now()
     }
   }
 }
