@@ -19,6 +19,15 @@ async function up(queryInterface, Sequelize) {
       type:Sequelize.DataTypes.STRING,
     },
 
+    createdAt:{
+      type     :Sequelize.DataTypes.DATE,
+      allowNull:false,
+    },
+    updatedAt:{
+      type     :Sequelize.DataTypes.DATE,
+      allowNull:false,
+    },
+
   })
 }
 

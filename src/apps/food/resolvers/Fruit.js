@@ -8,13 +8,13 @@ import {
 export default {
   Mutation:{
     async addFruit(r, a, c) {
-      return su(MainController.add(r, a), c.user)
+      return MainController.add(r, a)
     },
     async deleteFruit(r, a, c) {
-      return su(MainController.del(r, a), c.user)
+      return MainController.del(r, a)
     },
     async updateFruit(r, a, c) {
-      return su(MainController.update(r, a), c.user)
+      return MainController.update(r, a)
     },
     /*
     async addMyFruit(r, a, c) {
@@ -31,12 +31,12 @@ export default {
   Query:{
     allFruits(r, a, c) {
       // use context if you want to restrict the usage
-      return su(MainController.all(r, a), c.user)
+      return MainController.all(r, a)
       //return su(FruitController.paginated(r, a), c.user)
     },
     getFruit(r, a, c) {
       // use context if you want to restrict the usage
-      return su(MainController.get(r, a), c.user)
+      return MainController.get(r, a)
     },
     /*
     allMyFruits(r, a, c) {
