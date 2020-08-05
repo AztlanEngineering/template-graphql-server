@@ -1,0 +1,39 @@
+# @fwrlines/generator-graphql-server-type 2.8.1 
+extend type Query {
+  allFruits: [Fruit]
+  getFruit(id: ID!): Fruit!
+  #paginatedFruit (page:Int, category: String):PaginatedFruits
+}
+
+extend type Mutation {
+  #Admin mutations
+  addFruit(input:FruitInput!): Fruit!
+  updateFruit(id: ID!, input: FruitInput!): Fruit!
+  deleteFruit(id: ID!): ID!
+
+  #User mutations
+  }
+
+input FruitInput {
+  name:String
+  taste:String
+}
+
+type Fruit {
+  id:ID!
+  name:String
+  taste:String
+}
+
+#type PaginatedFruits {
+#  docs: [Fruit]
+#  totalDocs: Int!
+#  limit: Int!
+#  hasPrevPage: Boolean!
+#  hasNextPage: Boolean!
+#  page: Int!
+#  totalPages: Int!
+#  pagingCounter: Int!
+#  prevPage: Int
+#  nextPage: Int
+#}
