@@ -11,7 +11,7 @@ export default {
       return MainController.add(r, a)
     },
     async deleteFruit(r, a, c) {
-      return MainController.del(r, a)
+      return MainController.delete(r, a)
     },
     async updateFruit(r, a, c) {
       return MainController.update(r, a)
