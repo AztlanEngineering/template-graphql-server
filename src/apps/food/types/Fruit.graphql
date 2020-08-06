@@ -24,6 +24,8 @@ type Fruit {
   _string:String!
   name:String
   taste:String
+  createdAt:Float
+  updatedAt:Float
 }
 
 #type PaginatedFruits {
