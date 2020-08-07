@@ -5,8 +5,10 @@ import { generateTestDataFrom } from 'utils'
 
 const generateFake = () => {
   return {
-    name :faker.commerce.product(),
+    name :faker.commerce.productName(),
     taste:faker.commerce.productAdjective(),
+    pricePerKilo:faker.random.number(),
+    edible:true
   }
 }
 

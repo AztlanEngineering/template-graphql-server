@@ -19,6 +19,17 @@ async function up(queryInterface, Sequelize) {
       type:Sequelize.DataTypes.STRING,
     },
 
+    edible:{
+      type        :Sequelize.DataTypes.BOOLEAN,
+      allowNull   :false,
+    },
+
+    pricePerKilo:{
+      type        :Sequelize.DataTypes.FLOAT,
+      defaultValue:1,
+      allowNull   :false,
+    },
+
     createdAt:{
       type     :Sequelize.DataTypes.DATE,
       allowNull:false,

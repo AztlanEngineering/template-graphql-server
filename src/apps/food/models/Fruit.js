@@ -34,6 +34,18 @@ export default sequelize => {
       type:Sequelize.DataTypes.STRING,
     },
 
+    edible:{
+      type        :Sequelize.DataTypes.BOOLEAN,
+      allowNull   :false,
+      defaultValue:false
+    },
+
+    pricePerKilo:{
+      type        :Sequelize.DataTypes.FLOAT,
+      defaultValue:1,
+      allowNull   :false,
+    },
+
     _string:{
       type:new Sequelize.DataTypes.VIRTUAL(Sequelize.DataTypes.STRING, ['name']),
       get :function() {
