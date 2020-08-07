@@ -17,6 +17,8 @@ extend type Mutation {
 input FruitInput {
   name:String
   taste:String
+  edible:Boolean
+  pricePerKilo:Float
 }
 
 type Fruit {
@@ -24,6 +26,8 @@ type Fruit {
   _string:String!
   name:String
   taste:String
+  edible:Boolean
+  pricePerKilo:Float
   createdAt:Float
   updatedAt:Float
 }

@@ -29,4 +29,6 @@ const sequelize = new Sequelize(
   }
 )
 
+C.LOGGING && console.log(`OK => Db connection to${C.HOST} | DB ${C.DB_NAME}`)
+
 export default sequelize
