@@ -7,7 +7,7 @@ import fs from 'fs'
 
 import JWTStrategy from 'apps/auth/passport'
 //import { User, Token } from 'models'
-import schema from 'rootSchema'
+import { typeDefs, resolvers } from 'loadSchema'
 
 import { ApolloServer } from 'apollo-server-express'
 import { AuthenticationError } from 'apollo-server'
@@ -71,7 +71,8 @@ if (IS_DEBUG) {
 }
 
 const server = new ApolloServer({
-  schema,
+  typeDefs,
+  resolvers,
   playground,
   cors          :WITH_CORS,
   introspection :IS_DEBUG,
