@@ -19,7 +19,15 @@
 + `npm run migrate:up all` : run this on the dev machine 
 + After the tables have been migrated, it is crucial that each table ownership is passed to `cloudsqlsuperuser` to make them readable/writable in between users (in case we dont use the same username/login on the dev machine and the prod system, which we should be doing)
 
+### Fill the env variables
+
+```bash
+cp .env.template .env
+```
+And fill all the .env variables.
+
 ### Other 
 
 If google auth is not needed, remove dependencies 
 ```npm uninstall request request-promise query-string```
+
