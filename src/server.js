@@ -97,6 +97,13 @@ const server = new ApolloServer({
     const c = {}
     c.user = req.user
     c.headers = req.headers
+
+    const remoteAddress = (req.headers['x-forwarded-for'] || req.socket.remoteAddress || '').split(',')[0].trim()
+    const template = /^:?:(ffff)?:(?!0)(?!.*\.$)((1?\d?\d|25[0-5]|2[0-4]\d)(\.|$)){4}$/
+    const isRemoteAddressIPV4 = template.test(remoteAddress)
+    //console.log(remoteAddress, isRemoteAddressIPV4)
+    c.remoteAddress = isRemoteAddressIPV4 ? remoteAddress.replace(/^.*:/, '') : remoteAddress
+
     return c
 
     /* THIS if we decide to store the JWT. Else we use the JWTStrategy
