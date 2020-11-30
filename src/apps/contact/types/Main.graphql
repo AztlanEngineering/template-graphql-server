@@ -1,0 +1,18 @@
+# @fwrlines/generator-graphql-server-type 2.9.4 
+#extend type Query {
+#  getMain: Main
+#}
+
+extend type Mutation {
+  publicSendContactMessage(dry:Boolean, input: ContactMessageInput!): Boolean!
+}
+
+input ContactMessageInput {
+  name:String
+  firstName:String
+  lastName:String
+  email:String!
+  topic:String!
+  message:String!
+}
+

@@ -1,4 +1,7 @@
 export { default as suMethod } from './suMethod'
+export { default as appendOrNewArray } from './appendOrNewArray.js'
+export { default as getIPInfo } from './getIPInfo.js'
 export { default as userMethod } from './userMethod'
 export { default as isEmpty } from './isEmpty'
 export { default as randomString } from './randomString'
+export { default as getNestedState } from './getNestedState'

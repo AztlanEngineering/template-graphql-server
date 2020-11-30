@@ -16,10 +16,13 @@ class EmailSender {
       sender      :process.env.UTILS_EMAIL_DEFAULT_SENDER,
     }
 
+
     this.props = {
       ...this.props,
       ...props
     }
+
+    //console.log("Instantiation", this.props)
 
   }
 
@@ -39,20 +42,23 @@ class EmailSender {
 
   }
 
-  getGoogleAccessToken() {
-    this.oauth2Client = new google.OAuth2(
+  async getGoogleAccessToken() {
+    this.oauth2Client = new google.auth.OAuth2(
       this.props.clientId,
       this.props.clientSecret,
       GOOGLE_OAUTH_PLAYGROUND,
     )
-    this.oauth2Client.setCredentials()
-    this.accessToken = this.oauth2Client.getAccessToken()
+    this.oauth2Client.setCredentials({
+      refresh_token:this.props.refreshToken
+    })
+    //console.log('oauth2client cfg')
+    this.accessToken = await this.oauth2Client.getAccessToken()
     return this.accessToken
   }
 
   async send(dry=false) {
     if(!this.props.accessToken) {
-      if(this.provider === 'gmail') {
+      if(this.service === 'gmail') {
         this.getGoogleAccessToken()
       }
     }
